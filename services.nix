@@ -24,8 +24,12 @@
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       use_backend letsencrypt-backend if letsencrypt-acl
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
+      acl grafana-acl hdr(host) -i grafana.sene.ovh
       acl emby-acl hdr(host) -i emby.sene.ovh
+      acl transmission-acl hdr(host) -i transmission.sene.ovh
+      use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
+      use_backend transmission-backend if transmission-acl
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
@@ -53,7 +57,10 @@
   security.acme.certs = {
     "sene.ovh" = {
       extraDomains = {
+        "grafana.sene.ovh" = null;
         "emby.sene.ovh" = null;
+        "transmission.sene.ovh" = null;
+
       };
       webroot = "/var/www/challenges/";
       email = "victor@sene.ovh";
@@ -63,13 +70,13 @@
   };
   security.acme.directory = "/var/lib/acme";
 
-  services.emby.enable = true;
-  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
-
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
 
+  services.emby.enable = true;
+  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
+  
   services.transmission.enable = true;
   services.transmission.home = "/var/lib/transmission";
   services.transmission.settings = {
