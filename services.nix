@@ -69,6 +69,9 @@
   };
   security.acme.directory = "/var/lib/acme";
 
+  services.emby.enable = true;
+  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
+
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
