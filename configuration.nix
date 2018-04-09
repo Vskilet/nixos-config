@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -9,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./users.nix
+      ./services.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -17,15 +14,14 @@
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-  
+
   boot.supportedFilesystems = [ "zfs" ];
   services.zfs.autoSnapshot.enable = true;
   services.zfs.autoScrub.enable = true;
-  
+
   networking.hostName = "SENNAS01"; # Define your hostname.
-  networking.hostId = "7e44e347";  
+  networking.hostId = "7e44e347";
 
   # Select internationalisation properties.
   i18n = {
@@ -42,8 +38,8 @@
   environment.systemPackages = with pkgs; [
     wget vim tmux git
   ];
-  nixpkgs.config.allowUnfree = true;   
-  
+  nixpkgs.config.allowUnfree = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.zsh.enable = true;
@@ -54,18 +50,16 @@
   # programs.mtr.enable = true;
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
-  
+
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ ];
   networking.firewall.allowedUDPPorts = [ ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
-  
+
   security.sudo.wheelNeedsPassword = false;
 
   # This value determines the NixOS release with which your system is to be
