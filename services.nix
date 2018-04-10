@@ -16,17 +16,17 @@
       option forwardfor
       option http-server-close
     userlist THELIST
-      user victor password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
+      user victor password $6$WOpUfphaCRCpPEti$xn5np2mS.64b41lb31vWFQV/GKtW//VWJ/xiWAEECWPDsUfrk0P2h3g2TimztIK1JIcvzIxGCLYzzAGXaGfCl1
     frontend public
       bind :::80 v4v6
-      bind :::443 v4v6 ssl crt /var/lib/acme/sene.ovh/full.pem
+      #bind :::443 v4v6 ssl crt /var/lib/acme/freebox.sene.ovh/full.pem
       mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       use_backend letsencrypt-backend if letsencrypt-acl
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
-      acl grafana-acl hdr(host) -i grafana.sene.ovh
-      acl emby-acl hdr(host) -i emby.sene.ovh
-      acl transmission-acl hdr(host) -i transmission.sene.ovh
+      acl grafana-acl hdr(host) -i grafana.freebox.sene.ovh
+      acl emby-acl hdr(host) -i emby.freebox.sene.ovh
+      acl transmission-acl hdr(host) -i transmission.freebox.sene.ovh
       use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
       use_backend transmission-backend if transmission-acl
@@ -55,11 +55,11 @@
   };
 
   security.acme.certs = {
-    "sene.ovh" = {
+    "freebox.sene.ovh" = {
       extraDomains = {
-        "grafana.sene.ovh" = null;
-        "emby.sene.ovh" = null;
-        "transmission.sene.ovh" = null;
+        "grafana.freebox.sene.ovh" = null;
+        "emby.freebox.sene.ovh" = null;
+        "transmission.freebox.sene.ovh" = null;
 
       };
       webroot = "/var/www/challenges/";
@@ -76,7 +76,7 @@
 
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
-  
+
   services.transmission.enable = true;
   services.transmission.home = "/var/lib/transmission";
   services.transmission.settings = {
