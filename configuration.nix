@@ -66,7 +66,9 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  # system.stateVersion = "18.03"; # Did you read the comment?YES
+  
+  system.stateVersion = "18.03";
   system.autoUpgrade.enable = true;
-
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 15d";
 }
