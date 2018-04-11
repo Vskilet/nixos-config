@@ -111,10 +111,7 @@ in
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
-       
-  services.firefox.syncserver.enable = true;
-  services.firefox.syncserver.publicUrl = "http://sync.${domain}/";
-  
+
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
 
