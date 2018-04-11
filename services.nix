@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -58,8 +58,8 @@ in
         server ${name} ${value.ip}:${toString value.port}
         ${(if value.auth then (
             "
-        acl AuthOK_LOUTRE http_auth(LOUTRE)
-        http-request auth realm LOUTRE if !AuthOK_LOUTRE
+        acl AuthOK_THELIST http_auth(THELIST)
+        http-request auth realm THELIST if !AuthOK_THELIST
             ") else "")}
                 ''
                 ) haproxy_backends)}
@@ -113,7 +113,7 @@ in
   services.grafana.dataDir = "/var/lib/grafana";
        
   services.firefox.syncserver.enable = true;
-  services.firefox.syncserver.publicUrl = "http://sync.${domain}/"
+  services.firefox.syncserver.publicUrl = "http://sync.${domain}/";
   
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
