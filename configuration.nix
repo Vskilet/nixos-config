@@ -36,7 +36,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    wget vim tmux git
+    wget vim tmux git htop
   ];
   nixpkgs.config.allowUnfree = true;
 
