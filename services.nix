@@ -87,7 +87,27 @@ in
   };
   security.acme.directory = "/var/lib/acme";
   
+  
+  services.influxdb.enable = true;
+  services.influxdb.dataDir = "/var/db/influxdb";
 
+  services.telegraf.enable = true;
+  services.telegraf.extraConfig = {
+    inputs = {
+      net = { interfaces = [ "enp2s0" ]; };
+      netstat = {};
+      cpu = { totalcpu = true; };
+      kernel = {};
+      mem = {};
+      processes = {};
+      system = {};
+      disk = {};
+    };
+    outputs = {
+      influxdb = { database = "telegraf"; urls = [ "http://localhost:8086" ]; };
+    };
+  };
+  
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
