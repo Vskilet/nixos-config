@@ -1,5 +1,19 @@
 { config, pkgs, ... }:
 
+with lib;
+
+let
+
+  haproxy_backends = {
+    grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
+  };
+
+  domain = "freebox.sene.ovh";
+
+in
+
 {
   services.haproxy.enable = true;
   services.haproxy.config = ''
@@ -19,31 +33,36 @@
       user victor password $6$WOpUfphaCRCpPEti$xn5np2mS.64b41lb31vWFQV/GKtW//VWJ/xiWAEECWPDsUfrk0P2h3g2TimztIK1JIcvzIxGCLYzzAGXaGfCl1
     frontend public
       bind :::80 v4v6
-      #bind :::443 v4v6 ssl crt /var/lib/acme/freebox.sene.ovh/full.pem
+      bind :::443 v4v6 ssl crt /var/lib/acme/${domain}/full.pem
       mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-      use_backend letsencrypt-backend if letsencrypt-acl
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
-      acl grafana-acl hdr(host) -i grafana.freebox.sene.ovh
-      acl emby-acl hdr(host) -i emby.freebox.sene.ovh
-      acl transmission-acl hdr(host) -i transmission.freebox.sene.ovh
-      use_backend grafana-backend if grafana-acl
-      use_backend emby-backend if emby-acl
-      use_backend transmission-backend if transmission-acl
+      use_backend letsencrypt-backend if letsencrypt-acl
+      
+      ${concatStrings (
+      mapAttrsToList (name: value:
+        "
+  acl ${name}-acl hdr(host) -i ${name}.${domain}
+  use_backend ${name}-backend if ${name}-acl
+        ") haproxy_backends)}
+      
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
-    backend grafana-backend
-      mode http
-      server grafana 127.0.0.1:3000 check
-    backend emby-backend
-      mode http
-      server emby 127.0.0.1:8096 check
-    backend transmission-backend
-      mode http
-      acl AuthOK_THELIST http_auth(THELIST)
-      http-request auth realm THELIST if !AuthOK_THELIST
-      server transmission 127.0.0.1:9091 check
+    
+    ${concatStrings (
+      mapAttrsToList (name: value:
+        ''
+    backend ${name}-backend
+        mode http
+        server ${name} ${value.ip}:${toString value.port}
+        ${(if value.auth then (
+            "
+        acl AuthOK_LOUTRE http_auth(LOUTRE)
+        http-request auth realm LOUTRE if !AuthOK_LOUTRE
+            ") else "")}
+                ''
+                ) haproxy_backends)}
   '';
 
   services.nginx.enable = true;
@@ -55,20 +74,19 @@
   };
 
   security.acme.certs = {
-    "freebox.sene.ovh" = {
-      extraDomains = {
-        "grafana.freebox.sene.ovh" = null;
-        "emby.freebox.sene.ovh" = null;
-        "transmission.freebox.sene.ovh" = null;
-
-      };
+    ${domain} = {
+      extraDomains = mapAttrs' (name: value:
+        nameValuePair ("${name}.${domain}") (null)
+      ) haproxy_backends;
       webroot = "/var/www/challenges/";
       email = "victor@sene.ovh";
       user = "haproxy";
       group = "haproxy";
+      postRun = "systemctl reload haproxy";
     };
   };
   security.acme.directory = "/var/lib/acme";
+  
 
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
