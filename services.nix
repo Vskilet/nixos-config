@@ -8,6 +8,8 @@ let
     grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
     emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
     transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    cloud = { ip = "127.0.0.1"; port = 8441; auth = false; };
+    searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
   };
 
   domain = "freebox.sene.ovh";
@@ -15,6 +17,11 @@ let
 in
 
 {
+
+  imports = [
+	./nextcloud.nix
+	];
+
   services.haproxy.enable = true;
   services.haproxy.config = ''
     global
@@ -122,6 +129,12 @@ in
     rpc-host-whitelist = "*";
     rpc-whitelist-enabled = false;
   };
+  
+  services.nextcloud.enable = true;  
+  services.nextcloud.vhosts = [ "cloud.${domain}" ];
+  services.postgresql.enable = true;
+
+  services.searx.enable = true;
 
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
