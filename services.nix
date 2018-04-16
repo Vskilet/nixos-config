@@ -6,8 +6,8 @@ let
 
   haproxy_backends = {
     grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
-    emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
-    transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    stream = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    seed = { ip = "127.0.0.1"; port = 9091; auth = true; };
     cloud = { ip = "127.0.0.1"; port = 8441; auth = false; };
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
   };
@@ -19,7 +19,8 @@ in
 {
 
   imports = [
-	./nextcloud.nix
+    ./nextcloud.nix
+    ./mailserver.nix
 	];
 
   services.haproxy.enable = true;
@@ -37,7 +38,7 @@ in
       option forwardfor
       option http-server-close
     userlist THELIST
-      user victor password $6$WOpUfphaCRCpPEti$xn5np2mS.64b41lb31vWFQV/GKtW//VWJ/xiWAEECWPDsUfrk0P2h3g2TimztIK1JIcvzIxGCLYzzAGXaGfCl1
+      user victor password $6$Jhqey3bXLjbwD$KV8SAXPRUvbfy3.B3FgJlSjNFagk5fks.WOQ3ckdRg7/g3SUbOaCAPbq6FvLFoHWQzTl/eR4MWxfC49HN.4OB.  
     frontend public
       bind :::80 v4v6
       bind :::443 v4v6 ssl crt /var/lib/acme/${domain}/full.pem
@@ -135,6 +136,9 @@ in
   services.postgresql.enable = true;
 
   services.searx.enable = true;
+  
+  services.mailserver.enable = true;
+  services.mailserver.domain = domain;
 
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
