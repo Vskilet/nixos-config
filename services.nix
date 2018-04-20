@@ -49,10 +49,9 @@ in
       
       ${concatStrings (
       mapAttrsToList (name: value:
-        "
-  acl ${name}-acl hdr(host) -i ${name}.${domain}
-  use_backend ${name}-backend if ${name}-acl
-        ") haproxy_backends)}
+        " acl ${name}-acl hdr(host) -i ${name}.${domain}\n"
+      + " use_backend ${name}-backend if ${name}-acl\n"
+      ) haproxy_backends)}
       
     backend letsencrypt-backend
       mode http
@@ -61,16 +60,15 @@ in
     ${concatStrings (
       mapAttrsToList (name: value:
         ''
-    backend ${name}-backend
-        mode http
-        server ${name} ${value.ip}:${toString value.port}
-        ${(if value.auth then (
-            "
-        acl AuthOK_THELIST http_auth(THELIST)
-        http-request auth realm THELIST if !AuthOK_THELIST
-            ") else "")}
-                ''
-                ) haproxy_backends)}
+        backend ${name}-backend
+          mode http
+          server ${name} ${value.ip}:${toString value.port}
+          ${(if value.auth then (
+            "\n acl AuthOK_THELIST http_auth(THELIST)\n"
+          + " http-request auth realm THELIST if !AuthOK_THELIST\n"
+          ) else "")}
+        ''
+        ) haproxy_backends)}
   '';
 
   services.nginx.enable = true;
