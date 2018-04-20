@@ -61,6 +61,7 @@ in
         extraDomains = {
           "mail.${cfg.domain}" = null;
         };
+        postRun = "systemctl reload dovecot2.service";
       };
     };
   };

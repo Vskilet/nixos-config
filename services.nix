@@ -12,7 +12,7 @@ let
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
   };
 
-  domain = "freebox.sene.ovh";
+  domain = "sene.ovh";
 
 in
 
