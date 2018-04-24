@@ -10,6 +10,7 @@ let
     seed = { ip = "127.0.0.1"; port = 9091; auth = true; };
     cloud = { ip = "127.0.0.1"; port = 8441; auth = false; };
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    shell = { ip = "127.0.0.1"; port = 4200; auth = true; };
   };
 
   domain = "sene.ovh";
@@ -38,7 +39,7 @@ in
       option forwardfor
       option http-server-close
     userlist THELIST
-      user victor password $6$Jhqey3bXLjbwD$KV8SAXPRUvbfy3.B3FgJlSjNFagk5fks.WOQ3ckdRg7/g3SUbOaCAPbq6FvLFoHWQzTl/eR4MWxfC49HN.4OB.  
+      user victor password $6$aydejDVvpYbZ$..iTobk0.7KzY9DEwB5BWGwudnyqeYtxMITijr48HvjjyqbR1S/fn1zS3GS2n6n2UGEWKORYmPPt8QGRFxvX70
     frontend public
       bind :::80 v4v6
       bind :::443 v4v6 ssl crt /var/lib/acme/${domain}/full.pem
@@ -137,6 +138,9 @@ in
   
   services.mailserver.enable = true;
   services.mailserver.domain = domain;
+
+  services.shellinabox.enable = true;
+  services.shellinabox.extraOptions = [ "--css ${./white-on-black.css}" ];
 
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
