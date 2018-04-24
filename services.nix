@@ -11,10 +11,12 @@ let
     cloud = { ip = "127.0.0.1"; port = 8441; auth = false; };
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
     shell = { ip = "127.0.0.1"; port = 4200; auth = true; };
+    riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
   };
 
   domain = "sene.ovh";
-
+  riot_port = 30001;
 in
 
 {
@@ -77,6 +79,10 @@ in
     "acme" = {
       listen = [ { addr = "127.0.0.1"; port = 54321; } ];
       locations = { "/" = { root = "/var/www/challenges"; }; };
+    };
+    "riot" = {
+      listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
+      locations = { "/" = { root = pkgs.riot-web_custom; }; };
     };
   };
 
@@ -142,9 +148,55 @@ in
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./white-on-black.css}" ];
 
+  nixpkgs.overlays = [ (self: super: { riot-web_custom = super.riot-web.override { conf = ''
+    { 
+      "default_hs_url": "https://matrix.sene.ovh",
+      "default_is_url": "https://vector.im",
+      "brand": "SENE-NET",
+      "default_theme": "dark"
+    }
+  ''; }; } ) ];
+
+  services.matrix-synapse = {
+    enable = true;
+    enable_registration = true;
+    server_name = "sene.ovh";
+    listeners = [
+      { # federation
+        bind_address = "";
+        port = 8448;
+        resources = [
+          { compress = true; names = [ "client" "webclient" ]; }
+          { compress = false; names = [ "federation" ]; }
+        ];
+        tls = true;
+        type = "http";
+        x_forwarded = false;
+      }
+      { # client
+        bind_address = "127.0.0.1";
+        port = 8008;
+        resources = [
+          { compress = true; names = [ "client" "webclient" ]; }
+        ];
+        tls = false;
+        type = "http";
+        x_forwarded = true;
+      }
+    ];
+    database_type = "psycopg2";
+    database_args = {
+      database = "matrix-synapse";
+    };
+    extraConfig = ''
+      max_upload_size: "100M"
+    '';
+  };
+  
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
     51413 # Transmission
+    8448 # Matrix
   ];
   networking.firewall.allowedUDPPorts = [
     51413 # Transmission
