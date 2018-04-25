@@ -13,6 +13,7 @@ let
     shell = { ip = "127.0.0.1"; port = 4200; auth = true; };
     riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    sync = { ip = "127.0.0.1"; port = 5000; auth = false; };
   };
 
   domain = "sene.ovh";

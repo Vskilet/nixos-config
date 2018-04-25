@@ -44,6 +44,7 @@
   # started in user sessions.
   programs.zsh.enable = true;
   virtualisation.rkt.enable = true;
+  virtualisation.docker.enable = true;
   users.extraGroups.rkt = { };
   boot.kernelModules = [ "overlay" ];
   # programs.bash.enableCompletion = true;
