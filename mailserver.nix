@@ -36,6 +36,12 @@ in
         "victor@${cfg.domain}" = {
           hashedPassword = "$6$uQnAYIZbb5ILQz$OscV9Kby46QIzOkqhLhShxf14aLabbEKB6nqnaf0YkSlQCDz6Tby1vqI9zEfCYik2D7bvVtocZ3itvRPQ6QXJ/";
         };
+        "constance@${cfg.domain}" = {
+          hashedPassword = "$6$wGIPnWzZqfJD0.l$HpxYitiTsIWQVFoJOnJax5ZEJXucdhMsfc8vKgNzX7QfQQ/CSIwcozXfB49cqEXRivktd3aKcop1k7tCo840w/";
+        };
+        "gaelle@${cfg.domain}" = {
+          hashedPassword = "$6$hhEzaqBy1y$hmwRTOYWMmTZ8xJeShsQv4O4kmGB80slpI0R6UX1e8M53Gbg74tciQNd5fq4QqkUr5oCilc5b7b.E0spE5OtI.";
+        };
       };
 
       # Certificate setup
