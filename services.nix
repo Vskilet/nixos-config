@@ -14,10 +14,13 @@ let
     riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
     sync = { ip = "127.0.0.1"; port = 5000; auth = false; };
+    wedding = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
+
   };
 
   domain = "sene.ovh";
   riot_port = 30001;
+  wedding_port = 30002;
 in
 
 {
@@ -84,6 +87,10 @@ in
     "riot" = {
       listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
       locations = { "/" = { root = pkgs.riot-web_custom; }; };
+    };
+    "wedding" = {
+      listen = [ { addr = "127.0.0.1"; port = wedding_port; } ];
+      locations = { "/" = { root = "/var/www/wedding"; }; };
     };
   };
 
