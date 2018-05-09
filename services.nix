@@ -5,16 +5,16 @@ with lib;
 let
 
   haproxy_backends = {
-    grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
-    stream = { ip = "127.0.0.1"; port = 8096; auth = false; };
-    seed = { ip = "127.0.0.1"; port = 9091; auth = true; };
-    cloud = { ip = "127.0.0.1"; port = 8441; auth = false; };
-    searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    shell = { ip = "127.0.0.1"; port = 4200; auth = true; };
-    riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
-    matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    sync = { ip = "127.0.0.1"; port = 5000; auth = false; };
-    wedding = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
+    "grafana.sene.ovh" = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    "stream.sene.ovh" = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    "seed.sene.ovh" = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    "cloud.sene.ovh" = { ip = "127.0.0.1"; port = 8441; auth = false; };
+    "searx.sene.ovh" = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    "shell.sene.ovh" = { ip = "127.0.0.1"; port = 4200; auth = true; };
+    "riot.sene.ovh" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    "matrix.sene.ovh" = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    "sync.sene.ovh" = { ip = "127.0.0.1"; port = 5000; auth = false; };
+    "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
 
   };
 
@@ -56,7 +56,7 @@ in
       
       ${concatStrings (
       mapAttrsToList (name: value:
-        " acl ${name}-acl hdr(host) -i ${name}.${domain}\n"
+        " acl ${name}-acl hdr(host) -i ${name}\n"
       + " use_backend ${name}-backend if ${name}-acl\n"
       ) haproxy_backends)}
       
@@ -97,7 +97,7 @@ in
   security.acme.certs = {
     ${domain} = {
       extraDomains = mapAttrs' (name: value:
-        nameValuePair ("${name}.${domain}") (null)
+        nameValuePair ("${name}") (null)
       ) haproxy_backends;
       webroot = "/var/www/challenges/";
       email = "victor@sene.ovh";
