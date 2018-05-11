@@ -15,12 +15,13 @@ let
     "matrix.sene.ovh" = { ip = "127.0.0.1"; port = 8008; auth = false; };
     "sync.sene.ovh" = { ip = "127.0.0.1"; port = 5000; auth = false; };
     "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
-
+    "pgmanage.sene.ovh" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
   };
 
   domain = "sene.ovh";
   riot_port = 30001;
   wedding_port = 30002;
+  pgmanage_port = 30003;
 in
 
 {
@@ -146,7 +147,13 @@ in
   
   services.nextcloud.enable = true;  
   services.nextcloud.vhosts = [ "cloud.${domain}" ];
+  
   services.postgresql.enable = true;
+  services.pgmanage.enable = true;
+  services.pgmanage.port = pgmanage_port;
+  services.pgmanage.connections = {
+    localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
+  };
 
   services.searx.enable = true;
   
