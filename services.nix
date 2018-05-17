@@ -16,12 +16,15 @@ let
     "sync.sene.ovh" = { ip = "127.0.0.1"; port = 5000; auth = false; };
     "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
     "pgmanage.sene.ovh" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
+    "vilodec.fr" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
   };
 
   domain = "sene.ovh";
   riot_port = 30001;
   wedding_port = 30002;
   pgmanage_port = 30003;
+  vilodec_port = 30004;
+
 in
 
 {
@@ -29,7 +32,7 @@ in
   imports = [
     ./nextcloud.nix
     ./mailserver.nix
-	];
+  ];
 
   services.haproxy.enable = true;
   services.haproxy.config = ''
@@ -93,7 +96,39 @@ in
       listen = [ { addr = "127.0.0.1"; port = wedding_port; } ];
       locations = { "/" = { root = "/var/www/wedding"; }; };
     };
+    "vilodec" = {
+      listen = [ { addr = "127.0.0.1"; port = vilodec_port; } ];
+      locations = { "/" = { 
+        root = "/var/www/vilodec";
+	index = "index.php";
+        extraConfig = ''
+          location ~* \.php$ {
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass unix:/run/phpfpm/web;
+            include ${pkgs.nginx}/conf/fastcgi_params;
+            include ${pkgs.nginx}/conf/fastcgi.conf;
+          }
+        '';
+      }; };
+    };
   };
+  
+  services.phpfpm.poolConfigs.web = ''
+    listen = /run/phpfpm/web
+    listen.owner = nginx
+    listen.group = nginx
+    listen.mode = 0660
+    user = nginx
+    pm = dynamic
+    pm.max_children = 75
+    pm.start_servers = 2
+    pm.min_spare_servers = 1
+    pm.max_spare_servers = 20
+    pm.max_requests = 500
+    php_admin_value[error_log] = 'stderr'
+    php_admin_flag[log_errors] = on
+    catch_workers_output = yes
+  '';
 
   security.acme.certs = {
     ${domain} = {
@@ -154,6 +189,9 @@ in
   services.pgmanage.connections = {
     localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
+
+  services.mysql.enable = true;
+  services.mysql.package = pkgs.mysql;
 
   services.searx.enable = true;
   
