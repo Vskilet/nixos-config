@@ -67,7 +67,6 @@ in
         extraDomains = {
           "${cfg.domain}" = null;
         };
-        webroot = "/var/www/challenges/";
         postRun = ''
           systemctl reload dovecot2.service
         '';
