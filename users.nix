@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  environment.loginShellInit = "${./motd.sh}";
+  environment.loginShellInit = "${./users/motd.sh}";
   users.extraUsers.victor =
   { uid = 1111;
     isNormalUser = true;

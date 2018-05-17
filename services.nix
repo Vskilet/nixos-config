@@ -131,7 +131,7 @@ in
   services.mailserver.domain = domain;
 
   services.shellinabox.enable = true;
-  services.shellinabox.extraOptions = [ "--css ${./white-on-black.css}" ];
+  services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
   
   services.matrix-synapse = {
     enable = true;
