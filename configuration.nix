@@ -35,6 +35,9 @@
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
+  nixpkgs.overlays = [
+    (import ./overlays/riot-web.nix)
+  ];
   environment.systemPackages = with pkgs; [
     wget vim tmux git htop
   ];
