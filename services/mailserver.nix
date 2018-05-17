@@ -65,9 +65,12 @@ in
     security.acme.certs = {
       "${cfg.domain}" = {
         extraDomains = {
-          "mail.${cfg.domain}" = null;
+          "${cfg.domain}" = null;
         };
-        postRun = "systemctl reload dovecot2.service";
+        webroot = "/var/www/challenges/";
+        postRun = ''
+          systemctl reload dovecot2.service
+        '';
       };
     };
   };

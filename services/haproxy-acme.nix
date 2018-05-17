@@ -103,15 +103,17 @@ in
       };
       
       security.acme.certs = {
-        ${domain} = {
+        "${cfg.domain}" = {
           extraDomains = mapAttrs' (name: value:
             nameValuePair ("${name}") (null)
-          ) haproxy_backends;
+          ) cfg.services;
           webroot = "/var/www/challenges/";
           email = "victor@sene.ovh";
           user = "haproxy";
           group = "haproxy";
-          postRun = "systemctl reload haproxy";
+          postRun = ''
+            systemctl reload haproxy
+          '';
         };
       };
       security.acme.directory = "/var/lib/acme";
