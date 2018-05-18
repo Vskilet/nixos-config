@@ -59,7 +59,7 @@ in
         bind :::443 v4v6 ssl crt /var/lib/acme/${cfg.domain}/full.pem alpn h2,http/1.1
         mode http
         acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-        acl haproxy-acl path_beg /stats
+        acl haproxy-acl path_beg /haproxy
         redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
         http-response set-header Strict-Transport-Security max-age=15768000
         use_backend letsencrypt-backend if letsencrypt-acl
