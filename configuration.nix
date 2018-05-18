@@ -46,7 +46,22 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
+  users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+  programs.zsh.enableAutosuggestions = true;
+  programs.zsh.enableCompletion = true;
+  programs.zsh.syntaxHighlighting.enable = true;
+  programs.zsh.ohMyZsh.enable = true;
+  programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
+  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; };
+  programs.zsh.promptInit = ''
+    autoload -U promptinit
+    promptinit
+    prompt adam2
+  '';
+
+  environment.variables = { EDITOR = "nvim"; };
+
   virtualisation.rkt.enable = true;
   virtualisation.docker.enable = true;
   users.extraGroups.rkt = { };
