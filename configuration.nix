@@ -37,9 +37,10 @@
   # $ nix-env -qaP | grep wget
   nixpkgs.overlays = [
     (import ./overlays/riot-web.nix)
+    (import ./overlays/nvim.nix)
   ];
   environment.systemPackages = with pkgs; [
-    wget vim tmux git htop
+    wget nvim tmux git htop
   ];
   nixpkgs.config.allowUnfree = true;
 
