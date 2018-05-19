@@ -65,7 +65,7 @@ in
     security.acme.certs = {
       "${cfg.domain}" = {
         extraDomains = {
-          "${cfg.domain}" = null;
+          "mail.${cfg.domain}" = null;
         };
         postRun = ''
           systemctl reload dovecot2.service
