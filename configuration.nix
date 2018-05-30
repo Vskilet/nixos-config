@@ -38,6 +38,7 @@
   nixpkgs.overlays = [
     (import ./overlays/riot-web.nix)
     (import ./overlays/nvim.nix)
+    (import ./overlays/roundcube.nix)
   ];
   environment.systemPackages = with pkgs; [
     wget nvim tmux git htop

@@ -8,12 +8,14 @@ let
   wedding_port = 30002;
   pgmanage_port = 30003;
   vilodec_port = 30004;
+  roundcube_port = 30005;
 in
 {
   imports = [
     ./services/nextcloud.nix
     ./services/mailserver.nix
     ./services/haproxy-acme.nix
+    ./services/roundcube.nix
   ];
 
   services.haproxy-acme.enable = true;
@@ -83,6 +85,7 @@ in
   services.telegraf.enable = true;
   services.telegraf.extraConfig = {
     inputs = {
+      zfs = { poolMetrics = true; };
       net = { interfaces = [ "enp2s0" ]; };
       netstat = {};
       cpu = { totalcpu = true; };
@@ -129,6 +132,10 @@ in
   
   services.mailserver.enable = true;
   services.mailserver.domain = domain;
+
+  services.roundcube.enable = true;
+  services.roundcube.port = roundcube_port;
+  services.roundcube.domain = "webmail.sene.ovh";
 
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
