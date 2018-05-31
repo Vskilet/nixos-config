@@ -91,6 +91,7 @@ in
       cpu = { totalcpu = true; };
       kernel = {};
       mem = {};
+      swap = {};
       processes = {};
       system = {};
       disk = {};
