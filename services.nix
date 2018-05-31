@@ -21,17 +21,17 @@ in
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
   services.haproxy-acme.services = {
-    "grafana.sene.ovh" = { ip = "127.0.0.1"; port = 3000; auth = false; };
-    "stream.sene.ovh" = { ip = "127.0.0.1"; port = 8096; auth = false; };
-    "seed.sene.ovh" = { ip = "127.0.0.1"; port = 9091; auth = true; };
-    "cloud.sene.ovh" = { ip = "127.0.0.1"; port = 8441; auth = false; };
-    "searx.sene.ovh" = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    "shell.sene.ovh" = { ip = "127.0.0.1"; port = 4200; auth = true; };
-    "riot.sene.ovh" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
-    "matrix.sene.ovh" = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    "sync.sene.ovh" = { ip = "127.0.0.1"; port = 5000; auth = false; };
+    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
+    "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
+    "riot.${domain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    "sync.${domain}" = { ip = "127.0.0.1"; port = 5000; auth = false; };
     "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
-    "pgmanage.sene.ovh" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
+    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     "vilodec.fr" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
   };
 
@@ -136,7 +136,7 @@ in
 
   services.roundcube.enable = true;
   services.roundcube.port = roundcube_port;
-  services.roundcube.domain = "webmail.sene.ovh";
+  services.roundcube.domain = "webmail.${domain}";
 
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
@@ -144,7 +144,7 @@ in
   services.matrix-synapse = {
     enable = true;
     enable_registration = true;
-    server_name = "sene.ovh";
+    server_name = "${domain}";
     listeners = [
       { # federation
         bind_address = "";
