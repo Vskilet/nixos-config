@@ -105,6 +105,11 @@ in
         ln -sf ${immutableConfig} "${cfg.installPrefix}"/config/immutable.config.php
       '';
 
+    systemd.services.phpfpm-nextcloud.serviceConfig = {
+      Restart="on-failure";
+      RestartSec="5s";
+    };
+
     services.phpfpm.poolConfigs = {
       nextcloud = ''
         listen = ${cfg.phpfpm.socketName}
