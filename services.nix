@@ -104,6 +104,12 @@ in
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
+  services.grafana.extraOptions = {
+    SERVER_ROOT_URL = "https://grafana.${domain}";
+    SMTP_ENABLED = "true";
+    SMTP_FROM_ADDRESS = "grafana@${domain}";
+    SMTP_SKIP_VERIFY = "true";  
+  };
 
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
