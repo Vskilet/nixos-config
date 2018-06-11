@@ -9,6 +9,7 @@ let
   pgmanage_port = 30003;
   vilodec_port = 30004;
   roundcube_port = 30005;
+  gitea_port = 30006;
 in
 {
   imports = [
@@ -33,6 +34,7 @@ in
     "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
     "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     "vilodec.fr" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
+    "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
   };
 
   services.nginx.enable = true;
@@ -146,7 +148,13 @@ in
 
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
-  
+
+  services.gitea.enable = true;
+  services.gitea.httpPort = gitea_port;
+  services.gitea.rootUrl = "https://git.${domain}/";
+  services.gitea.database.type = "postgres";
+  services.gitea.database.password = "gitea";
+
   services.matrix-synapse = {
     enable = true;
     enable_registration = true;
