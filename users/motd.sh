@@ -39,24 +39,24 @@ RKT=`rkt version | awk {'print $3; exit'} `
 echo "Good $TIME $USER"
 
 echo "
-===========================================================================
+============================================================
  - Hostname............: $HOSTNAME
  - IPv4................: $IP
  - Release.............: `nixos-version`
  - Kernel..............: $LINUX
  - Users...............: Currently `users | wc -w` user(s) logged on
-===========================================================================
+============================================================
  - Current user........: $USER
  - CPU usage...........: $LOAD1, $LOAD5, $LOAD15 (1, 5, 15 min)
  - Memory used.........: $MEMORY
  - Swap in use.........: `free -m | tail -n 1 | awk '{print $3}'` MB
  - System uptime.......: $upDays days $upHours hours $upMins minutes $upSecs seconds
  - Disk space ROOT.....: $DISK
-===========================================================================
+============================================================
  - Docker..............: $DOCKER
  - rkt.................: $RKT
 "
-services=( "haproxy.service" "nginx.service" "dovecot2.service" "phpfpm-nextcloud.service" "searx.service" "matrix-synapse.service" "grafana.service" "shellinaboxd.service" "emby.service" "transmission.service" )
+services=( "haproxy.service" "nginx.service" "dovecot2.service" "phpfpm-roundcube.service" "phpfpm-nextcloud.service" "searx.service" "matrix-synapse.service" "grafana.service" "shellinaboxd.service" "emby.service" "transmission.service" )
 
 for var in "${services[@]}"
 do
@@ -69,5 +69,5 @@ do
 done
 
 echo "
-===========================================================================
+============================================================
 "
