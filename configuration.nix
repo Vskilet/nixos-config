@@ -41,7 +41,7 @@
     (import ./overlays/roundcube.nix)
   ];
   environment.systemPackages = with pkgs; [
-    wget nvim tmux git htop
+    wget nvim tmux git htop dnsutils
   ];
   nixpkgs.config.allowUnfree = true;
 
