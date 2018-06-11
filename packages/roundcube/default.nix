@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/
     cp -R . $out/
+    ln -sf /var/lib/roundcube/config/config.inc.php $out/config/config.inc.php
+    rm -rf $out/installer
   '';
 
   meta = {
