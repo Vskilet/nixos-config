@@ -90,6 +90,7 @@
   
   system.stateVersion = "18.03";
   system.autoUpgrade.enable = true;
+  systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.nix.package.out ]; 
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 15d";
 }
