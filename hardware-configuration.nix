@@ -17,6 +17,42 @@
       fsType = "ext4";
     };
 
+ fileSystems."/var/certs" =
+    { device = "senpool01/var/certs";
+      fsType = "zfs";
+    };
+
+ fileSystems."/var/db" =
+    { device = "senpool01/var/db";
+      fsType = "zfs";
+    };
+
+ fileSystems."/var/dkim" =
+    { device = "senpool01/var/dkim";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib" =
+    { device = "senpool01/var/lib";
+      fsType = "zfs";
+    };
+
+ fileSystems."/var/sieve" =
+    { device = "senpool01/var/sieve";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/vmail" =
+    { device = "senpool01/var/vmail";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/www" =
+    { device = "senpool01/var/www";
+      fsType = "zfs";
+    };
+
+
   swapDevices = [ { device = "/var/swapfile"; } ];
 
   nix.maxJobs = lib.mkDefault 2;
