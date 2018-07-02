@@ -85,12 +85,14 @@ in
   services.influxdb.dataDir = "/var/db/influxdb";
 
   services.telegraf.enable = true;
+  systemd.services.telegraf.path = [ pkgs.lm_sensors ];
   services.telegraf.extraConfig = {
     inputs = {
       zfs = { poolMetrics = true; };
       net = { interfaces = [ "enp2s0" ]; };
       netstat = {};
       cpu = { totalcpu = true; };
+      sensors = {};
       kernel = {};
       mem = {};
       swap = {};
