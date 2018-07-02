@@ -86,6 +86,9 @@ in
 
   services.telegraf.enable = true;
   systemd.services.telegraf.path = [ pkgs.lm_sensors ];
+  security.sudo.extraRules = [
+    { commands = [ { command = "${pkgs.smartmontools}/bin/smartctl"; options = [ "NOPASSWD" ]; } ]; users = [ "telegraf" ]; }
+  ];
   services.telegraf.extraConfig = {
     inputs = {
       zfs = { poolMetrics = true; };
@@ -99,6 +102,9 @@ in
       processes = {};
       system = {};
       disk = {};
+      smart = {
+        path = "${pkgs.writeShellScriptBin "smartctl" "/run/wrappers/bin/sudo ${pkgs.smartmontools}/bin/smartctl $@"}/bin/smartctl";
+      };
     };
     outputs = {
       influxdb = { database = "telegraf"; urls = [ "http://localhost:8086" ]; };
