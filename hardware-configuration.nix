@@ -17,17 +17,27 @@
       fsType = "ext4";
     };
 
- fileSystems."/var/certs" =
+  fileSystems."/mnt/medias" =
+    { device = "senpool01/medias";
+      fsType = "zfs";
+    };  
+    
+  fileSystems."/mnt/share" =
+    { device = "senpool01/share";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/certs" =
     { device = "senpool01/var/certs";
       fsType = "zfs";
     };
 
- fileSystems."/var/db" =
+  fileSystems."/var/db" =
     { device = "senpool01/var/db";
       fsType = "zfs";
     };
 
- fileSystems."/var/dkim" =
+  fileSystems."/var/dkim" =
     { device = "senpool01/var/dkim";
       fsType = "zfs";
     };
@@ -37,7 +47,7 @@
       fsType = "zfs";
     };
 
- fileSystems."/var/sieve" =
+  fileSystems."/var/sieve" =
     { device = "senpool01/var/sieve";
       fsType = "zfs";
     };
