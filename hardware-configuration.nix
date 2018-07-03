@@ -46,6 +46,11 @@
     { device = "senpool01/var/lib";
       fsType = "zfs";
     };
+  
+  fileSystems."/var/lib/docker" =
+    { device = "senpool01/var/lib/docker";
+      fsType = "zfs";
+    };
 
   fileSystems."/var/sieve" =
     { device = "senpool01/var/sieve";
