@@ -12,4 +12,8 @@
   users.extraGroups.medias =
   { members = [ "emby" "transmission" ];
   };
+
+  users.extraGroups.cloud =
+  { members = [ "nextcloud" "medias" ];
+  };
 }
