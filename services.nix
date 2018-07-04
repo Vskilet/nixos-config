@@ -197,6 +197,31 @@ in
     extraConfig = ''
       max_upload_size: "100M"
     '';
+    logConfig = ''
+      version: 1
+
+      formatters:
+          journal_fmt:
+              format: '%(name)s: [%(request)s] %(message)s'
+
+      filters:
+          context:
+              (): synapse.util.logcontext.LoggingContextFilter
+              request: ""
+
+      handlers:
+          journal:
+              class: systemd.journal.JournalHandler
+              formatter: journal_fmt
+              filters: [context]
+              SYSLOG_IDENTIFIER: synapse
+
+      root:
+          level: WARNING
+          handlers: [journal]
+
+      disable_existing_loggers: False
+    '';
   };
   
   networking.firewall.allowedTCPPorts = [
