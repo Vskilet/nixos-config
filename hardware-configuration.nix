@@ -68,7 +68,10 @@
     };
 
 
-  swapDevices = [ { device = "/var/swapfile"; } ];
+   swapDevices = [ { 
+     device = "/var/swapfile"; 
+     size = 8096;
+    } ];
 
   nix.maxJobs = lib.mkDefault 2;
 }
