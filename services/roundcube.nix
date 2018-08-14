@@ -59,7 +59,9 @@ in
       pm.max_requests = 500
       php_admin_value[error_log] = 'stderr'
       php_admin_flag[log_errors] = on
+      php_admin_value[post_max_size] = 25M
+      php_admin_value[upload_max_filesize] = 25M
       catch_workers_output = yes
-    '';
+   '';
   };
 }
