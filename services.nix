@@ -3,6 +3,8 @@
 with lib;
 
 let
+  unstable = import <nixos-unstable> {};
+  
   domain = "sene.ovh";
   riot_port = 30001;
   wedding_port = 30002;
