@@ -41,6 +41,15 @@ in
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
   };
 
+  services.smartd = {
+    enable = true;
+    defaults.monitored = "-a -o on -s (S/../.././03|L/../../7/04)";
+    notifications.mail = {
+      enable = true;
+      recipient = "victor@sene.ovh";
+    };
+  };
+
   services.nginx.enable = true;
   services.nginx.virtualHosts = {
     "riot" = {
