@@ -21,6 +21,8 @@ in
     ./services/roundcube.nix
   ];
 
+  services.fail2ban.enable = true;
+
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
   services.haproxy-acme.services = {
