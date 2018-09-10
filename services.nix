@@ -26,7 +26,7 @@ in
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
   services.haproxy-acme.services = {
-    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
     "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; };
     "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
     "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
@@ -131,7 +131,12 @@ in
     SERVER_ROOT_URL = "https://grafana.${domain}";
     SMTP_ENABLED = "true";
     SMTP_FROM_ADDRESS = "grafana@${domain}";
-    SMTP_SKIP_VERIFY = "true";  
+    SMTP_SKIP_VERIFY = "true";
+    AUTH_DISABLE_LOGIN_FORM = "true";
+    AUTH_DISABLE_SIGNOUT_MENU = "true";
+    AUTH_ANONYMOUS_ENABLED = "true";
+    AUTH_ANONYMOUS_ORG_ROLE = "Admin";
+    AUTH_BASIC_ENABLED = "false";
   };
 
   services.emby.enable = true;
