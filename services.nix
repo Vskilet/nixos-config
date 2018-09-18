@@ -180,7 +180,7 @@ in
   services.gitea.httpPort = gitea_port;
   services.gitea.rootUrl = "https://git.${domain}/";
   services.gitea.database.type = "postgres";
-  services.gitea.database.password = "gitea";
+  services.gitea.database.passwordFile = "/mnt/secrets/gitea-db";
 
   services.matrix-synapse = {
     enable = true;

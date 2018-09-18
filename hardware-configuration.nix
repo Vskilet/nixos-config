@@ -27,6 +27,13 @@
       fsType = "zfs";
     };
 
+  fileSystems."/mnt/secrets" =
+    { device = "senpool01/secrets";
+      fsType = "zfs";
+      options  = [ "nofail" ];
+    };
+
+
   fileSystems."/var/certs" =
     { device = "senpool01/var/certs";
       fsType = "zfs";
