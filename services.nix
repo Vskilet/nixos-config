@@ -12,6 +12,7 @@ let
   vilodec_port = 30004;
   roundcube_port = 30005;
   gitea_port = 30006;
+  office_port = 30007;
 in
 {
   imports = [
@@ -39,6 +40,7 @@ in
     "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     "vilodec.${domain}" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
+    "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
   };
 
   services.smartd = {
@@ -74,6 +76,46 @@ in
           }
         '';
       }; };
+    };
+    "office" = {
+      listen = [ { addr = "127.0.0.1"; port = office_port; } ];
+      extraConfig = ''
+        # static files
+        location ^~ /loleaflet {
+            proxy_pass https://localhost:9980;
+            proxy_set_header Host $http_host;
+        }
+
+        # WOPI discovery URL
+        location ^~ /hosting/discovery {
+            proxy_pass https://localhost:9980;
+            proxy_set_header Host $http_host;
+        }
+
+        # main websocket
+        location ~ ^/lool/(.*)/ws$ {
+            proxy_pass https://localhost:9980;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header Host $http_host;
+            proxy_read_timeout 36000s;
+        }
+
+        # download, presentation and image upload
+        location ~ ^/lool {
+            proxy_pass https://localhost:9980;
+            proxy_set_header Host $http_host;
+        }
+
+        # Admin Console websocket
+        location ^~ /lool/adminws {
+            proxy_pass https://localhost:9980;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header Host $http_host;
+            proxy_read_timeout 36000s;
+        }
+      '';
     };
   };
   
