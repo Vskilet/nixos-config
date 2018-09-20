@@ -41,7 +41,7 @@
     (import ./overlays/roundcube.nix)
   ];
   environment.systemPackages = with pkgs; [
-    wget nvim tmux git htop dnsutils nmap busybox lm_sensors
+    wget nvim tmux git htop dnsutils nmap busybox lm_sensors borgbackup rclone tig
   ];
   nixpkgs.config.allowUnfree = true;
 
