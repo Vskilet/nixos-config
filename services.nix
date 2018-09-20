@@ -213,7 +213,7 @@ in
 
   services.roundcube.enable = true;
   services.roundcube.port = roundcube_port;
-  services.roundcube.domain = "webmail.${domain}";
+  services.roundcube.domain = "roundcube.${domain}";
 
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
