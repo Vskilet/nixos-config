@@ -39,6 +39,7 @@
     (import ./overlays/riot-web.nix)
     (import ./overlays/nvim.nix)
     (import ./overlays/roundcube.nix)
+    (import ./overlays/unstable-pkgs.nix)
   ];
   environment.systemPackages = with pkgs; [
     wget nvim tmux git htop dnsutils nmap busybox lm_sensors borgbackup rclone tig
