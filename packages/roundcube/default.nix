@@ -1,13 +1,12 @@
-#with (import <nixpkgs> {});
 { lib, stdenv, fetchurl }:
 
 stdenv.mkDerivation rec {
   name= "roundcube-${version}";
-  version = "1.3.6";
+  version = "1.3.7";
 
   src = fetchurl {
-    url = "https://github.com/roundcube/roundcubemail/releases/download/1.3.6/roundcubemail-1.3.6-complete.tar.gz"; 
-    sha256 = "f1b86e97cc8fd69bb1957d4115762af6ea2d6957ea17b33dd3ec2995662670d9"; 
+    url = "https://github.com/roundcube/roundcubemail/releases/download/${version}/roundcubemail-${version}-complete.tar.gz";
+    sha256 = "31bd37d0f89dc634064f170c6ed8981c258754b6f81eccb59a2634b29d0bb01c";
   };
 
   installPhase = ''
@@ -18,12 +17,10 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    description = "Instance de Roundcube";
-    homepage = https://webmail.sene.ovh/;
+    description = "Open Source Webmail Software";
+    homepage = https://roundcube.sene.ovh/;
     maintainers = with stdenv.lib.maintainers; [ vskilet ];
     license = stdenv.lib.licenses.cc-by-nc-sa-40;
     platforms = stdenv.lib.platforms.all;
   };
 }
-
-
