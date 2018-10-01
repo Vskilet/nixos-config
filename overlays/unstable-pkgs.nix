@@ -6,5 +6,6 @@ in
   jackett = unstable.jackett;
   radarr = unstable.radarr;
   sonarr = unstable.sonarr;
+  roundcube = unstable.roundcube;
 }
 

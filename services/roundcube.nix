@@ -9,27 +9,35 @@ in
   options.services.roundcube = {
     enable = mkEnableOption "Roundcube";
 
-    port = mkOption {
+    listenAddress = mkOption {
+      type = types.str;
+      default = 127.0.0.1;
+      description = "Listening address";
+    };
+
+    listenPort = mkOption {
       type = types.int;
-      example = 30005;
+      default = 80;
       description = "Listening port";
     };
     
     domain = mkOption {
       type = types.str;
-      example = "webmail.sene.ovh";
+      example = "webmail.domain.tld";
       description = "Sub-domain to use";
+    };
+    
+    extraConfig = mkOption {
+      type = types.str;
     };
   };
 
   config = mkIf cfg.enable {
-    services.haproxy-acme.services = {
-      ${cfg.domain} = { ip = "127.0.0.1"; port = cfg.port; auth = false; };
-    };
-    
+    environment.etc."roundcube/config.inc.php".text = cfg.extraConfig;
+
     services.nginx.virtualHosts = {
       "roundcube" = {
-        listen = [ { addr = "127.0.0.1"; port = cfg.port; } ];
+        listen = [ { addr = cfg.listenAddress; port = cfg.listenPort; } ];
         locations."/" = {
           root = pkgs.roundcube;
           index = "index.php";

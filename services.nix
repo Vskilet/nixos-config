@@ -39,6 +39,7 @@ in
     "vilodec.${domain}" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
     "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
+    "roundcube.${domain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
   };
 
   services.smartd = {
@@ -210,8 +211,10 @@ in
   services.mailserver.domain = domain;
 
   services.roundcube.enable = true;
-  services.roundcube.port = roundcube_port;
+  services.roundcube.listenAddress = "127.0.0.1";
+  services.roundcube.listenPort = roundcube_port;
   services.roundcube.domain = "roundcube.${domain}";
+  services.roundcube.extraConfig = lib.fileContents users/config.inc.php;
 
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
