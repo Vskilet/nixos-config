@@ -214,10 +214,10 @@ in
   services.roundcube.listenAddress = "127.0.0.1";
   services.roundcube.listenPort = roundcube_port;
   services.roundcube.domain = "roundcube.${domain}";
-  services.roundcube.extraConfig = lib.fileContents users/config.inc.php;
+  services.roundcube.extraConfig = lib.fileContents configuration/config.inc.php;
 
   services.shellinabox.enable = true;
-  services.shellinabox.extraOptions = [ "--css ${./users/white-on-black.css}" ];
+  services.shellinabox.extraOptions = [ "--css ${./configuration/white-on-black.css}" ];
 
   services.gitea.enable = true;
   services.gitea.httpPort = gitea_port;
