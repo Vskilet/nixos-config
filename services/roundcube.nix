@@ -21,14 +21,28 @@ in
       description = "Listening port";
     };
     
-    domain = mkOption {
+    subDomain = mkOption {
       type = types.str;
-      example = "webmail.domain.tld";
-      description = "Sub-domain to use";
+      example = "webmail";
+      description = "Sub-domain to use which is the name of the nginx vhost";
     };
     
     extraConfig = mkOption {
       type = types.str;
+      default = ''
+        <?php
+
+        $config = array();
+        $config['db_dsnw'] = 'pgsql://roundcube:pass@localhost/roundcubemail';
+        $config['db_prefix'] = 'rc';
+        $config['default_host'] = 'tls://%h';
+        $config['smtp_server'] = 'tls://%h';
+        $config['smtp_user'] = '%u';
+        $config['smtp_pass'] = '%p';
+
+        $config['max_message_size'] = '25M';
+      '';
+      description = "Configuration for roundcube webmail instance";
     };
   };
 
@@ -36,7 +50,7 @@ in
     environment.etc."roundcube/config.inc.php".text = cfg.extraConfig;
 
     services.nginx.virtualHosts = {
-      "roundcube" = {
+      "${cfg.subDomain}" = {
         listen = [ { addr = cfg.listenAddress; port = cfg.listenPort; } ];
         locations."/" = {
           root = pkgs.roundcube;
@@ -53,7 +67,7 @@ in
       };
     };
 
-    services.phpfpm.poolConfigs.roundcube = ''
+    services.phpfpm.poolConfigs.${cfg.subDomain} = ''
       listen = /run/phpfpm/roundcube
       listen.owner = nginx
       listen.group = nginx

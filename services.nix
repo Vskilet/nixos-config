@@ -213,7 +213,7 @@ in
   services.roundcube.enable = true;
   services.roundcube.listenAddress = "127.0.0.1";
   services.roundcube.listenPort = roundcube_port;
-  services.roundcube.domain = "roundcube.${domain}";
+  services.roundcube.subDomain = "roundcube";
   services.roundcube.extraConfig = lib.fileContents configuration/config.inc.php;
 
   services.shellinabox.enable = true;
