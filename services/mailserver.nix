@@ -34,7 +34,7 @@ in
       # mkpasswd -m sha-512 "super secret password"
       loginAccounts = {
         "victor@${cfg.domain}" = {
-          hashedPassword = "$6$uQnAYIZbb5ILQz$OscV9Kby46QIzOkqhLhShxf14aLabbEKB6nqnaf0YkSlQCDz6Tby1vqI9zEfCYik2D7bvVtocZ3itvRPQ6QXJ/";
+          hashedPassword = "$6$SKy30uwxPvGAS4j0$yTEAL5VyOwTXnkdxI/Caj0F44S7yMT.7w28c61miDmV6Q59xV.so2ds7soP1eZ0a6tTSjmzZCXe2xXeFI8KVp/";
         };
         "constance@${cfg.domain}" = {
           hashedPassword = "$6$wGIPnWzZqfJD0.l$HpxYitiTsIWQVFoJOnJax5ZEJXucdhMsfc8vKgNzX7QfQQ/CSIwcozXfB49cqEXRivktd3aKcop1k7tCo840w/";
