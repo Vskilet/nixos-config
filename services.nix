@@ -3,6 +3,7 @@
 with lib;
 
 let
+  nixos-unstable = fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
   domain = "sene.ovh";
   riot_port = 30001;
   wedding_port = 30002;
@@ -14,11 +15,14 @@ let
 in
 {
   imports = [
-    ./services/nextcloud.nix
     ./services/mailserver.nix
     ./services/haproxy-acme.nix
     ./services/roundcube.nix
+    "${nixos-unstable}/nixos/modules/services/web-apps/nextcloud.nix"
+    "${nixos-unstable}/nixos/modules/services/web-servers/nginx/default.nix"
   ];
+
+  disabledModules = [ "services/web-servers/nginx/default.nix" ];
 
   services.fail2ban.enable = true;
 
@@ -192,9 +196,21 @@ in
     rpc-whitelist-enabled = false;
   };
   
-  services.nextcloud.enable = true;  
-  services.nextcloud.vhosts = [ "cloud.${domain}" ];
-  
+  services.nginx.virtualHosts."cloud.${domain}".listen = [ { addr = "127.0.0.1"; port = 8441; } ];
+  services.nextcloud = {
+    enable = true;
+    hostName = "cloud.${domain}";
+    https = true;
+    nginx.enable = true;
+    config = {
+      dbtype = "pgsql";
+      dbuser = "nextcloud";
+      dbpass = "nextcloud";
+      dbtableprefix = "oc_";
+      adminpass = "nextlcoud";
+    };
+  };
+
   services.postgresql.enable = true;
   services.pgmanage.enable = true;
   services.pgmanage.port = pgmanage_port;
