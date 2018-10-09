@@ -18,7 +18,7 @@ in
     ./services/mailserver.nix
     ./services/haproxy-acme.nix
     ./services/roundcube.nix
-    "${nixos-unstable}/nixos/modules/services/web-apps/nextcloud.nix"
+    ./services/nextcloud.nix
     "${nixos-unstable}/nixos/modules/services/web-servers/nginx/default.nix"
   ];
 
@@ -202,6 +202,14 @@ in
     hostName = "cloud.${domain}";
     https = true;
     nginx.enable = true;
+    poolConfig = ''
+      pm = dynamic
+      pm.max_children = 75
+      pm.start_servers = 10
+      pm.min_spare_servers = 5
+      pm.max_spare_servers = 20
+      pm.max_requests = 500
+    '';
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
