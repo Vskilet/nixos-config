@@ -123,7 +123,7 @@ in {
     };
 
     poolConfig = mkOption {
-      type = types.str;
+      type = types.lines;
       default = ''
         pm = dynamic
         pm.max_children = 32
