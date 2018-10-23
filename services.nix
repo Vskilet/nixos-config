@@ -19,7 +19,8 @@ in
     ./services/roundcube.nix
   ];
 
-  services.fail2ban.enable = true;
+  services.mailserver.enable = true;
+  services.mailserver.domain = domain;
 
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
@@ -40,80 +41,132 @@ in
     "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
     "roundcube.${domain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
   };
+    
+  services.roundcube.enable = true;
+  services.roundcube.listenAddress = "127.0.0.1";
+  services.roundcube.listenPort = roundcube_port;
+  services.roundcube.subDomain = "roundcube";
+  services.roundcube.extraConfig = lib.fileContents configuration/config.inc.php;
 
-  services.smartd = {
+  services.nextcloud = {
     enable = true;
-    defaults.monitored = "-a -o on -s (S/../.././03|L/../../7/04)";
-    notifications.mail = {
-      enable = true;
-      recipient = "victor@sene.ovh";
+    hostName = "cloud.${domain}";
+    https = true;
+    nginx.enable = true;
+    poolConfig = ''
+      pm = dynamic
+      pm.max_children = 75
+      pm.start_servers = 10
+      pm.min_spare_servers = 5
+      pm.max_spare_servers = 20
+      pm.max_requests = 500
+    '';
+    config = {
+      dbtype = "pgsql";
+      dbuser = "nextcloud";
+      dbpass = "nextcloud";
+      dbtableprefix = "oc_";
+      adminpass = "nextlcoud";
     };
   };
 
-  services.nginx.enable = true;
-  services.nginx.virtualHosts = {
-    "riot" = {
-      listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
-      locations = { "/" = { root = pkgs.riot-web; }; };
+  services.searx.enable = true;
+  
+  services.shellinabox.enable = true;
+  services.shellinabox.extraOptions = [ "--css ${./configuration/white-on-black.css}" ];
+
+  services.gitea = {
+    enable = true;
+    httpPort = gitea_port;
+    rootUrl = "https://git.${domain}/";
+    database = {   
+      type = "postgres";
+      passwordFile = "/mnt/secrets/gitea-db";
     };
-    "wedding" = {
-      listen = [ { addr = "127.0.0.1"; port = wedding_port; } ];
-      locations = { "/" = { root = "/var/www/wedding"; }; };
+  };
+
+  services.emby.enable = true;
+  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
+
+  services.transmission = {
+    enable = true;
+    home = "/var/lib/transmission";
+    settings = {
+      rpc-bind-address = "127.0.0.1";
+      rpc-host-whitelist = "*";
+      rpc-whitelist-enabled = false;
     };
-    "vilodec" = {
-      listen = [ { addr = "127.0.0.1"; port = vilodec_port; } ];
-      locations = { "/" = { 
-        root = "/var/www/vilodec";
-	index = "index.php";
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "riot" = {
+        listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
+        locations = { "/" = { root = pkgs.riot-web; }; };
+      };
+      "wedding" = {
+        listen = [ { addr = "127.0.0.1"; port = wedding_port; } ];
+        locations = { "/" = { root = "/var/www/wedding"; }; };
+      };
+      "vilodec" = {
+        listen = [ { addr = "127.0.0.1"; port = vilodec_port; } ];
+        locations = { "/" = { 
+          root = "/var/www/vilodec";
+          index = "index.php";
+          extraConfig = ''
+            location ~* \.php$ {
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass unix:/run/phpfpm/web;
+              include ${pkgs.nginx}/conf/fastcgi_params;
+              include ${pkgs.nginx}/conf/fastcgi.conf;
+            }
+          '';
+        }; };
+      };
+      "cloud.${domain}" = {
+        listen = [ { addr = "127.0.0.1"; port = 8441; } ];
+      };  
+      "office" = {
+        listen = [ { addr = "127.0.0.1"; port = office_port; } ];
         extraConfig = ''
-          location ~* \.php$ {
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass unix:/run/phpfpm/web;
-            include ${pkgs.nginx}/conf/fastcgi_params;
-            include ${pkgs.nginx}/conf/fastcgi.conf;
+          # static files
+          location ^~ /loleaflet {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $http_host;
+          }
+
+          # WOPI discovery URL
+          location ^~ /hosting/discovery {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $http_host;
+          }
+
+          # main websocket
+          location ~ ^/lool/(.*)/ws$ {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $http_host;
+              proxy_read_timeout 36000s;
+          }
+
+          # download, presentation and image upload
+          location ~ ^/lool {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $http_host;
+          }
+
+          # Admin Console websocket
+          location ^~ /lool/adminws {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $http_host;
+              proxy_read_timeout 36000s;
           }
         '';
-      }; };
-    };
-    "office" = {
-      listen = [ { addr = "127.0.0.1"; port = office_port; } ];
-      extraConfig = ''
-        # static files
-        location ^~ /loleaflet {
-            proxy_pass https://localhost:9980;
-            proxy_set_header Host $http_host;
-        }
-
-        # WOPI discovery URL
-        location ^~ /hosting/discovery {
-            proxy_pass https://localhost:9980;
-            proxy_set_header Host $http_host;
-        }
-
-        # main websocket
-        location ~ ^/lool/(.*)/ws$ {
-            proxy_pass https://localhost:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_set_header Host $http_host;
-            proxy_read_timeout 36000s;
-        }
-
-        # download, presentation and image upload
-        location ~ ^/lool {
-            proxy_pass https://localhost:9980;
-            proxy_set_header Host $http_host;
-        }
-
-        # Admin Console websocket
-        location ^~ /lool/adminws {
-            proxy_pass https://localhost:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_set_header Host $http_host;
-            proxy_read_timeout 36000s;
-        }
-      '';
+      };
     };
   };
   
@@ -133,6 +186,16 @@ in
     php_admin_flag[log_errors] = on
     catch_workers_output = yes
   '';
+
+  services.postgresql.enable = true;
+  services.pgmanage.enable = true;
+  services.pgmanage.port = pgmanage_port;
+  services.pgmanage.connections = {
+    localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
+  };
+
+  services.mysql.enable = true;
+  services.mysql.package = pkgs.mysql;
   
   services.influxdb.enable = true;
   services.influxdb.dataDir = "/var/db/influxdb";
@@ -164,85 +227,23 @@ in
     };
   };
   
-  services.grafana.enable = true;
-  services.grafana.addr = "127.0.0.1";
-  services.grafana.dataDir = "/var/lib/grafana";
-  services.grafana.extraOptions = {
-    SERVER_ROOT_URL = "https://grafana.${domain}";
-    SMTP_ENABLED = "true";
-    SMTP_FROM_ADDRESS = "grafana@${domain}";
-    SMTP_SKIP_VERIFY = "true";
-    AUTH_DISABLE_LOGIN_FORM = "true";
-    AUTH_DISABLE_SIGNOUT_MENU = "true";
-    AUTH_ANONYMOUS_ENABLED = "true";
-    AUTH_ANONYMOUS_ORG_NAME = "SENE-NET";
-    AUTH_ANONYMOUS_ORG_ROLE = "Admin";
-    AUTH_BASIC_ENABLED = "false";
-  };
-
-  services.emby.enable = true;
-  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
-
-  services.transmission.enable = true;
-  services.transmission.home = "/var/lib/transmission";
-  services.transmission.settings = {
-    rpc-bind-address = "127.0.0.1";
-    rpc-host-whitelist = "*";
-    rpc-whitelist-enabled = false;
-  };
-  
-  services.nginx.virtualHosts."cloud.${domain}".listen = [ { addr = "127.0.0.1"; port = 8441; } ];
-  services.nextcloud = {
+  services.grafana = {
     enable = true;
-    hostName = "cloud.${domain}";
-    https = true;
-    nginx.enable = true;
-    poolConfig = ''
-      pm = dynamic
-      pm.max_children = 75
-      pm.start_servers = 10
-      pm.min_spare_servers = 5
-      pm.max_spare_servers = 20
-      pm.max_requests = 500
-    '';
-    config = {
-      dbtype = "pgsql";
-      dbuser = "nextcloud";
-      dbpass = "nextcloud";
-      dbtableprefix = "oc_";
-      adminpass = "nextlcoud";
+    addr = "127.0.0.1";
+    dataDir = "/var/lib/grafana";
+    extraOptions = {
+      SERVER_ROOT_URL = "https://grafana.${domain}";
+      SMTP_ENABLED = "true";
+      SMTP_FROM_ADDRESS = "grafana@${domain}";
+      SMTP_SKIP_VERIFY = "true";
+      AUTH_DISABLE_LOGIN_FORM = "true";
+      AUTH_DISABLE_SIGNOUT_MENU = "true";
+      AUTH_ANONYMOUS_ENABLED = "true";
+      AUTH_ANONYMOUS_ORG_NAME = "SENE-NET";
+      AUTH_ANONYMOUS_ORG_ROLE = "Admin";
+      AUTH_BASIC_ENABLED = "false";
     };
   };
-
-  services.postgresql.enable = true;
-  services.pgmanage.enable = true;
-  services.pgmanage.port = pgmanage_port;
-  services.pgmanage.connections = {
-    localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
-  };
-
-  services.mysql.enable = true;
-  services.mysql.package = pkgs.mysql;
-
-  services.searx.enable = true;
-  
-  services.mailserver.enable = true;
-  services.mailserver.domain = domain;
-
-  services.roundcube.enable = true;
-  services.roundcube.listenAddress = "127.0.0.1";
-  services.roundcube.listenPort = roundcube_port;
-  services.roundcube.subDomain = "roundcube";
-  services.roundcube.extraConfig = lib.fileContents configuration/config.inc.php;
-
-  services.shellinabox.enable = true;
-  services.shellinabox.extraOptions = [ "--css ${./configuration/white-on-black.css}" ];
-
-  services.gitea.enable = true;
-  services.gitea.httpPort = gitea_port;
-  services.gitea.rootUrl = "https://git.${domain}/";
-  services.gitea.database.type = "postgres";
-  services.gitea.database.passwordFile = "/mnt/secrets/gitea-db";
 
   services.matrix-synapse = {
     enable = true;
@@ -304,7 +305,18 @@ in
       disable_existing_loggers: False
     '';
   };
+
+  services.smartd = {
+    enable = true;
+    defaults.monitored = "-a -o on -s (S/../.././03|L/../../7/04)";
+    notifications.mail = {
+      enable = true;
+      recipient = "victor@sene.ovh";
+    };
+  };
   
+  services.fail2ban.enable = true;
+
   networking.firewall.allowedTCPPorts = [
     51413 # Transmission
     8448 # Matrix Federation
