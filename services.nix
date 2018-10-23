@@ -3,7 +3,6 @@
 with lib;
 
 let
-  nixos-unstable = fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
   domain = "sene.ovh";
   riot_port = 30001;
   wedding_port = 30002;
@@ -18,10 +17,7 @@ in
     ./services/mailserver.nix
     ./services/haproxy-acme.nix
     ./services/roundcube.nix
-    "${nixos-unstable}/nixos/modules/services/web-servers/nginx/default.nix"
   ];
-
-  disabledModules = [ "services/web-servers/nginx/default.nix" ];
 
   services.fail2ban.enable = true;
 
