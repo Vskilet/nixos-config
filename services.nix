@@ -18,7 +18,6 @@ in
     ./services/mailserver.nix
     ./services/haproxy-acme.nix
     ./services/roundcube.nix
-    ./services/nextcloud.nix
     "${nixos-unstable}/nixos/modules/services/web-servers/nginx/default.nix"
   ];
 

@@ -7,6 +7,5 @@ in
   radarr = unstable.radarr;
   sonarr = unstable.sonarr;
   roundcube = unstable.roundcube;
-  nextcloud = unstable.nextcloud;
 }
 
