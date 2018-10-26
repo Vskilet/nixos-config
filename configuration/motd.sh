@@ -31,17 +31,20 @@ LOAD1=`cat /proc/loadavg | awk {'print $1'}`
 LOAD5=`cat /proc/loadavg | awk {'print $2'}`
 LOAD15=`cat /proc/loadavg | awk {'print $3'}`
 
-IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+IPV4=`dig +short sene.ovh @resolver1.opendns.com`
+IPV6=`ip -6 addr show enp2s0 | awk '/inet6/{print $2}' | cut -d/ -f1 | head -1`
 
 DOCKER=`docker --version | awk -F'[, ]' '{printf "%s",$3} END {print ""}'`
 RKT=`rkt version | awk {'print $3; exit'} `
 
 echo "Good $TIME $USER"
+echo "Here is your server state. Enjoy :)"
 
 echo "
 ============================================================
  - Hostname............: $HOSTNAME
- - IPv4................: $IP
+ - IPv4................: $IPV4
+ - IPv6................: $IPV6
  - Release.............: `nixos-version`
  - Kernel..............: $LINUX
  - Users...............: Currently `users | wc -w` user(s) logged on
