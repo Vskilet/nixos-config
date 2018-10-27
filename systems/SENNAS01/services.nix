@@ -14,9 +14,9 @@ let
 in
 {
   imports = [
-    ./services/mailserver.nix
-    ./services/haproxy-acme.nix
-    ./services/roundcube.nix
+    ../../services/mailserver.nix
+    ../../services/haproxy-acme.nix
+    ../../services/roundcube.nix
   ];
 
   services.mailserver.enable = true;
@@ -46,7 +46,7 @@ in
   services.roundcube.listenAddress = "127.0.0.1";
   services.roundcube.listenPort = roundcube_port;
   services.roundcube.subDomain = "roundcube";
-  services.roundcube.extraConfig = lib.fileContents configuration/config.inc.php;
+  services.roundcube.extraConfig = lib.fileContents ../../configuration/config.inc.php;
 
   services.nextcloud = {
     enable = true;
@@ -73,7 +73,7 @@ in
   services.searx.enable = true;
   
   services.shellinabox.enable = true;
-  services.shellinabox.extraOptions = [ "--css ${./configuration/white-on-black.css}" ];
+  services.shellinabox.extraOptions = [ "--css ${../../configuration/white-on-black.css}" ];
 
   services.gitea = {
     enable = true;
