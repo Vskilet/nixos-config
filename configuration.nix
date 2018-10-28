@@ -1,1 +1,0 @@
-systems/SENNAS01/configuration.nix
