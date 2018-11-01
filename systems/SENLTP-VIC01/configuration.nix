@@ -3,58 +3,13 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      #./hardware-configuration.nix
+      ./hardware-configuration.nix
       ./users.nix
     ];
-  
-   
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.luks.devices = [
-    {
-      name = "luks";
-      device = "/dev/disk/by-uuid/9174f611-814f-4aa4-a8be-df30f3b18787";
-      preLVM = true;
-      allowDiscards = true;
-    }
+  nixpkgs.overlays = [
+    (import ../../overlays/nvim.nix)
   ];
-  
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/bf9dfa25-33a5-43ea-8faf-cc1ef39a27c3";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B860-AA21";
-      fsType = "vfat";
-    };
-  
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/0bfe697f-e2b5-4f83-979e-31192cce865a";
-      fsType = "ext4";
-    };
-
-  swapDevices = [ ];
-
-  nix.maxJobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  hardware.enableRedistributableFirmware = true;
-  # Use the GRUB 2 boot loader.
-  #boot.loader.grub.enable = true;
-  #boot.loader.grub.version = 2;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  #boot.loader.grub.device = "/dev/disk/by-id/ata-SAMSUNG_SP2504C_S09QJ10L806216"; # or "nodev" for efi only
-  
-  hardware.u2f.enable = true; 
-  services.tlp.enable = true; 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
   
@@ -64,17 +19,11 @@
      consoleKeyMap = "fr";
      defaultLocale = "fr_FR.UTF-8";
   };
-
   # Set your time zone.
   time.timeZone = "Europe/Paris";
   
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-
-  nixpkgs.overlays = [
-    (import ../../overlays/nvim.nix)
-  ];
-
   environment.systemPackages = with pkgs; [
     filezilla
     wineStaging
@@ -116,16 +65,12 @@
     gimp
     vlc
   ];
-
-  services.sshd.enable = true; 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
-  services.pcscd.enable = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
@@ -144,6 +89,10 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "zfs";
+  
+  services.tlp.enable = true;
+  services.sshd.enable = true; 
+  services.pcscd.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -165,6 +114,10 @@
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  
+  services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ];
