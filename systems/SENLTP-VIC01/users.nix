@@ -1,7 +1,7 @@
 {config, pkgs, ...}:
 {
   users.extraUsers.victor =
-  { uid = 1111;
+  { uid = 1000;
     isNormalUser = true;
     description = "Victor SENE";
     extraGroups = [ "wheel" "networkmanager" "docker" ];
