@@ -17,12 +17,8 @@
       allowDiscards = true;
     }
   ];
-  boot.extraModprobeConfig = ''
-    options iwlwifi bt_coex_active=0 power_save=Y
-    options iwldvm force_cam=N
-  '';
-
-  boot.kernelModules = [ "kvm-intel" "iwlwifi" ];
+  
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
