@@ -1,27 +1,60 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      #./hardware-configuration.nix
       ./users.nix
     ];
+  
+   
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.luks.devices = [
+    {
+      name = "luks";
+      device = "/dev/disk/by-uuid/9174f611-814f-4aa4-a8be-df30f3b18787";
+      preLVM = true;
+      allowDiscards = true;
+    }
+  ];
+
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/bf9dfa25-33a5-43ea-8faf-cc1ef39a27c3";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/B860-AA21";
+      fsType = "vfat";
+    };
+
+  swapDevices = [ ];
+
+  nix.maxJobs = lib.mkDefault 8;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
+  #boot.loader.grub.enable = true;
+  #boot.loader.grub.version = 2;
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.grub.device = "/dev/disk/by-id/ata-SAMSUNG_SP2504C_S09QJ10L806216"; # or "nodev" for efi only
+  #boot.loader.grub.device = "/dev/disk/by-id/ata-SAMSUNG_SP2504C_S09QJ10L806216"; # or "nodev" for efi only
   
   hardware.u2f.enable = true; 
   
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
+  
   # Select internationalisation properties.
   i18n = {
-  #   consoleFont = "Lat2-Terminus16";
+     #consoleFont = "Lat2-Terminus16";
      consoleKeyMap = "fr";
      defaultLocale = "fr_FR.UTF-8";
   };
@@ -71,6 +104,7 @@
     vlc
   ];
 
+  services.sshd.enable = true; 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
@@ -130,5 +164,5 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   
-  system.stateVersion = "18.03";
+  system.stateVersion = "18.09";
 }
