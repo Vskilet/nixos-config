@@ -17,8 +17,12 @@
       allowDiscards = true;
     }
   ];
+  boot.extraModprobeConfig = ''
+    options iwlwifi bt_coex_active=0 power_save=Y
+    options iwldvm force_cam=N
+  '';
 
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "iwlwifi" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -29,6 +33,11 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/B860-AA21";
       fsType = "vfat";
+    };
+  
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/0bfe697f-e2b5-4f83-979e-31192cce865a";
+      fsType = "ext4";
     };
 
   swapDevices = [ ];
@@ -110,7 +119,7 @@
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
-
+  services.pcscd.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   users.defaultUserShell = pkgs.zsh;
