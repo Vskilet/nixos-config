@@ -54,7 +54,7 @@
   #boot.loader.grub.device = "/dev/disk/by-id/ata-SAMSUNG_SP2504C_S09QJ10L806216"; # or "nodev" for efi only
   
   hardware.u2f.enable = true; 
-  
+  services.tlp.enable = true; 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
   
@@ -67,9 +67,14 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
-
+  
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
+
+  nixpkgs.overlays = [
+    (import ../../overlays/nvim.nix)
+  ];
+
   environment.systemPackages = with pkgs; [
     filezilla
     wineStaging
@@ -100,11 +105,13 @@
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
     imagemagick
-
+    pciutils
+    git
+    tig
     gnome-breeze
     arc-theme
     materia-theme
-    
+    nvim
     libreoffice
     gimp
     vlc
