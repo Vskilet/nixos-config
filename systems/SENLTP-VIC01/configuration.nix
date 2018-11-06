@@ -24,6 +24,7 @@
   
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     filezilla
     wineStaging
@@ -64,6 +65,7 @@
     libreoffice
     gimp
     vlc
+    spotify
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
@@ -78,7 +80,7 @@
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.ohMyZsh.enable = true;
   programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
-  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; };
+  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
   programs.zsh.promptInit = ''
     autoload -U promptinit
     promptinit
@@ -88,7 +90,6 @@
   environment.variables = { EDITOR = "nvim"; TERM = "konsole-256color"; };
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "zfs";
   
   services.tlp.enable = true;
   services.sshd.enable = true; 
@@ -114,7 +115,7 @@
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-  
+ 
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
