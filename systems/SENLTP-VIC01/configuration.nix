@@ -92,7 +92,9 @@
   environment.variables = { EDITOR = "nvim"; TERM = "konsole-256color"; };
 
   virtualisation.docker.enable = true;
-  
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+
   services.tlp.enable = true;
   services.sshd.enable = true; 
   services.pcscd.enable = true;
