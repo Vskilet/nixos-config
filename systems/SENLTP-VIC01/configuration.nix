@@ -56,6 +56,7 @@
     })
     imagemagick
     pciutils
+    usbutils
     git
     tig
     gnome-breeze
@@ -65,6 +66,7 @@
     libreoffice
     gimp
     vlc
+    nextcloud-client
     spotify
   ];
   programs.wireshark.enable = true;
