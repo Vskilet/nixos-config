@@ -35,7 +35,6 @@ IPV4=`dig +short sene.ovh @resolver1.opendns.com`
 IPV6=`ip -6 addr show enp2s0 | awk '/inet6/{print $2}' | cut -d/ -f1 | head -1`
 
 DOCKER=`docker --version | awk -F'[, ]' '{printf "%s",$3} END {print ""}'`
-RKT=`rkt version | awk {'print $3; exit'} `
 
 echo "Good $TIME $USER"
 echo "Here is your server state. Enjoy :)"
@@ -57,7 +56,6 @@ echo "
  - Disk space ROOT.....: $DISK
 ============================================================
  - Docker..............: $DOCKER
- - rkt.................: $RKT
 "
 services=( "haproxy.service" "nginx.service" "dovecot2.service" "phpfpm-roundcube.service" "phpfpm-nextcloud.service" "searx.service" "matrix-synapse.service" "grafana.service" "shellinaboxd.service" "emby.service" "transmission.service" )
 

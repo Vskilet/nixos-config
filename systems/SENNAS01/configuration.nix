@@ -66,10 +66,8 @@
 
   environment.variables = { EDITOR = "nvim"; };
 
-  virtualisation.rkt.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "zfs";
-  users.extraGroups.rkt = { };
   boot.kernelModules = [ "overlay" ];
   # programs.bash.enableCompletion = true;
   # programs.mtr.enable = true;
