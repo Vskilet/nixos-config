@@ -44,7 +44,7 @@
     (import ../../overlays/unstable-pkgs.nix)
   ];
   environment.systemPackages = with pkgs; [
-    wget nvim tmux git htop dnsutils nmap busybox lm_sensors borgbackup rclone tig
+    wget nvim tmux git htop dnsutils nmap busybox lm_sensors borgbackup rclone tig kubectl
   ];
   nixpkgs.config.allowUnfree = true;
 
