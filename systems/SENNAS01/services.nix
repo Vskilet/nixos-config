@@ -40,8 +40,11 @@ in
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
     "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
     "roundcube.${domain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
+    "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = false; };
+    "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = false; };
+    "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = false; };
   };
-    
+ 
   services.roundcube.enable = true;
   services.roundcube.listenAddress = "127.0.0.1";
   services.roundcube.listenPort = roundcube_port;
@@ -87,11 +90,17 @@ in
 
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
+  services.sonarr.enable = true;
+  services.radarr.enable = true;
+  services.jackett.enable = true;
 
   services.transmission = {
     enable = true;
     home = "/var/lib/transmission";
     settings = {
+      download-dir = "/mnt/medias/downloads/";
+      incomplete-dir = "/mnt/medias/downloads/.incomplete";
+      incomplete-dir-enabled = true;
       rpc-bind-address = "127.0.0.1";
       rpc-host-whitelist = "*";
       rpc-whitelist-enabled = false;
