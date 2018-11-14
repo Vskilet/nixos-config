@@ -18,8 +18,8 @@ in
 
   imports = [
     (builtins.fetchTarball {
-      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/v2.1.4/nixos-mailserver-v2.1.4.tar.gz";
-      sha256 = "1n7k8vlsd1p0fa7s3kgd40bnykpk7pv579aqssx9wia3kl5s7c1b";
+      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/v2.2.0/nixos-mailserver-v2.2.0.tar.gz";
+      sha256 = "0gqzgy50hgb5zmdjiffaqp277a68564vflfpjvk1gv6079zahksc";
     })
   ];
 
@@ -49,9 +49,6 @@ in
       certificateScheme = 1;
       certificateFile = "/var/lib/acme/${cfg.domain}/fullchain.pem";
       keyFile = "/var/lib/acme/${cfg.domain}/key.pem";
-
-      # Length of the Diffie Hillman prime used
-      dhParamBitLength = 4096;
 
       # Enable IMAP and POP3
       enableImap = true;
