@@ -40,9 +40,9 @@ in
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
     "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
     "roundcube.${domain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
-    "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = false; };
-    "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = false; };
-    "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = false; };
+    "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
+    "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
+    "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
   };
  
   services.roundcube.enable = true;
