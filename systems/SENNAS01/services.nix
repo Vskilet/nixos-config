@@ -314,6 +314,12 @@ in
       disable_existing_loggers: False
     '';
   };
+  systemd.services.matrix-synapse = {
+    serviceConfig = {
+      MemoryHigh = "3G";
+      MemoryMax = "5G";
+    };
+  };
 
   services.smartd = {
     enable = true;
