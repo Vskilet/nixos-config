@@ -29,6 +29,7 @@
     akonadiconsole
     spectacle
 
+    qlcplus
     filezilla
     wine-staging
     wineWowPackages.staging
@@ -87,7 +88,9 @@
 
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "startkde";
-  
+
+  services.udev.packages = [ pkgs.qlcplus ];
+
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
