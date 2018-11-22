@@ -25,7 +25,10 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; with kdeApplications; [
+    akonadiconsole
+    spectacle
+
     filezilla
     wineStaging
     winetricks
