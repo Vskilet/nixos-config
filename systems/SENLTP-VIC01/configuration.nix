@@ -143,4 +143,7 @@
   # should.
   
   system.stateVersion = "18.09";
+  system.autoUpgrade.enable = true;
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 15d";
 }
