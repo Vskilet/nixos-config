@@ -84,6 +84,9 @@
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
+
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "startkde";
   
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
