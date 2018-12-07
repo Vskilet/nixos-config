@@ -30,7 +30,8 @@
     spectacle
 
     filezilla
-    wineStaging
+    wine-staging
+    wineWowPackages.staging
     winetricks
     transmission-remote-gtk
     appimage-run
@@ -71,6 +72,12 @@
     vlc
     nextcloud-client
     spotify
+    htop
+    acpi
+    iperf
+    lm_sensors
+    pdftk
+    ghostscript
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
