@@ -127,7 +127,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
+  services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver_1_00_37 ];
 
   # Enable sound.
   sound.enable = true;
