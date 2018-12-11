@@ -73,12 +73,15 @@
     vlc
     nextcloud-client
     spotify
+    teamviewer
     htop
     acpi
     iperf
     lm_sensors
     pdftk
     ghostscript
+    net_snmp
+    telnet
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
