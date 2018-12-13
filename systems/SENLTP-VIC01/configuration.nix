@@ -25,9 +25,14 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; with kdeApplications; [
+    akonadiconsole
+    spectacle
+
+    qlcplus
     filezilla
-    wineStaging
+    wine-staging
+    wineWowPackages.staging
     winetricks
     transmission-remote-gtk
     appimage-run
@@ -68,13 +73,27 @@
     vlc
     nextcloud-client
     spotify
+    teamviewer
+    htop
+    acpi
+    iperf
+    lm_sensors
+    pdftk
+    ghostscript
+    net_snmp
+    telnet
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
-  
+
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "startkde";
+
+  services.udev.packages = [ pkgs.qlcplus ];
+
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
@@ -108,7 +127,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
+  services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver_1_00_37 ];
 
   # Enable sound.
   sound.enable = true;
@@ -143,4 +162,7 @@
   # should.
   
   system.stateVersion = "18.09";
+  system.autoUpgrade.enable = true;
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 15d";
 }
