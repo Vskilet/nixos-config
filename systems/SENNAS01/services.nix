@@ -44,7 +44,7 @@ in
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
   };
- 
+
   services.roundcube.enable = true;
   services.roundcube.listenAddress = "127.0.0.1";
   services.roundcube.listenPort = roundcube_port;
@@ -74,7 +74,7 @@ in
   };
 
   services.searx.enable = true;
-  
+
   services.shellinabox.enable = true;
   services.shellinabox.extraOptions = [ "--css ${../../configuration/white-on-black.css}" ];
 
@@ -82,7 +82,7 @@ in
     enable = true;
     httpPort = gitea_port;
     rootUrl = "https://git.${domain}/";
-    database = {   
+    database = {
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea-db";
     };
@@ -120,7 +120,7 @@ in
       };
       "vilodec" = {
         listen = [ { addr = "127.0.0.1"; port = vilodec_port; } ];
-        locations = { "/" = { 
+        locations = { "/" = {
           root = "/var/www/vilodec";
           index = "index.php";
           extraConfig = ''
@@ -135,7 +135,7 @@ in
       };
       "cloud.${domain}" = {
         listen = [ { addr = "127.0.0.1"; port = 8441; } ];
-      };  
+      };
       "office" = {
         listen = [ { addr = "127.0.0.1"; port = office_port; } ];
         extraConfig = ''
@@ -178,7 +178,7 @@ in
       };
     };
   };
-  
+
   services.phpfpm.poolConfigs.web = ''
     listen = /run/phpfpm/web
     listen.owner = nginx
@@ -205,7 +205,7 @@ in
 
   services.mysql.enable = true;
   services.mysql.package = pkgs.mysql;
-  
+
   services.influxdb.enable = true;
   services.influxdb.dataDir = "/var/db/influxdb";
 
@@ -235,7 +235,7 @@ in
       influxdb = { database = "telegraf"; urls = [ "http://localhost:8086" ]; };
     };
   };
-  
+
   services.grafana = {
     enable = true;
     addr = "127.0.0.1";
@@ -329,7 +329,7 @@ in
       recipient = "victor@sene.ovh";
     };
   };
-  
+
   services.fail2ban.enable = true;
 
   services.borgbackup.jobs = {

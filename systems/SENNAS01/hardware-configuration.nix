@@ -20,13 +20,13 @@
   fileSystems."/mnt/medias" =
     { device = "senpool01/medias";
       fsType = "zfs";
-    };  
-    
+    };
+
   fileSystems."/mnt/share" =
     { device = "senpool01/share";
       fsType = "zfs";
     };
-  
+
   fileSystems."/mnt/backups" =
     { device = "/dev/disk/by-uuid/3d4d5f8e-9cc6-44d0-a420-d2f153a02319";
       fsType = "ext4";
@@ -59,7 +59,7 @@
     { device = "senpool01/var/lib";
       fsType = "zfs";
     };
-  
+
   fileSystems."/var/lib/docker" =
     { device = "senpool01/var/lib/docker";
       fsType = "zfs";
@@ -81,8 +81,8 @@
     };
 
 
-   swapDevices = [ { 
-     device = "/var/swapfile"; 
+   swapDevices = [ {
+     device = "/var/swapfile";
      size = 8096;
     } ];
 
