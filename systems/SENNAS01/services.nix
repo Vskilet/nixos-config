@@ -345,7 +345,7 @@ in
         "/var/sieve"
         "/var/vmail"
       ];
-      repo = "/home/victor/backup/borg";
+      repo = "/mnt/backups/borg";
       encryption = {
         mode = "repokey-blake2";
         passCommand = "cat /mnt/secrets/borgbackup_senback01_encryption_pass";
@@ -354,7 +354,7 @@ in
       prune.keep = {
         within = "1d";
         weekly = 4;
-        monthly = 12;
+        monthly = 6;
       };
       preHook = "${pkgs.zfs}/bin/zfs snapshot senpool01/var/lib@borgsnap";
       postHook = ''

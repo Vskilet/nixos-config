@@ -26,6 +26,12 @@
     { device = "senpool01/share";
       fsType = "zfs";
     };
+  
+  fileSystems."/mnt/backups" =
+    { device = "/dev/disk/by-uuid/3d4d5f8e-9cc6-44d0-a420-d2f153a02319";
+      fsType = "ext4";
+      options  = [ "nofail" ];
+    };
 
   fileSystems."/mnt/secrets" =
     { device = "senpool01/secrets";
