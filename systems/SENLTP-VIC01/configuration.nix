@@ -12,7 +12,7 @@
 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
-  
+
   # Select internationalisation properties.
   i18n = {
      #consoleFont = "Lat2-Terminus16";
@@ -21,63 +21,68 @@
   };
   # Set your time zone.
   time.timeZone = "Europe/Paris";
-  
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; with kdeApplications; [
-    akonadiconsole
-    spectacle
-
-    qlcplus
-    filezilla
-    wine-staging
-    wineWowPackages.staging
-    winetricks
-    transmission-remote-gtk
-    appimage-run
-    filelight 
-    bat
-    gopass
-    xclip
-    signal-desktop
-    firefox
-    audacity
-    gnupg
-    tdesktop
-    nixnote2
-    kdeplasma-addons
     ark
     kate
     kmail
     kdeconnect
     okular
-    yakuake
     konversation
-    gwenview
     kcalc
-    (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super;
-    })
+    kdeplasma-addons
+    akonadiconsole
+    spectacle
+    yakuake
+
+    gwenview
     imagemagick
-    pciutils
-    usbutils
-    git
-    tig
     gnome-breeze
     arc-theme
     materia-theme
-    nvim
+    wine-staging
+    wineWowPackages.staging
+    winetricks
+
+    firefox
+    filezilla
+    transmission-remote-gtk
+    filelight
+    signal-desktop
+    tdesktop
+
+    (texlive.combine {
+      inherit (texlive) scheme-small titling collection-langfrench cm-super;
+    })
+    nixnote2
     libreoffice
     gimp
     vlc
+
+    audacity
+    qlcplus
     nextcloud-client
     spotify
     teamviewer
+
+    appimage-run
+    nvim
+    gnupg
+    gopass
+    xclip
+
+    bat
+    git
+    tig
     htop
     acpi
     iperf
     lm_sensors
+    pciutils
+    usbutils
     pdftk
     ghostscript
     net_snmp
@@ -122,7 +127,7 @@
     CPU_SCALING_GOVERNOR_ON_BAT=powersave
     ENERGY_PERF_POLICY_ON_BAT=powersave
   '';
-  services.sshd.enable = true; 
+  services.sshd.enable = true;
   services.pcscd.enable = true;
 
   # Enable CUPS to print documents.
@@ -145,7 +150,7 @@
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
- 
+
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
@@ -160,7 +165,7 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  
+
   system.stateVersion = "18.09";
   system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
