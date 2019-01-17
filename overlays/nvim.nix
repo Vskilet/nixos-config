@@ -15,6 +15,10 @@ self: super:
         filetype plugin on
         set background=dark
         set number
+        set shiftwidth=2
+        set softtabstop=2
+        set expandtab
+        autocmd BufWritePre * :%s/\s\+$//e
       '';
     };
   };
