@@ -22,6 +22,7 @@ let
       timeout client 10s
       timeout connect 4s
       timeout server 30s
+      errorfile 503 ${/etc/nixos/configuration/503.html}
     userlist THELIST
       user victor password $6$aydejDVvpYbZ$..iTobk0.7KzY9DEwB5BWGwudnyqeYtxMITijr48HvjjyqbR1S/fn1zS3GS2n6n2UGEWKORYmPPt8QGRFxvX70
     frontend public
@@ -34,20 +35,20 @@ let
       http-response set-header Strict-Transport-Security max-age=15768000
       use_backend letsencrypt-backend if letsencrypt-acl
       use_backend haproxy_stats if haproxy-acl
-      
+
       ${concatStrings (
       mapAttrsToList (name: value:
         " acl ${name}-acl hdr(host) -i ${name}\n"
       + " use_backend ${name}-backend if ${name}-acl\n"
       ) cfg.services)}
-      
+
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:${toString nginx_port}
     backend haproxy_stats
       mode http
       stats enable
-      stats hide-version 
+      stats hide-version
       acl AUTH_OK http_auth(THELIST)
       http-request auth realm THELIST if !AUTH_OK
 
@@ -119,7 +120,7 @@ in
         locations = { "/" = { root = "/var/www/challenges"; }; };
       };
     };
-    
+
     security.acme.certs = {
       "${cfg.domain}" = {
         extraDomains = mapAttrs' (name: value:
