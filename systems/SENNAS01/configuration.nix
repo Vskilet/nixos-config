@@ -41,7 +41,6 @@
   nixpkgs.overlays = [
     (import ../../overlays/riot-web.nix)
     (import ../../overlays/nvim.nix)
-    (import ../../overlays/unstable-pkgs.nix)
   ];
   environment.systemPackages = with pkgs; [
     wget nvim tmux git htop dnsutils nmap busybox lm_sensors borgbackup rclone tig kubectl
@@ -91,8 +90,6 @@
   # should.
 
   system.stateVersion = "18.03";
-  system.autoUpgrade.enable = true;
-  systemd.services.nixos-upgrade.path = with pkgs; [  gnutar xz.bin gzip config.nix.package.out ];
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 15d";
 }
