@@ -35,7 +35,7 @@ in
     "riot.${domain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
     "sync.${domain}" = { ip = "127.0.0.1"; port = 5000; auth = false; };
-    "constanceetvictor.fr" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
+    "wedding.${domain}" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
     "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     "vilodec.${domain}" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
     "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
