@@ -1,4 +1,4 @@
-<?php
+
 
 /* Local configuration for Roundcube Webmail */
 // ----------------------------------
@@ -18,13 +18,13 @@ $config['product_name'] = 'Webmail SENE-NET';
 // For examples see http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
 // NOTE: for SQLite use absolute path (Linux): 'sqlite:////full/path/to/sqlite.db?mode=0646'
 //       or (Windows): 'sqlite:///C:/full/path/to/sqlite.db'
-$config['db_dsnw'] = 'pgsql://roundcube:roundcube@localhost/roundcube';
+//$config['db_dsnw'] = 'pgsql://roundcube:roundcube@localhost/roundcube';
 
 // you can define specific table (and sequence) names prefix
 $config['db_prefix'] = 'rc';
 
 // log driver:  'syslog', 'stdout' or 'file'.
-$config['log_driver'] = 'syslog';
+//$config['log_driver'] = 'syslog';
 
 // ----------------------------------
 // IMAP
@@ -124,13 +124,13 @@ $config['username_domain'] = '%d';
 // Message size limit. Note that SMTP server(s) may use a different value.
 // This limit is verified when user attaches files to a composed message.
 // Size in bytes (possible unit suffix: K, M, G)
-$config['max_message_size'] = '25M';
+//$config['max_message_size'] = '25M';
 
 // ----------------------------------
 // PLUGINS
 // ----------------------------------
 // List of active plugins (in plugins/ directory)
-$config['plugins'] = array('archive', 'attachment_reminder', 'autologon', 'emoticons', 'enigma', 'filesystem_attachments', 'help', 'identicon', 'identity_select', 'jqueryui', 'managesieve', 'newmail_notifier', 'password', 'show_additional_headers', 'subscriptions_option', 'virtuser_file', 'zipdownload');
+//$config['plugins'] = array('archive', 'attachment_reminder', 'autologon', 'emoticons', 'enigma', 'filesystem_attachments', 'help', 'identicon', 'identity_select', 'jqueryui', 'managesieve', 'newmail_notifier', 'password', 'show_additional_headers', 'subscriptions_option', 'virtuser_file', 'zipdownload');
 
 // the default locale setting (leave empty for auto-detection)
 // RFC1766 formatted language name like en_US, de_DE, de_CH, fr_FR, pt_BR

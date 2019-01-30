@@ -17,7 +17,6 @@ in
   imports = [
     ../../services/mailserver.nix
     ../../services/haproxy-acme.nix
-    ../../services/roundcube.nix
   ];
 
   services.mailserver.enable = true;
@@ -47,11 +46,18 @@ in
     "homepage.${domain}" = { ip = "127.0.0.1"; port = homepage_port; auth = false; };
   };
 
-  services.roundcube.enable = true;
-  services.roundcube.listenAddress = "127.0.0.1";
-  services.roundcube.listenPort = roundcube_port;
-  services.roundcube.subDomain = "roundcube";
-  services.roundcube.extraConfig = lib.fileContents ../../configuration/config.inc.php;
+  services.roundcube = {
+    enable = true;
+    hostName = "roundcube.${domain}";
+    database = {
+      username = "roundcube";
+      host = "localhost";
+      password = "roundcube";
+      dbname = "roundcube";
+    };
+    plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "enigma" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "newmail_notifierpassword" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
+    extraConfig = lib.fileContents ../../configuration/config.inc.php;
+  };
 
   services.nextcloud = {
     enable = true;
@@ -112,6 +118,11 @@ in
   services.nginx = {
     enable = true;
     virtualHosts = {
+      ${config.services.roundcube.hostName} = {
+        listen = [ { addr = "127.0.0.1"; port = roundcube_port; } ];
+        forceSSL = false;
+        enableACME = false;
+      };
       "riot" = {
         listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
         locations = { "/" = { root = pkgs.riot-web; }; };
