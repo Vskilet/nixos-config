@@ -5,22 +5,11 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./users.nix
+      ../common.nix
     ];
-  nixpkgs.overlays = [
-    (import ../../overlays/nvim.nix)
-  ];
 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Select internationalisation properties.
-  i18n = {
-     #consoleFont = "Lat2-Terminus16";
-     consoleKeyMap = "fr";
-     defaultLocale = "fr_FR.UTF-8";
-  };
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -69,24 +58,9 @@
     teamviewer
 
     appimage-run
-    nvim
     gnupg
     gopass
     xclip
-
-    bat
-    git
-    tig
-    htop
-    acpi
-    iperf
-    lm_sensors
-    pciutils
-    usbutils
-    pdftk
-    ghostscript
-    net_snmp
-    telnet
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
@@ -98,20 +72,6 @@
   services.xrdp.defaultWindowManager = "startkde";
 
   services.udev.packages = [ pkgs.qlcplus ];
-
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.syntaxHighlighting.enable = true;
-  programs.zsh.ohMyZsh.enable = true;
-  programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
-  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
-  programs.zsh.promptInit = ''
-    autoload -U promptinit
-    promptinit
-    prompt adam2
-  '';
 
   environment.variables = { EDITOR = "nvim"; TERM = "konsole-256color"; };
 
@@ -127,7 +87,7 @@
     CPU_SCALING_GOVERNOR_ON_BAT=powersave
     ENERGY_PERF_POLICY_ON_BAT=powersave
   '';
-  services.sshd.enable = true;
+
   services.pcscd.enable = true;
 
   # Enable CUPS to print documents.
@@ -168,6 +128,4 @@
 
   system.stateVersion = "18.09";
   system.autoUpgrade.enable = true;
-  nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 15d";
 }
