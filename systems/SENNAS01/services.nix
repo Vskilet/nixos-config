@@ -30,7 +30,6 @@ in
     "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
     "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
     "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
     "riot.${domain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
     "sync.${domain}" = { ip = "127.0.0.1"; port = 5000; auth = false; };
@@ -82,9 +81,6 @@ in
   };
 
   services.searx.enable = true;
-
-  services.shellinabox.enable = true;
-  services.shellinabox.extraOptions = [ "--css ${../../configuration/white-on-black.css}" ];
 
   services.gitea = {
     enable = true;
