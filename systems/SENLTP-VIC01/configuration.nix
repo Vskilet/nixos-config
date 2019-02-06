@@ -73,7 +73,7 @@
 
   services.udev.packages = [ pkgs.qlcplus ];
 
-  environment.variables = { EDITOR = "nvim"; TERM = "konsole-256color"; };
+  environment.variables = { TERM = "konsole-256color"; };
 
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
