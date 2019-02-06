@@ -55,7 +55,7 @@ in
       dbname = "roundcube";
     };
     plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "enigma" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "newmail_notifierpassword" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
-    extraConfig = lib.fileContents ../../configuration/config.inc.php;
+    extraConfig = lib.fileContents ../../misc/config.inc.php;
   };
 
   services.nextcloud = {

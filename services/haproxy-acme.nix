@@ -22,7 +22,7 @@ let
       timeout client 10s
       timeout connect 4s
       timeout server 30s
-      errorfile 503 ${/etc/nixos/configuration/503.html}
+      errorfile 503 ${/etc/nixos/misc/503.html}
     userlist THELIST
       user victor password $6$aydejDVvpYbZ$..iTobk0.7KzY9DEwB5BWGwudnyqeYtxMITijr48HvjjyqbR1S/fn1zS3GS2n6n2UGEWKORYmPPt8QGRFxvX70
     frontend public
