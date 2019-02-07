@@ -26,7 +26,6 @@
   ];
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    busybox
     dnsutils
     nmap
     pciutils
