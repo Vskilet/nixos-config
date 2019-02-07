@@ -250,6 +250,36 @@ in
       smart = {
         path = "${pkgs.writeShellScriptBin "smartctl" "/run/wrappers/bin/sudo ${pkgs.smartmontools}/bin/smartctl $@"}/bin/smartctl";
       };
+      exec= [
+        {
+          commands = [
+            "${pkgs.python3}/bin/python ${pkgs.writeText "zpool.py" ''
+              import json
+              from subprocess import check_output
+
+              columns = ["NAME", "SIZE", "ALLOC", "FREE", "EXPANDSZ", "FRAG", "CAP", "DEDUP", "HEALTH", "ALTROOT"]
+              health = {'ONLINE':0, 'DEGRADED':11, 'OFFLINE':21, 'UNAVAIL':22, 'FAULTED':23, 'REMOVED':24}
+
+              stdout = check_output(["${pkgs.zfs}/bin/zpool", "list", "-Hp"],encoding='UTF-8').split('\n')
+              parsed_stdout = list(map(lambda x: dict(zip(columns,x.split('\t'))), stdout))[:-1]
+
+              for pool in parsed_stdout:
+                for item in pool:
+                  if item in ["SIZE", "ALLOC", "FREE", "FRAG", "CAP"]:
+                    pool[item] = int(pool[item])
+                  if item in ["DEDUP"]:
+                    pool[item] = float(pool[item])
+                  if item == "HEALTH":
+                    pool[item] = health[pool[item]]
+
+              print(json.dumps(parsed_stdout))
+            ''}"
+          ];
+          tag_keys = [ "NAME" ];
+          data_format = "json";
+          name_suffix = "_python_zpool";
+        }
+      ];
     };
     outputs = {
       influxdb = { database = "telegraf"; urls = [ "http://localhost:8086" ]; };
