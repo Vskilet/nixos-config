@@ -43,6 +43,7 @@
     winetricks
 
     firefox
+    chromium
     filezilla
     transmission-remote-gtk
     filelight
