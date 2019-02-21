@@ -347,6 +347,7 @@ in
     database_args = {
       database = "matrix-synapse";
     };
+    app_service_config_files = [ /etc/nixos/misc/mautrix-telegram/registration.yaml /etc/nixos/misc/mautrix-whatsapp/registration.yaml ];
     extraConfig = ''
       max_upload_size: "100M"
     '';
