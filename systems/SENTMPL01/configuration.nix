@@ -46,13 +46,10 @@
     lm_sensors
     pdftk
     ghostscript
-    
+
     ark
     kate
-    kmail
     okular
-    kcalc
-    kdeplasma-addons
     akonadiconsole
     spectacle
 
@@ -71,14 +68,9 @@
     gimp
     vlc
     appimage-run
-    
+
     chessx
-    gshogi
-    pong3d
-    snake4
     superTux
-    xskat
-    xsok
   ];
 
   users.defaultUserShell = pkgs.zsh;
@@ -94,7 +86,7 @@
     promptinit
     prompt adam2
   '';
-  
+
   services.tlp.enable = true;
   services.tlp.extraConfig = ''
     DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"
@@ -125,9 +117,7 @@
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = true;
 
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.mate.enable = true;
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ];
