@@ -68,6 +68,8 @@
     gnupg
     gopass
     xclip
+
+    vitetris
   ];
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
