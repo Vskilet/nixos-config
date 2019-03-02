@@ -128,14 +128,15 @@ in
         ) cfg.services;
         webroot = "/var/www/challenges/";
         email = "victor@sene.ovh";
-        user = "haproxy";
-        group = "haproxy";
+        allowKeysForGroup = true;
+        group = "acme";
         postRun = ''
           systemctl reload haproxy
         '';
       };
     };
     security.acme.directory = "/var/lib/acme";
+    users.groups.acme.members = [ "haproxy" ];
     networking.firewall.allowedTCPPorts = [
       80 443 # HAProxy
     ];

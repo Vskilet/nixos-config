@@ -348,6 +348,8 @@ in
       database = "matrix-synapse";
     };
     app_service_config_files = [ /etc/nixos/misc/mautrix-telegram/registration.yaml /etc/nixos/misc/mautrix-whatsapp/registration.yaml ];
+    tls_private_key_path = "/var/lib/acme/${domain}/key.pem";
+    tls_certificate_path = "/var/lib/acme/${domain}/fullchain.pem";
     extraConfig = ''
       max_upload_size: "100M"
     '';
@@ -377,6 +379,7 @@ in
       disable_existing_loggers: False
     '';
   };
+  users.groups.acme.members = [ "matrix-synapse" ];
   systemd.services.matrix-synapse = {
     serviceConfig = {
       MemoryHigh = "3G";
