@@ -71,6 +71,11 @@
 
     vitetris
   ];
+
+  fonts.fonts = with pkgs; [
+    corefonts
+  ];
+
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
