@@ -4,6 +4,7 @@ with lib;
 
 let
   domain = "sene.ovh";
+  adomain = "senequenous.fr";
   riot_port = 30001;
   wedding_port = 30002;
   pgmanage_port = 30003;
@@ -32,7 +33,6 @@ in
     "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
     "riot.${domain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    "sync.${domain}" = { ip = "127.0.0.1"; port = 5000; auth = false; };
     "wedding.${domain}" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
     "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     "vilodec.${domain}" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
@@ -43,6 +43,18 @@ in
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "homepage.${domain}" = { ip = "127.0.0.1"; port = homepage_port; auth = false; };
+
+    "grafana.${adomain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
+    "storm.${adomain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
+    "searx.${adomain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    "riot.${adomain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    "matrix.${adomain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    "git.${adomain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
+    "office.${adomain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
+    "lettre.${adomain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
+    "jackett.${adomain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
+    "sonarr.${adomain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
+    "radarr.${adomain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
   };
 
   services.roundcube = {
