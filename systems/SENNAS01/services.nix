@@ -18,6 +18,7 @@ in
   imports = [
     ../../services/mailserver.nix
     ../../services/haproxy-acme.nix
+    ../../services/mautrix-whatsapp.nix
   ];
 
   services.mailserver.enable = true;
@@ -360,7 +361,10 @@ in
     database_args = {
       database = "matrix-synapse";
     };
-    app_service_config_files = [ /etc/nixos/misc/mautrix-telegram/registration.yaml /etc/nixos/misc/mautrix-whatsapp/registration.yaml ];
+    app_service_config_files = [
+      /etc/nixos/misc/mautrix-telegram/registration.yaml
+      config.services.mautrix-whatsapp.registrationPath
+    ];
     tls_private_key_path = "/var/lib/acme/${domain}/key.pem";
     tls_certificate_path = "/var/lib/acme/${domain}/fullchain.pem";
     extraConfig = ''
@@ -397,6 +401,49 @@ in
     serviceConfig = {
       MemoryHigh = "3G";
       MemoryMax = "5G";
+    };
+  };
+  services.mautrix-whatsapp = {
+    enable = true;
+    configOptions = {
+      homeserver = {
+        address = https://matrix.sene.ovh;
+        domain = "sene.ovh";
+      };
+      appservice = {
+        address = http://localhost:8081;
+        hostname = "0.0.0.0";
+        port = 8081;
+        database = {
+          type = "sqlite3";
+          uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
+        };
+        state_store_path = "/var/lib/mautrix-whatsapp/mx-state.json";
+        id = "whatsapp";
+        bot = {
+          username = "whatsappbot";
+          displayname = "WhatsApp bridge bot";
+          avatar = "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr";
+        };
+        as_token = "INIv6z0YlCL2KsMHnW3WCRxsutWn94EKiiph0UglCuNlJ6NcEaviKvVj02uWRwIf";
+        hs_token = "TDrSsMA27VkhlcrlWBiADtSmMYq5NBQ8OtvO00rj3dlxK7qPWs66ZsUaxGYLA3Hv";
+      };
+      bridge = {
+        username_template = "whatsapp_{{.}}";
+        displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}} (WA)";
+        command_prefix = "!wa";
+        permissions = {
+          "@vskilet:sene.ovh" = 100;
+        };
+      };
+      logging = {
+        directory = "/var/lib/mautrix-whatsapp/logs";
+        file_name_format = "{{.Date}}-{{.Index}}.log";
+        file_date_format = "\"2006-01-02\"";
+        file_mode = 384;
+        timestamp_format = "Jan _2, 2006 15:04:05";
+        print_level = "debug";
+      };
     };
   };
 
