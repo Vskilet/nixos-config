@@ -61,23 +61,11 @@ in
   services.roundcube = {
     enable = true;
     hostName = "roundcube.${domain}";
-    productName = "Webmail SENE-NET";
-    imap = {
-      server = "tls://mail.%d";
-      port = 143;
-      authType = "PLAIN";
-    };
-    smtp = {
-      server = "tls://mail.%d";
-      port = 587;
-      authType = "PLAIN";
-    };
     database = {
       username = "roundcube";
       host = "localhost";
       password = "roundcube";
       dbname = "roundcube";
-      dbprefix = "rc";
     };
     plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "enigma" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "newmail_notifierpassword" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
     extraConfig = lib.fileContents ../../misc/config.inc.php;

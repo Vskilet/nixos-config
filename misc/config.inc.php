@@ -1,4 +1,33 @@
 // ----------------------------------
+// SQL DATABASE
+// ----------------------------------
+$config['db_prefix'] = 'rc';
+
+// ----------------------------------
+// IMAP
+// ----------------------------------
+$config['default_host'] = 'tls://mail.%d';
+$config['default_port'] = 143;
+$config['imap_auth_type'] = 'PLAIN';
+$config['username_domain'] = '%d';
+
+// ----------------------------------
+// SMTP
+// ----------------------------------
+$config['smtp_server'] = 'tls://mail.%d';
+$config['smtp_port'] = 587;
+$config['smtp_user'] = '%u';
+$config['smtp_pass'] = '%p';
+$config['smtp_auth_type'] = 'PLAIN';
+
+// ----------------------------------
+// SYSTEM
+// ----------------------------------
+$config['enable_installer'] = false;
+$config['product_name'] = 'Webmail SENE-NET';
+$config['cipher_method'] = 'AES-256-CBC';
+
+// ----------------------------------
 // EXTRA CONFIGURATION
 // ----------------------------------
 // provide an URL where a user can get support for this Roundcube installation
