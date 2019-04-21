@@ -101,6 +101,7 @@ in
       dbpass = "nextcloud";
       dbtableprefix = "oc_";
       adminpass = "nextlcoud";
+      extraTrustedDomains = ["storm.${adomain}"];
     };
   };
 
