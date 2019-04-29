@@ -348,10 +348,6 @@ in
     database_args = {
       database = "matrix-synapse";
     };
-    app_service_config_files = [
-      /etc/nixos/misc/mautrix-telegram/registration.yaml
-      config.services.mautrix-whatsapp.registrationPath
-    ];
     tls_private_key_path = "/var/lib/acme/${domain}/key.pem";
     tls_certificate_path = "/var/lib/acme/${domain}/fullchain.pem";
     extraConfig = ''
@@ -394,8 +390,8 @@ in
     enable = true;
     configOptions = {
       homeserver = {
-        address = https://matrix.sene.ovh;
-        domain = "sene.ovh";
+        address = "https://matrix.${domain}";
+        domain = "${domain}";
       };
       appservice = {
         address = http://localhost:8081;
@@ -409,11 +405,11 @@ in
         id = "whatsapp";
         bot = {
           username = "whatsappbot";
-          displayname = "WhatsApp bridge bot";
+          displayname = "WhatsAppBot";
           avatar = "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr";
         };
-        as_token = "INIv6z0YlCL2KsMHnW3WCRxsutWn94EKiiph0UglCuNlJ6NcEaviKvVj02uWRwIf";
-        hs_token = "TDrSsMA27VkhlcrlWBiADtSmMYq5NBQ8OtvO00rj3dlxK7qPWs66ZsUaxGYLA3Hv";
+        as_token = "";
+        hs_token = "";
       };
       bridge = {
         username_template = "whatsapp_{{.}}";
