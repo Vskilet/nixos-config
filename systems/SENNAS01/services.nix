@@ -106,8 +106,7 @@ in
     };
   };
 
-  services.emby.enable = true;
-  services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
+  services.jellyfin.enable = true;
   services.sonarr.enable = true;
   services.radarr.enable = true;
   services.jackett.enable = true;
