@@ -11,12 +11,6 @@
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  boot.initrd.network.enable = true;
-  boot.initrd.network.ssh.enable = true;
-  boot.initrd.network.ssh.authorizedKeys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2ZzVnOlmoNoLgrc3+Lx7whO8mzcwUf2p9DiYAVg2zo2zbfubLVG1BAgFDe7y+2HwJIbGDDMNUaT+FAsv0mHRlfdUMXXF3nVsFPWGovo1ks31O5zUI9IE3qFU5AJ7SPICS4lQYox1o594iS1OcwJ7Iu6pjEQRRG1OLVYSILJ994vtGsDxfz1CZ8b7u9oSwHz0E4pdy6epkFSE/+9WsZl+ziDMigYZfubjzUCzMy2uT5Z6t+r6bW6mcxnmYax/YmrRvL/dTeDE64Qf7nugjB0XOKUOKCPN5dtqYRx0fN9aDSRf4ubmyVaYeKudm9vttGHXjSPVWAvow+jUDOq2cGr victor@sene.ovh"
-  ];
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config.allowUnfree = true;
@@ -81,9 +75,6 @@
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
-
-  services.xrdp.enable = true;
-  services.xrdp.defaultWindowManager = "startkde";
 
   services.udev.packages = [ pkgs.qlcplus ];
 
