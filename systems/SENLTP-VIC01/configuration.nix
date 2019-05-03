@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
-
+let
+  yakuake_autostart = (pkgs.makeAutostartItem { name = "yakuake"; package = pkgs.yakuake; srcPrefix = "org.kde."; });
+  nextcloud_autostart = (pkgs.makeAutostartItem { name = "nextcloud"; package = pkgs.nextcloud-client; });
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -26,6 +29,7 @@
     akonadiconsole
     spectacle
     yakuake
+    yakuake_autostart
 
     gwenview
     imagemagick
@@ -55,8 +59,8 @@
     audacity
     qlcplus
     nextcloud-client
+    nextcloud_autostart
     spotify
-    teamviewer
 
     appimage-run
     gnupg
