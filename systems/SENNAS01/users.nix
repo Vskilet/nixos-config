@@ -13,7 +13,7 @@
   };
 
   users.extraGroups.medias =
-  { members = [ "emby" "transmission" "sonarr" "radarr" ];
+  { members = [ "jellyfin" "transmission" "sonarr" "radarr" ];
   };
 
   users.extraGroups.cloud =
