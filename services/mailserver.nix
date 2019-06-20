@@ -11,15 +11,17 @@ in
     enable = mkEnableOption "Mail Server";
     domain = mkOption {
       type = types.string;
-      example = "delabombe.com";
-      description = "Domain name of the mail server";
+      description = "Principal domain name for the mail server";
+    };
+    adomain = mkOption {
+      type = types.string;
     };
   };
 
   imports = [
     (builtins.fetchTarball {
-      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/8b7dde4b54da821ca3dc2058178d6ffbd2e25bc5/nixos-mailserver-8b7dde4b54da821ca3dc2058178d6ffbd2e25bc5.tar.gz";
-      sha256 = "0pf25ns3yq9vdbpb30cplx4zkj7srrklamd6kw7ifaf7gyc7fy65";
+      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/v2.2.1/nixos-mailserver-v2.2.1.tar.gz";
+      sha256 = "03d49v8qnid9g9rha0wg2z6vic06mhp0b049s3whccn1axvs2zzx";
     })
   ];
 
@@ -28,7 +30,7 @@ in
     mailserver = {
       enable = true;
       fqdn = "mail.${cfg.domain}";
-      domains = [ cfg.domain ];
+      domains = [ cfg.domain cfg.adomain ];
 
       # A list of all login accounts. To create the password hashes, use
       # mkpasswd -m sha-512 "super secret password"
@@ -64,6 +66,7 @@ in
       "${cfg.domain}" = {
         extraDomains = {
           "mail.${cfg.domain}" = null;
+          "mail.${cfg.adomain}" = null;
         };
         postRun = ''
           systemctl reload dovecot2.service

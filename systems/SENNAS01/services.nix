@@ -23,6 +23,7 @@ in
 
   services.mailserver.enable = true;
   services.mailserver.domain = domain;
+  services.mailserver.adomain = adomain;
 
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
