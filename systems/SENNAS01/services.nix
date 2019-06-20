@@ -12,7 +12,7 @@ let
   roundcube_port = 30005;
   gitea_port = 30006;
   office_port = 30007;
-  homepage_port = 30008;
+  apc_port = 30008;
 in
 {
   imports = [
@@ -43,7 +43,7 @@ in
     "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
-    "homepage.${domain}" = { ip = "127.0.0.1"; port = homepage_port; auth = false; };
+    "apc.${domain}" = { ip = "127.0.0.1"; port = apc_port; auth = false; };
 
     "grafana.${adomain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
     "storm.${adomain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
@@ -198,16 +198,9 @@ in
           }
         '';
       };
-      "homepage.${domain}" = {
-        listen = [ { addr = "127.0.0.1"; port = homepage_port; } ];
-        locations = { "/" = {
-          root = "/var/www/homepage";
-          extraConfig = ''
-            location / {
-              try_files $uri $uri/ /index.php?$query_string;
-            }
-          '';
-        }; };
+      "apc.${domain}" = {
+        listen = [ { addr = "127.0.0.1"; port = apc_port; } ];
+        locations = { "/" = { root = "/var/www/apc"; }; };
       };
     };
   };
