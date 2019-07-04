@@ -399,8 +399,8 @@ in
         id = "whatsapp";
         bot = {
           username = "whatsappbot";
-          displayname = "WhatsAppBot";
-          avatar = "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr";
+          displayname = "WhatsApp Bot";
+          #avatar = "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr";
         };
         as_token = "";
         hs_token = "";
@@ -410,7 +410,7 @@ in
         displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}} (WA)";
         command_prefix = "!wa";
         permissions = {
-          "@vskilet:sene.ovh" = 100;
+          "@vskilet:sene.ovh" = "admin";
         };
       };
       logging = {
