@@ -31,6 +31,7 @@ in
     yakuake
     yakuake_autostart
 
+    gparted
     gwenview
     imagemagick
     gnome-breeze
