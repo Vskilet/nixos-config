@@ -36,9 +36,10 @@ in
     gnome-breeze
     arc-theme
     materia-theme
-    wine-staging
-    wineWowPackages.staging
-    winetricks
+    wineWowPackages.unstable
+    (winetricks.override {
+      wine = wineWowPackages.unstable;
+    })
 
     firefox
     chromium
