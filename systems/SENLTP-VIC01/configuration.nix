@@ -21,12 +21,17 @@ in
     ark
     kate
     kmail
+    kaddressbook
+    korganizer
     kdeconnect
     okular
     konversation
     kcalc
     kdeplasma-addons
     akonadiconsole
+    akonadi-calendar
+    akonadi-contacts
+    akonadi-notes
     spectacle
     yakuake
     yakuake_autostart
