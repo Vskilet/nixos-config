@@ -16,6 +16,7 @@ let
       ssl-default-bind-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
       ssl-default-server-ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256
       ssl-default-server-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+      ssl-dh-param-file /var/lib/dhparams/dovecot2.pem
     defaults
       option forwardfor
       option http-server-close
@@ -29,10 +30,13 @@ let
       bind :::80 v4v6
       bind :::443 v4v6 ssl crt /var/lib/acme/${cfg.domain}/full.pem alpn h2,http/1.1
       mode http
+      http-response set-header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
+      http-response set-header X-Frame-Options "SAMEORIGIN"
+      http-response set-header X-XSS-Protection "1;mode=block"
+      http-response set-header X-Content-Type-Options nosniff
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       acl haproxy-acl path_beg /haproxy
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
-      http-response set-header Strict-Transport-Security max-age=15768000
       use_backend letsencrypt-backend if letsencrypt-acl
       use_backend haproxy_stats if haproxy-acl
 
