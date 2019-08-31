@@ -16,17 +16,27 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    firefox = {
+      enableAdobeFlash = true;
+    };
+  };
   environment.systemPackages = with pkgs; with kdeApplications; [
     ark
     kate
     kmail
+    kaddressbook
+    korganizer
     kdeconnect
     okular
     konversation
     kcalc
     kdeplasma-addons
     akonadiconsole
+    akonadi-calendar
+    akonadi-contacts
+    akonadi-notes
     spectacle
     yakuake
     yakuake_autostart

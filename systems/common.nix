@@ -50,7 +50,7 @@
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.ohMyZsh.enable = true;
-  programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" "nix" ];
+  programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
   programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
   programs.zsh.promptInit = ''
     autoload -U promptinit
