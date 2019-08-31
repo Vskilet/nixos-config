@@ -16,7 +16,12 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    firefox = {
+      enableAdobeFlash = true;
+    };
+  };
   environment.systemPackages = with pkgs; with kdeApplications; [
     ark
     kate
