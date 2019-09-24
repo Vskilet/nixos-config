@@ -54,9 +54,9 @@ in
 
       # Enable IMAP and POP3
       enableImap = true;
-      enablePop3 = true;
+      enablePop3 = false;
       enableImapSsl = true;
-      enablePop3Ssl = true;
+      enablePop3Ssl = false;
 
       # Enable the ManageSieve protocol
       enableManageSieve = true;
