@@ -34,7 +34,6 @@ IPV6=`ip -6 addr show enp2s0 | awk '/inet6/{print $2}' | cut -d/ -f1 | head -1`
 
 echo "============================================================"
 echo "Good $TIME $USER"
-echo `curl -s wttr.in/Haguenau\?format=3`
 echo "============================================================
  - Hostname............: $HOSTNAME
  - IPv4................: $IPV4
