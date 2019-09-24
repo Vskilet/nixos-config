@@ -78,6 +78,7 @@ in
     gnupg
     gopass
     xclip
+    woeusb
 
     vitetris
   ];
@@ -95,6 +96,8 @@ in
   services.udev.packages = [ pkgs.qlcplus ];
 
   environment.variables = { TERM = "konsole-256color"; };
+
+  services.flatpak.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
