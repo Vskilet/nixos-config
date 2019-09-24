@@ -344,9 +344,8 @@ in
     };
     tls_private_key_path = "/var/lib/acme/${domain}/key.pem";
     tls_certificate_path = "/var/lib/acme/${domain}/fullchain.pem";
-    extraConfig = ''
-      max_upload_size: "100M"
-    '';
+    max_upload_size = "100M";
+    url_preview_enabled = true;
     logConfig = ''
       version: 1
 
