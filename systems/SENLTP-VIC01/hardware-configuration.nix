@@ -2,14 +2,15 @@
 
 {
   imports =
-    [ 
+    [
       <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
-  
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];  
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  
+  boot.supportedFilesystems = [ "ntfs" ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -31,7 +32,7 @@
     { device = "/dev/disk/by-uuid/B860-AA21";
       fsType = "vfat";
     };
-  
+
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/0bfe697f-e2b5-4f83-979e-31192cce865a";
       fsType = "ext4";
