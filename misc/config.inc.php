@@ -6,8 +6,8 @@ $config['db_prefix'] = 'rc';
 // ----------------------------------
 // IMAP
 // ----------------------------------
-$config['default_host'] = 'tls://mail.%d';
-$config['default_port'] = 143;
+$config['default_host'] = 'ssl://mail.%d';
+$config['default_port'] = 993;
 $config['imap_auth_type'] = 'PLAIN';
 $config['username_domain'] = '%d';
 
