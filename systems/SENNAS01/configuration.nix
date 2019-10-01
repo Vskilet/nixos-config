@@ -21,6 +21,10 @@
   services.zfs.autoSnapshot.enable = true;
   services.zfs.autoScrub.enable = true;
 
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+  services.openssh.permitRootLogin = "no";
+
   networking.hostName = "SENNAS01"; # Define your hostname.
   networking.hostId = "7e44e347";
 

@@ -9,10 +9,6 @@
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = "no";
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.overlays = [
