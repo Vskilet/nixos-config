@@ -18,9 +18,6 @@ in
   # $ nix-env -qaP | grep wget
   nixpkgs.config = {
     allowUnfree = true;
-    firefox = {
-      enableAdobeFlash = true;
-    };
   };
   environment.systemPackages = with pkgs; with kdeApplications; [
     ark
