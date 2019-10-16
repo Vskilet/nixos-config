@@ -45,6 +45,7 @@ in
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "apc.${domain}" = { ip = "127.0.0.1"; port = apc_port; auth = false; };
+    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
 
     "grafana.${adomain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
     "storm.${adomain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
@@ -57,6 +58,7 @@ in
     "jackett.${adomain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
     "sonarr.${adomain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${adomain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
+    "external.vilodec.fr" = { ip = "127.0.0.1"; port = 4200; auth = true; };
   };
 
   services.roundcube = {
@@ -105,6 +107,11 @@ in
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea-db";
     };
+  };
+
+  services.shellinabox = {
+    enable = true;
+    extraOptions = [ "--css ${../../misc/white-on-black.css}" ];
   };
 
   services.jellyfin.enable = true;
