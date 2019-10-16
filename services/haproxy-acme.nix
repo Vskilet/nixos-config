@@ -84,7 +84,7 @@ in
     enable = mkEnableOption "HAProxy with ACME support";
 
     domain = mkOption {
-      type = types.string;
+      type = types.str;
       example = "sene.fr";
       description = ''
         This options list define the TLDN domain.
@@ -139,7 +139,6 @@ in
         '';
       };
     };
-    security.acme.directory = "/var/lib/acme";
     users.groups.acme.members = [ "haproxy" ];
     networking.firewall.allowedTCPPorts = [
       80 443 # HAProxy

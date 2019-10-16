@@ -10,11 +10,11 @@ in
   options.services.mailserver = {
     enable = mkEnableOption "Mail Server";
     domain = mkOption {
-      type = types.string;
+      type = types.str;
       description = "Principal domain name for the mail server";
     };
     adomain = mkOption {
-      type = types.string;
+      type = types.str;
     };
   };
 

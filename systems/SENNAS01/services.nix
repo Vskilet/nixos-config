@@ -79,14 +79,14 @@ in
     hostName = "cloud.${domain}";
     https = true;
     nginx.enable = true;
-    poolConfig = ''
-      pm = dynamic
-      pm.max_children = 75
-      pm.start_servers = 10
-      pm.min_spare_servers = 5
-      pm.max_spare_servers = 20
-      pm.max_requests = 500
-    '';
+    poolSettings = {
+      "pm" = "dynamic";
+      "pm.max_children" = "75";
+      "pm.start_servers" = "10";
+      "pm.min_spare_servers" = "5";
+      "pm.max_spare_servers" = "20";
+      "pm.max_requests" = "500";
+    };
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
@@ -156,7 +156,7 @@ in
           extraConfig = ''
             location ~* \.php$ {
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
-              fastcgi_pass unix:/run/phpfpm/web;
+              fastcgi_pass unix:${config.services.phpfpm.pools.web.socket};
               include ${pkgs.nginx}/conf/fastcgi_params;
               include ${pkgs.nginx}/conf/fastcgi.conf;
             }
@@ -172,13 +172,13 @@ in
           # static files
           location ^~ /loleaflet {
               proxy_pass https://localhost:9980;
-              proxy_set_header Host $http_host;
+              proxy_set_header Host $host;
           }
 
           # WOPI discovery URL
           location ^~ /hosting/discovery {
               proxy_pass https://localhost:9980;
-              proxy_set_header Host $http_host;
+              proxy_set_header Host $host;
           }
 
           # main websocket
@@ -186,14 +186,14 @@ in
               proxy_pass https://localhost:9980;
               proxy_set_header Upgrade $http_upgrade;
               proxy_set_header Connection "Upgrade";
-              proxy_set_header Host $http_host;
+              proxy_set_header Host $host;
               proxy_read_timeout 36000s;
           }
 
           # download, presentation and image upload
           location ~ ^/lool {
               proxy_pass https://localhost:9980;
-              proxy_set_header Host $http_host;
+              proxy_set_header Host $host;
           }
 
           # Admin Console websocket
@@ -201,7 +201,7 @@ in
               proxy_pass https://localhost:9980;
               proxy_set_header Upgrade $http_upgrade;
               proxy_set_header Connection "Upgrade";
-              proxy_set_header Host $http_host;
+              proxy_set_header Host $host;
               proxy_read_timeout 36000s;
           }
         '';
@@ -213,22 +213,24 @@ in
     };
   };
 
-  services.phpfpm.poolConfigs.web = ''
-    listen = /run/phpfpm/web
-    listen.owner = nginx
-    listen.group = nginx
-    listen.mode = 0660
-    user = nginx
-    pm = dynamic
-    pm.max_children = 75
-    pm.start_servers = 2
-    pm.min_spare_servers = 1
-    pm.max_spare_servers = 20
-    pm.max_requests = 500
-    php_admin_value[error_log] = 'stderr'
-    php_admin_flag[log_errors] = on
-    catch_workers_output = yes
-  '';
+  services.phpfpm.pools.web = {
+    user = "nginx";
+    settings = {
+      "listen.owner" = "nginx";
+      "listen.group" = "nginx";
+      "listen.mode" = "0660";
+      "user" = "nginx";
+      "pm" = "dynamic";
+      "pm.max_children" = "75";
+      "pm.start_servers" = "2";
+      "pm.min_spare_servers" = "1";
+      "pm.max_spare_servers" =" 20";
+      "pm.max_requests" = "500";
+      "php_admin_value[error_log]" = "stderr";
+      "php_admin_flag[log_errors]" = "on";
+      "catch_workers_output" = "yes";
+    };
+  };
 
   services.postgresql.enable = true;
   services.pgmanage.enable = true;
