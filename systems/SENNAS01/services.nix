@@ -103,6 +103,7 @@ in
     enable = true;
     httpPort = gitea_port;
     rootUrl = "https://git.${domain}/";
+    disableRegistration = true;
     database = {
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea-db";
