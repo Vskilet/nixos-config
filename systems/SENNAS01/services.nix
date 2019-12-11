@@ -70,7 +70,7 @@ in
       password = "roundcube";
       dbname = "roundcube";
     };
-    plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "enigma" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "newmail_notifierpassword" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
+    plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
     extraConfig = lib.fileContents ../../misc/config.inc.php;
   };
 
