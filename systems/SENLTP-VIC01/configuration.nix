@@ -76,6 +76,7 @@ in
     gopass
     xclip
     woeusb
+    jmtpfs
 
     vitetris
   ];
@@ -89,6 +90,8 @@ in
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
+
+  programs.adb.enable = true;
 
   services.udev.packages = [ pkgs.qlcplus ];
 
