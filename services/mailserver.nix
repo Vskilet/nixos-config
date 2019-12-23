@@ -21,7 +21,7 @@ in
   imports = [
     (builtins.fetchTarball {
       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/master/nixos-mailserver-master.tar.gz";
-      sha256 = "0wn94js60i6v2lm03p5c162dimqcdgsjjjd0638zr4crf852w2nc";
+      sha256 = "026wr69xf23ilxq7b1s5xxv169k6q8fq0z285mbx8jvsq5w0bbr9";
     })
   ];
 
