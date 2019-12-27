@@ -5,19 +5,13 @@ with lib;
 let
   domain = "sene.ovh";
   adomain = "senequenous.fr";
-  riot_port = 30001;
-  wedding_port = 30002;
-  pgmanage_port = 30003;
-  vilodec_port = 30004;
-  roundcube_port = 30005;
-  gitea_port = 30006;
-  office_port = 30007;
-  apc_port = 30008;
 
   jellyfin_backend = ''
     http-request set-header X-Forwarded-Port %[dst_port]
     http-request add-header X-Forwarded-Proto https if { ssl_fc }
   '';
+
+  nginxGetFirstLocalPort = vh: (findFirst (x: x.addr == "127.0.0.1") (throw "No local port found") config.services.nginx.virtualHosts.${vh}.listen).port;
 in
 {
   imports = [
@@ -38,18 +32,18 @@ in
     "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
     "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
     "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    "riot.${domain}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    "riot.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "riot"; auth = false; };
     "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    "wedding.${domain}" = { ip = "127.0.0.1"; port = wedding_port; auth = false; };
-    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
-    "vilodec.${domain}" = { ip = "127.0.0.1"; port = vilodec_port; auth = false; };
-    "git.${domain}" = { ip = "127.0.0.1"; port = gitea_port; auth = false; };
-    "office.${domain}" = { ip = "127.0.0.1"; port = office_port; auth = false; };
-    "roundcube.${domain}" = { ip = "127.0.0.1"; port = roundcube_port; auth = false; };
+    "wedding.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "wedding"; auth = false; };
+    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = config.services.pgmanage.port; auth = true; };
+    "vilodec.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "vilodec"; auth = false; };
+    "git.${domain}" = { ip = "127.0.0.1"; port = config.services.gitea.httpPort; auth = false; };
+    "office.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "office"; auth = false; };
+    "roundcube.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "${config.services.roundcube.hostName}"; auth = false; };
     "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
-    "apc.${domain}" = { ip = "127.0.0.1"; port = apc_port; auth = false; };
+    "apc.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "apc.${domain}"; auth = false; };
     "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
 
     "grafana.${adomain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
@@ -106,7 +100,7 @@ in
 
   services.gitea = {
     enable = true;
-    httpPort = gitea_port;
+    httpPort = 30006;
     rootUrl = "https://git.${domain}/";
     disableRegistration = true;
     database = {
@@ -142,20 +136,20 @@ in
     enable = true;
     virtualHosts = {
       ${config.services.roundcube.hostName} = {
-        listen = [ { addr = "127.0.0.1"; port = roundcube_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30005; } ];
         forceSSL = false;
         enableACME = false;
       };
       "riot" = {
-        listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30001; } ];
         locations = { "/" = { root = pkgs.riot-web; }; };
       };
       "wedding" = {
-        listen = [ { addr = "127.0.0.1"; port = wedding_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30002; } ];
         locations = { "/" = { root = "/var/www/wedding"; }; };
       };
       "vilodec" = {
-        listen = [ { addr = "127.0.0.1"; port = vilodec_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30004; } ];
         locations = { "/" = {
           root = "/var/www/vilodec";
           index = "index.php";
@@ -173,7 +167,7 @@ in
         listen = [ { addr = "127.0.0.1"; port = 8441; } ];
       };
       "office" = {
-        listen = [ { addr = "127.0.0.1"; port = office_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30007; } ];
         extraConfig = ''
           # static files
           location ^~ /loleaflet {
@@ -213,7 +207,7 @@ in
         '';
       };
       "apc.${domain}" = {
-        listen = [ { addr = "127.0.0.1"; port = apc_port; } ];
+        listen = [ { addr = "127.0.0.1"; port = 30008; } ];
         locations = { "/" = { root = "/var/www/apc"; }; };
       };
     };
@@ -240,7 +234,7 @@ in
 
   services.postgresql.enable = true;
   services.pgmanage.enable = true;
-  services.pgmanage.port = pgmanage_port;
+  services.pgmanage.port = 30003;
   services.pgmanage.connections = {
     localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
