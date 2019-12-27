@@ -61,6 +61,7 @@ let
         ''
         backend ${name}-backend
           mode http
+          ${value.extraBackend}
           ${(if value.socket == "" then ''
 	      server ${name} ${value.ip}:${toString value.port}
 	  ''
@@ -100,6 +101,7 @@ in
         auth = mkOption { type = bool; description = "Enable authentification"; default = false; };
         extraAcls = mkOption { type = str; description = "Optional HaProxy ACL"; default = ""; };
         aclBool = mkOption { type = str; description = "Authentification way"; default = "!AUTH_OK"; };
+        extraBackend = mkOption { type = str; description = "Additionals options for HAProxy"; default = ""; };
       }; });
       example = ''
         haproxy_backends = {
