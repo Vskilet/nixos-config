@@ -13,6 +13,11 @@ let
   gitea_port = 30006;
   office_port = 30007;
   apc_port = 30008;
+
+  jellyfin_backend = ''
+    http-request set-header X-Forwarded-Port %[dst_port]
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
+  '';
 in
 {
   imports = [
@@ -29,7 +34,7 @@ in
   services.haproxy-acme.domain = domain;
   services.haproxy-acme.services = {
     "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
-    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; extraBackend = "${jellyfin_backend}"; };
     "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
     "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
     "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
