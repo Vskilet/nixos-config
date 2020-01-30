@@ -14,14 +14,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices = [
-    {
-      name = "luks";
+  boot.initrd.luks.devices = {
+    luks = {
       device = "/dev/disk/by-uuid/9174f611-814f-4aa4-a8be-df30f3b18787";
       preLVM = true;
       allowDiscards = true;
-    }
-  ];
+    };
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/bf9dfa25-33a5-43ea-8faf-cc1ef39a27c3";

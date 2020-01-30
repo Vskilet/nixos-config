@@ -14,6 +14,9 @@ in
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  # Select internationalisation properties.
+  i18n.defaultLocale = "fr_FR.UTF-8";
+  console.keyMap = "fr";
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config = {
