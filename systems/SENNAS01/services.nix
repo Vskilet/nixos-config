@@ -26,24 +26,24 @@ in
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domain = domain;
   services.haproxy-acme.services = {
-    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
-    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; extraBackend = "${jellyfin_backend}"; };
-    "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
-    "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
-    "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    "riot.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "riot"; auth = false; };
-    "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    "wedding.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "wedding"; auth = false; };
-    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = config.services.pgmanage.port; auth = true; };
-    "vilodec.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "vilodec"; auth = false; };
-    "git.${domain}" = { ip = "127.0.0.1"; port = config.services.gitea.httpPort; auth = false; };
-    "office.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "office"; auth = false; };
     "roundcube.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "${config.services.roundcube.hostName}"; auth = false; };
+    "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
+    "office.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "office"; auth = false; };
+    "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    "git.${domain}" = { ip = "127.0.0.1"; port = config.services.gitea.httpPort; auth = false; };
+    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
+    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; extraBackend = "${jellyfin_backend}"; };
     "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
     "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
     "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
+    "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    "riot.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "riot"; auth = false; };
+    "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    "wedding.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "wedding"; auth = false; };
+    "vilodec.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "vilodec"; auth = false; };
     "apc.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "apc.${domain}"; auth = false; };
-    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
+    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = config.services.pgmanage.port; auth = true; };
+    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
 
     "external.vilodec.fr" = { ip = "127.0.0.1"; port = 4200; auth = true; };
   };
@@ -54,7 +54,6 @@ in
     database = {
       username = "roundcube";
       host = "localhost";
-      password = "roundcube";
       dbname = "roundcube";
     };
     plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
