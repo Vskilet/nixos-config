@@ -18,6 +18,7 @@ in
   # $ nix-env -qaP | grep wget
   nixpkgs.config = {
     allowUnfree = true;
+    firefox.enablePlasmaBrowserIntegration = true;
   };
   environment.systemPackages = with pkgs; with kdeApplications; [
     ark
