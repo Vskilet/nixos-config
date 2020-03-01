@@ -56,15 +56,16 @@ in
     transmission-remote-gtk
     filelight
     signal-desktop
-    tdesktop
 
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
     nixnote2
+    qownnotes
     libreoffice
     gimp
     vlc
+    zim
 
     audacity
     qlcplus
