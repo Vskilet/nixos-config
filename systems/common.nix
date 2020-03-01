@@ -4,6 +4,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
+  # Select internationalisation properties.
+  i18n.defaultLocale = "fr_FR.UTF-8";
+  console.keyMap = "fr";
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.overlays = [
