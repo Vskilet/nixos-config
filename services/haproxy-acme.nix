@@ -127,6 +127,7 @@ in
       };
     };
 
+    security.acme.acceptTerms = true;
     security.acme.certs = {
       "${cfg.domain}" = {
         extraDomains = mapAttrs' (name: value:
