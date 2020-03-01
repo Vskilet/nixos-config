@@ -31,6 +31,7 @@
     tmux
     git
     tig
+    jq
 
     lm_sensors
     pdftk
