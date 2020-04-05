@@ -83,6 +83,8 @@ in
 
   services.searx.enable = true;
 
+  users.users.gitea.uid = 998;
+  users.groups.gitea.gid = 492;
   services.gitea = {
     enable = true;
     httpPort = 30006;
