@@ -38,6 +38,7 @@ in
     spectacle
     yakuake
     yakuake_autostart
+    anydesk
 
     gparted
     gwenview
@@ -56,6 +57,7 @@ in
     transmission-remote-gtk
     filelight
     signal-desktop
+    riot-desktop
 
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
