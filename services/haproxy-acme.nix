@@ -138,7 +138,7 @@ in
         allowKeysForGroup = true;
         group = "acme";
         postRun = ''
-          systemctl reload haproxy
+          systemctl restart haproxy.service
         '';
       };
     };
