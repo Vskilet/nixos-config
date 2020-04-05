@@ -43,6 +43,7 @@ in
     "apc.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "apc.${domain}"; auth = false; };
     "pgmanage.${domain}" = { ip = "127.0.0.1"; port = config.services.pgmanage.port; auth = true; };
     "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
+    "videos.${domain}" = { ip = "127.0.0.1"; port = 9000; auth = false; };
 
     "external.vilodec.fr" = { ip = "127.0.0.1"; port = 4200; auth = true; };
   };
@@ -63,6 +64,7 @@ in
     enable = true;
     hostName = "cloud.${domain}";
     https = true;
+    package = pkgs.nextcloud18;
     nginx.enable = true;
     poolSettings = {
       "pm" = "dynamic";
