@@ -416,6 +416,20 @@ in
       processes = {};
       system = {};
       disk = {};
+      cgroup = [
+        {
+          paths = [
+            "/sys/fs/cgroup/memory/system.slice/*"
+          ];
+          files = ["memory.*usage*" "memory.limit_in_bytes"];
+        }
+        {
+          paths = [
+            "/sys/fs/cgroup/cpu/system.slice/*"
+          ];
+          files = ["cpuacct.usage" "cpu.cfs_period_us" "cpu.cfs_quota_us"];
+        }
+      ];
       smart = {
         path = "${pkgs.writeShellScriptBin "smartctl" "/run/wrappers/bin/sudo ${pkgs.smartmontools}/bin/smartctl $@"}/bin/smartctl";
       };
