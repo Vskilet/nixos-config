@@ -13,9 +13,6 @@ in
       type = types.str;
       description = "Principal domain name for the mail server";
     };
-    adomain = mkOption {
-      type = types.str;
-    };
   };
 
   imports = [
@@ -30,7 +27,8 @@ in
     mailserver = {
       enable = true;
       fqdn = "mail.${cfg.domain}";
-      domains = [ cfg.domain cfg.adomain ];
+      messageSizeLimit = 26214400;
+      domains = [ cfg.domain ];
 
       # A list of all login accounts. To create the password hashes, use
       # mkpasswd -m sha-512 "super secret password"
@@ -73,7 +71,6 @@ in
       "${cfg.domain}" = {
         extraDomains = {
           "mail.${cfg.domain}" = null;
-          "mail.${cfg.adomain}" = null;
         };
         postRun = ''
           systemctl reload dovecot2.service

@@ -4,7 +4,6 @@ with lib;
 
 let
   domain = "sene.ovh";
-  adomain = "senequenous.fr";
 
   jellyfin_backend = ''
     http-request set-header X-Forwarded-Port %[dst_port]
@@ -79,7 +78,6 @@ in
       dbpass = "nextcloud";
       dbtableprefix = "oc_";
       adminpass = "nextlcoud";
-      extraTrustedDomains = ["storm.${adomain}"];
     };
   };
 
@@ -240,7 +238,6 @@ in
   ####################################
   services.mailserver.enable = true;
   services.mailserver.domain = domain;
-  services.mailserver.adomain = adomain;
 
   services.matrix-synapse = {
     enable = true;
