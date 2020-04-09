@@ -89,6 +89,7 @@ in
   users.groups.gitea.gid = 492;
   services.gitea = {
     enable = true;
+    cookieSecure = true;
     httpPort = 30006;
     rootUrl = "https://git.${domain}/";
     disableRegistration = true;
