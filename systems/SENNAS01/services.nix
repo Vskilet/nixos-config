@@ -288,7 +288,7 @@ in
 
   services.roundcube = {
     enable = true;
-    hostName = "roundcube.${domain}";
+    hostName = "roundcube.sene.ovh";
     database = {
       username = "roundcube";
       host = "localhost";
@@ -300,7 +300,7 @@ in
 
   services.nextcloud = {
     enable = true;
-    hostName = "cloud.${domain}";
+    hostName = "cloud.sene.ovh";
     https = true;
     package = pkgs.nextcloud18;
     nginx.enable = true;
@@ -329,7 +329,7 @@ in
     enable = true;
     cookieSecure = true;
     httpPort = 30006;
-    rootUrl = "https://git.${domain}/";
+    rootUrl = "https://git.sene.ovh/";
     disableRegistration = true;
     database = {
       type = "postgres";
@@ -394,12 +394,12 @@ in
   ##         Communication          ##
   ####################################
   services.mailserver.enable = true;
-  services.mailserver.domain = domain;
+  services.mailserver.domain = "sene.ovh";
 
   services.matrix-synapse = {
     enable = true;
     enable_registration = true;
-    server_name = "${domain}";
+    server_name = "sene.ovh";
     listeners = [
       { # federation
         bind_address = "";
@@ -427,8 +427,8 @@ in
     database_args = {
       database = "matrix-synapse";
     };
-    tls_private_key_path = "/var/lib/acme/${domain}/key.pem";
-    tls_certificate_path = "/var/lib/acme/${domain}/fullchain.pem";
+    tls_private_key_path = "/var/lib/acme/sene.ovh/key.pem";
+    tls_certificate_path = "/var/lib/acme/sene.ovh/fullchain.pem";
     max_upload_size = "100M";
     url_preview_enabled = true;
     logConfig = ''
@@ -457,19 +457,15 @@ in
       disable_existing_loggers: False
     '';
   };
-  users.groups.acme.members = [ "matrix-synapse" ];
-  systemd.services.matrix-synapse = {
-    serviceConfig = {
-      MemoryHigh = "3G";
-      MemoryMax = "5G";
-    };
-  };
+  users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
+  security.acme.certs."sene.ovh".allowKeysForGroup = true;
+
   services.mautrix-whatsapp = {
     enable = true;
     configOptions = {
       homeserver = {
-        address = "https://matrix.${domain}";
-        domain = "${domain}";
+        address = "https://matrix.sene.ovh";
+        domain = "sene.ovh";
       };
       appservice = {
         address = http://localhost:8081;
@@ -628,9 +624,9 @@ in
     addr = "127.0.0.1";
     dataDir = "/var/lib/grafana";
     extraOptions = {
-      SERVER_ROOT_URL = "https://grafana.${domain}";
+      SERVER_ROOT_URL = "https://grafana.sene.ovh";
       SMTP_ENABLED = "true";
-      SMTP_FROM_ADDRESS = "grafana@${domain}";
+      SMTP_FROM_ADDRESS = "grafana@sene.ovh";
       SMTP_SKIP_VERIFY = "true";
       AUTH_DISABLE_LOGIN_FORM = "true";
       AUTH_DISABLE_SIGNOUT_MENU = "true";
