@@ -48,7 +48,38 @@ echo "============================================================
  - Swap in use.........: `free -m | tail -n 1 | awk '{print $3}'` MB
  - System uptime.......: $upDays days $upHours hours $upMins minutes $upSecs seconds
 ============================================================"
-services=( "grafana.service" "searx.service" "gitea.service" "matrix-synapse.service" "docker.service" "" "dovecot2.service" "postfix.service" "rspamd.service" "" "haproxy.service" "nginx.service" "phpfpm-web.service" "phpfpm-roundcube.service" "phpfpm-nextcloud.service" "" "influxdb.service" "pgmanage.service" "postgresql.service" "mysql.service" "" "jellyfin.service" "transmission.service" "jackett.service" "radarr.service" "sonarr.service" )
+services=(
+  "nginx.service"
+  "nginx-sso.service"
+  "phpfpm-web.service"
+  "phpfpm-nextcloud.service"
+  "phpfpm-roundcube.service"
+  "matrix-synapse.service"
+  "mautrix-whatsapp.service"
+  "gitea.service"
+  "grafana.service"
+  "jellyfin.service"
+  "searx.service"
+  "docker.service"
+  "rspamd.service"
+  "postfix.service"
+  "dovecot2.service"
+  ""
+  "pgmanage.service"
+  "postgresql.service"
+  "mysql.service"
+  "influxdb.service"
+  ""
+  "sonarr.service"
+  "radarr.service"
+  "jackett.service"
+  "transmission.service"
+  ""
+  "smartd.service"
+  "telegraf.service"
+  "firewall.service"
+  "fail2ban.service"
+  )
 
 for var in "${services[@]}"
 do
