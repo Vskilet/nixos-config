@@ -54,6 +54,9 @@ in
     ../../services/mautrix-whatsapp.nix
   ];
 
+  services.unifi.enable = true;
+  services.unifi.unifiPackage = pkgs.unifiStable;
+
   ####################################
   ##          WEB services          ##
   ####################################
@@ -688,7 +691,6 @@ in
   networking.firewall.allowedTCPPorts = [
     80
     443
-    8443
     51413 # Transmission
     8448 # Matrix Federation
   ];
