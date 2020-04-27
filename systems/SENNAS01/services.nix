@@ -4,48 +4,286 @@ with lib;
 
 let
   domain = "sene.ovh";
-
   jellyfin_backend = ''
     http-request set-header X-Forwarded-Port %[dst_port]
     http-request add-header X-Forwarded-Proto https if { ssl_fc }
   '';
 
-  nginxGetFirstLocalPort = vh: (findFirst (x: x.addr == "127.0.0.1") (throw "No local port found") config.services.nginx.virtualHosts.${vh}.listen).port;
+  nginxSsoAuth = pkgs.writeText "nginx-sso_auth.inc" ''
+    # Protect this location using the auth_request
+    auth_request /sso-auth;
+
+    # Redirect the user to the login page when they are not logged in
+    error_page 401 = @error401;
+
+    location /sso-auth {
+        # Do not allow requests from outside
+        internal;
+
+        # Access /auth endpoint to query login state
+        proxy_pass http://127.0.0.1:${toString(config.services.nginx.sso.configuration.listen.port)}/auth;
+
+        # Do not forward the request body (nginx-sso does not care about it)
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+
+        # Set custom information for ACL matching: Each one is available as
+        # a field for matching: X-Host = x-host, ...
+        proxy_set_header X-Origin-URI $request_uri;
+        proxy_set_header X-Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # If the user is lead to /logout redirect them to the logout endpoint
+    # of ngninx-sso which then will redirect the user to / on the current host
+    location /sso-logout {
+        return 302 https://login.sene.ovh/logout?go=$scheme://$http_host/;
+    }
+
+    # Define where to send the user to login and specify how to get back
+    location @error401 {
+        return 302 https://login.sene.ovh/login?go=$scheme://$http_host$request_uri;
+    }
+  '';
 in
 {
   imports = [
     ../../services/mailserver.nix
-    ../../services/haproxy-acme.nix
     ../../services/mautrix-whatsapp.nix
   ];
 
   ####################################
   ##          WEB services          ##
   ####################################
-  services.haproxy-acme.enable = true;
-  services.haproxy-acme.domain = domain;
-  services.haproxy-acme.services = {
-    "roundcube.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "${config.services.roundcube.hostName}"; auth = false; };
-    "cloud.${domain}" = { ip = "127.0.0.1"; port = 8441; auth = false; };
-    "office.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "office"; auth = false; };
-    "searx.${domain}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    "git.${domain}" = { ip = "127.0.0.1"; port = config.services.gitea.httpPort; auth = false; };
-    "shell.${domain}" = { ip = "127.0.0.1"; port = 4200; auth = true; };
-    "stream.${domain}" = { ip = "127.0.0.1"; port = 8096; auth = false; extraBackend = "${jellyfin_backend}"; };
-    "jackett.${domain}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
-    "sonarr.${domain}" = { ip = "127.0.0.1"; port = 8989; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
-    "radarr.${domain}" = { ip = "127.0.0.1"; port = 7878; auth = true; extraAcls = "acl API path_beg /api\n"; aclBool = "!AUTH_OK !API"; };
-    "seed.${domain}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
-    "riot.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "riot"; auth = false; };
-    "matrix.${domain}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    "wedding.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "wedding"; auth = false; };
-    "vilodec.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "vilodec"; auth = false; };
-    "apc.${domain}" = { ip = "127.0.0.1"; port = nginxGetFirstLocalPort "apc.${domain}"; auth = false; };
-    "pgmanage.${domain}" = { ip = "127.0.0.1"; port = config.services.pgmanage.port; auth = true; };
-    "grafana.${domain}" = { ip = "127.0.0.1"; port = 3000; auth = true; };
-    "videos.${domain}" = { ip = "127.0.0.1"; port = 9000; auth = false; };
 
-    "external.vilodec.fr" = { ip = "127.0.0.1"; port = 4200; auth = true; };
+  security.acme = {
+    email = "victor@sene.ovh";
+    acceptTerms = true;
+  };
+  services.nginx = {
+    enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    commonHttpConfig = ''
+      map $scheme $hsts_header {
+        https   "max-age=31536000; includeSubdomains; preload";
+      }
+      add_header Strict-Transport-Security  $hsts_header;
+      add_header Referrer-Policy            origin-when-cross-origin;
+
+      error_page 500 502 503 504 https://sene.ovh/errorpages/50x.html;
+    '';
+    sso = {
+      enable = true;
+      environmentFile = "/mnt/secrets/nginx-sso.env";
+      configuration = {
+        listen = {
+          addr = "127.0.0.1";
+          port = 8082;
+        };
+        login = {
+          title = "SENE-NET login";
+          default_method = "simple";
+          hide_mfa_field = true;
+          names.simple = "Username / Password";
+        };
+        cookie = {
+          domain = ".sene.ovh";
+          secure = true;
+        };
+        audit_log = {
+          targets = [ "fd://stdout" ];
+          events = [ "access_denied" "login_success" "login_failure" "logout" ];
+        };
+        providers.simple = {
+          enable_basic_auth = true;
+          users = {
+            victor = "$2y$10$8OeX2FlnodZgx9QoYRugq.ObARUy6sMfop6wasoaRgjtXU7ZdHnOC";
+          };
+          groups = {
+            admins = [ "victor" ];
+          };
+        };
+        acl = {
+          rule_sets = [
+            {
+              rules = [ { field = "x-host"; regexp = ".*"; } ];
+              allow = [ "@admins" ];
+            }
+          ];
+        };
+      };
+    };
+    virtualHosts = let
+      base = locations: {
+        inherit locations;
+        forceSSL = true;
+        enableACME = true;
+      };
+      simpleReverse = targetport: base {
+        "/" = {
+          proxyPass = "http://127.0.0.1:${toString(targetport)}/";
+        };
+      };
+      authReverse = targetport: base {
+        "/" = {
+          proxyPass = "http://127.0.0.1:${toString(targetport)}/";
+          extraConfig = ''
+            auth_request_set $cookie $upstream_http_set_cookie;
+            add_header Set-Cookie $cookie;
+          '';
+        };
+      } // {
+        extraConfig = ''
+          include ${nginxSsoAuth};
+        '';
+      };
+    in {
+      "sene.ovh" = {
+        default = true;
+        enableACME = true;
+        forceSSL = true;
+        locations = {
+          "/" = {
+            alias = "/var/www/frontpage/";
+          };
+          "/errorpages/" = {
+            alias = "/var/www/errorpages/";
+          };
+        };
+      };
+      "login.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString(config.services.nginx.sso.configuration.listen.port)}/";
+      	};
+      };
+      "riot.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        locations = { "/" = { root = pkgs.riot-web; }; };
+      };
+      "vilodec.sene.ovh" = {
+      	enableACME = true;
+        forceSSL = true;
+        locations = { "/" = {
+          root = "/var/www/vilodec";
+          index = "index.php";
+          extraConfig = ''
+            location ~* \.php$ {
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass unix:${config.services.phpfpm.pools.web.socket};
+              include ${pkgs.nginx}/conf/fastcgi_params;
+              include ${pkgs.nginx}/conf/fastcgi.conf;
+            }
+          '';
+        }; };
+      };
+      "office.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        extraConfig = ''
+          # static files
+          location ^~ /loleaflet {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $host;
+          }
+
+          # WOPI discovery URL
+          location ^~ /hosting/discovery {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $host;
+          }
+
+          # main websocket
+          location ~ ^/lool/(.*)/ws$ {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 36000s;
+          }
+
+          # download, presentation and image upload
+          location ~ ^/lool {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Host $host;
+          }
+
+          # Admin Console websocket
+          location ^~ /lool/adminws {
+              proxy_pass https://localhost:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 36000s;
+          }
+        '';
+      };
+      "apc.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        locations = { "/" = { root = "/var/www/apc"; }; };
+      };
+      "cloud.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+      };
+      "matrix.sene.ovh" = simpleReverse 8008;
+      "searx.sene.ovh" = simpleReverse 8888;
+      "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
+      "stream.sene.ovh" = simpleReverse 8096;
+      "jackett.sene.ovh" = authReverse 9117;
+      "sonarr.sene.ovh" = authReverse 8989;
+      "radarr.sene.ovh" = authReverse 7878;
+      "seed.sene.ovh" = authReverse config.services.transmission.port;
+      "pgmanage.sene.ovh" = authReverse config.services.pgmanage.port;
+      "grafana.sene.ovh" = authReverse config.services.grafana.port;
+      "unifi.sene.ovh" = {
+	enableACME = true;
+        forceSSL = true;
+        locations = {
+	  "/" = {
+            extraConfig = ''
+	      proxy_pass_header Authorization;
+	      proxy_pass https://127.0.0.1:8443/;
+	      proxy_set_header Host $host;
+	      proxy_set_header X-Real-IP $remote_addr;
+	      proxy_set_header X-Forwarded-Host $host;
+	      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	      proxy_set_header X-Forwarded-Proto $scheme;
+            '';
+          };
+	  "/wss/" = {
+            extraConfig = ''
+              proxy_pass https://127.0.0.1:8443;
+              proxy_http_version 1.1;
+              proxy_buffering off;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_read_timeout 86400;
+	    '';
+	  };
+	};
+      };
+      "home.sene.ovh" = simpleReverse config.services.home-assistant.port;
+      "videos.sene.ovh" = {
+      	enableACME = true;
+        forceSSL = true;
+        locations = { "/" = {
+          proxyPass = "http://127.0.0.1:9000/";
+          extraConfig = ''
+            client_max_body_size 5G;
+          '';
+        }; };
+      };
+    };
   };
 
   services.roundcube = {
@@ -114,87 +352,6 @@ in
       rpc-bind-address = "127.0.0.1";
       rpc-host-whitelist = "*";
       rpc-whitelist-enabled = false;
-    };
-  };
-
-  services.nginx = {
-    enable = true;
-    virtualHosts = {
-      ${config.services.roundcube.hostName} = {
-        listen = [ { addr = "127.0.0.1"; port = 30005; } ];
-        forceSSL = false;
-        enableACME = false;
-      };
-      "riot" = {
-        listen = [ { addr = "127.0.0.1"; port = 30001; } ];
-        locations = { "/" = { root = pkgs.riot-web; }; };
-      };
-      "wedding" = {
-        listen = [ { addr = "127.0.0.1"; port = 30002; } ];
-        locations = { "/" = { root = "/var/www/wedding"; }; };
-      };
-      "vilodec" = {
-        listen = [ { addr = "127.0.0.1"; port = 30004; } ];
-        locations = { "/" = {
-          root = "/var/www/vilodec";
-          index = "index.php";
-          extraConfig = ''
-            location ~* \.php$ {
-              fastcgi_split_path_info ^(.+\.php)(/.+)$;
-              fastcgi_pass unix:${config.services.phpfpm.pools.web.socket};
-              include ${pkgs.nginx}/conf/fastcgi_params;
-              include ${pkgs.nginx}/conf/fastcgi.conf;
-            }
-          '';
-        }; };
-      };
-      "cloud.${domain}" = {
-        listen = [ { addr = "127.0.0.1"; port = 8441; } ];
-      };
-      "office" = {
-        listen = [ { addr = "127.0.0.1"; port = 30007; } ];
-        extraConfig = ''
-          # static files
-          location ^~ /loleaflet {
-              proxy_pass https://localhost:9980;
-              proxy_set_header Host $host;
-          }
-
-          # WOPI discovery URL
-          location ^~ /hosting/discovery {
-              proxy_pass https://localhost:9980;
-              proxy_set_header Host $host;
-          }
-
-          # main websocket
-          location ~ ^/lool/(.*)/ws$ {
-              proxy_pass https://localhost:9980;
-              proxy_set_header Upgrade $http_upgrade;
-              proxy_set_header Connection "Upgrade";
-              proxy_set_header Host $host;
-              proxy_read_timeout 36000s;
-          }
-
-          # download, presentation and image upload
-          location ~ ^/lool {
-              proxy_pass https://localhost:9980;
-              proxy_set_header Host $host;
-          }
-
-          # Admin Console websocket
-          location ^~ /lool/adminws {
-              proxy_pass https://localhost:9980;
-              proxy_set_header Upgrade $http_upgrade;
-              proxy_set_header Connection "Upgrade";
-              proxy_set_header Host $host;
-              proxy_read_timeout 36000s;
-          }
-        '';
-      };
-      "apc.${domain}" = {
-        listen = [ { addr = "127.0.0.1"; port = 30008; } ];
-        locations = { "/" = { root = "/var/www/apc"; }; };
-      };
     };
   };
 
@@ -533,6 +690,9 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [
+    80
+    443
+    8443
     51413 # Transmission
     8448 # Matrix Federation
   ];
