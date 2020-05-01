@@ -40,11 +40,14 @@ in
     yakuake_autostart
     anydesk
 
+    kdenlive
+    ffmpeg-full
+    frei0r
+
     gparted
     gwenview
     imagemagick
     gnome-breeze
-    arc-theme
     materia-theme
     wineWowPackages.unstable
     (winetricks.override {
@@ -76,6 +79,7 @@ in
     spotify
 
     appimage-run
+    youtube-dl
     gnupg
     gopass
     xclip
