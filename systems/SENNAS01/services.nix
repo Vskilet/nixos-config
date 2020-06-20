@@ -54,8 +54,11 @@ in
     ../../services/mautrix-whatsapp.nix
   ];
 
-  services.unifi.enable = true;
-  services.unifi.unifiPackage = pkgs.unifiStable;
+  services.unifi = {
+    enable = true;
+    unifiPackage = pkgs.unifiStable;
+    openPorts = true;
+  };
 
   ####################################
   ##          WEB services          ##
