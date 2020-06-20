@@ -487,47 +487,6 @@ in
       };
     };
   };
-  services.mautrix-telegram = {
-    enable = true;
-    config = {
-      homeserver = {
-        address = "https://matrix.${domain}";
-        domain = "${domain}";
-      };
-
-      appservice = {
-        bot_displayname = "Telegram Bot";
-        provisioning.enabled = false;
-        public = {
-          enabled = true;
-          prefix = "/public";
-          external = "https://matrix.${domain}/public";
-        };
-      };
-
-      bridge = {
-        relaybot.authless_portals = false;
-        permissions = {
-          "*" = "relaybot";
-          "@vskilet:sene.ovh" = "admin";
-        };
-      };
-
-      telegram = {
-        api_id = lib.fileContents /mnt/secrets/mautrix-telegram_api-id;
-        api_hash = lib.fileContents /mnt/secrets/mautrix-telegram_api-hash;
-      };
-
-      logging = {
-        loggers = {
-          mau.level = "DEBUG";
-          telethon.level = "DEBUG";
-          aiohttp.level = "INFO";
-        };
-        root.level = "DEBUG";
-      };
-    };
-  };
 
   ####################################
   ##          Supervision           ##
