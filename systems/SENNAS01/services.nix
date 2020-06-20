@@ -175,22 +175,6 @@ in
         forceSSL = true;
         locations = { "/" = { root = pkgs.riot-web; }; };
       };
-      "vilodec.sene.ovh" = {
-      	enableACME = true;
-        forceSSL = true;
-        locations = { "/" = {
-          root = "/var/www/vilodec";
-          index = "index.php";
-          extraConfig = ''
-            location ~* \.php$ {
-              fastcgi_split_path_info ^(.+\.php)(/.+)$;
-              fastcgi_pass unix:${config.services.phpfpm.pools.web.socket};
-              include ${pkgs.nginx}/conf/fastcgi_params;
-              include ${pkgs.nginx}/conf/fastcgi.conf;
-            }
-          '';
-        }; };
-      };
       "office.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
@@ -231,11 +215,6 @@ in
               proxy_read_timeout 36000s;
           }
         '';
-      };
-      "apc.sene.ovh" = {
-        enableACME = true;
-        forceSSL = true;
-        locations = { "/" = { root = "/var/www/apc"; }; };
       };
       "cloud.sene.ovh" = {
         enableACME = true;
@@ -278,7 +257,6 @@ in
 	  };
 	};
       };
-      "home.sene.ovh" = simpleReverse config.services.home-assistant.port;
       "videos.sene.ovh" = {
       	enableACME = true;
         forceSSL = true;
