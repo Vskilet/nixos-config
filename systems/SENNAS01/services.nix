@@ -471,7 +471,7 @@ in
       };
       bridge = {
         username_template = "whatsapp_{{.}}";
-        displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}} (WA)";
+        displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}}";
         command_prefix = "!wa";
         permissions = {
           "@vskilet:sene.ovh" = "admin";
@@ -483,7 +483,7 @@ in
         file_date_format = "2006-01-02";
         file_mode = 0384;
         timestamp_format = "Jan _2, 2006 15:04:05";
-        print_level = "debug";
+        print_level = "error";
       };
     };
   };
