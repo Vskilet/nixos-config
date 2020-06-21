@@ -91,6 +91,8 @@ in
 
   fonts.fonts = with pkgs; [
     corefonts
+    dejavu_fonts
+    freefont_ttf
   ];
 
   programs.wireshark.enable = true;
