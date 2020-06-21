@@ -15,15 +15,19 @@
   ];
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    dnsutils
+    nix-index
+    nix-prefetch-scripts
+    nox
+
     nmap
+    iperf
+    telnet
+    dnsutils
     pciutils
     usbutils
     htop
     acpi
-    iperf
-    net_snmp
-    telnet
+    ncdu
 
     nvim
     bat
