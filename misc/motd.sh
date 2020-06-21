@@ -45,7 +45,6 @@ echo "============================================================
  - Current user........: $USER
  - CPU usage...........: $LOAD1, $LOAD5, $LOAD15 (1, 5, 15 min)
  - Memory used.........: $MEMORY
- - Swap in use.........: `free -m | tail -n 1 | awk '{print $3}'` MB
  - System uptime.......: $upDays days $upHours hours $upMins minutes $upSecs seconds
 ============================================================"
 services=(
@@ -74,11 +73,6 @@ services=(
   "radarr.service"
   "jackett.service"
   "transmission.service"
-  ""
-  "smartd.service"
-  "telegraf.service"
-  "firewall.service"
-  "fail2ban.service"
   )
 
 for var in "${services[@]}"
