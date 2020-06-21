@@ -61,12 +61,13 @@ in
     filelight
     signal-desktop
     riot-desktop
+    skypeforlinux
+    teams
 
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
     nixnote2
-    qownnotes
     libreoffice
     gimp
     vlc
@@ -83,7 +84,6 @@ in
     gnupg
     gopass
     xclip
-    woeusb
     jmtpfs
 
     vitetris
@@ -157,6 +157,6 @@ in
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "18.09";
+  system.stateVersion = "20.03";
   system.autoUpgrade.enable = true;
 }
