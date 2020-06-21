@@ -9,8 +9,12 @@
     ];
 
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4519fb92-2e56-4210-952a-1e5e4922e4d9";
