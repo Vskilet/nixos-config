@@ -319,6 +319,10 @@ in
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea-db";
     };
+    extraConfig = ''
+      [server]
+      LANDING_PAGE = explore
+    '';
   };
 
   services.jellyfin.enable = true;
