@@ -299,9 +299,9 @@ in
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
-      dbpass = "nextcloud";
+      dbpassFile = "/mnt/secrets/nextcloud_config_dbpassFile";
       dbtableprefix = "oc_";
-      adminpass = "nextlcoud";
+      adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
     };
   };
 
@@ -317,7 +317,7 @@ in
     disableRegistration = true;
     database = {
       type = "postgres";
-      passwordFile = "/mnt/secrets/gitea-db";
+      passwordFile = "/mnt/secrets/gitea_database_passwordFile";
     };
     extraConfig = ''
       [server]
@@ -371,9 +371,6 @@ in
   services.pgmanage.connections = {
     localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
-
-  services.mysql.enable = true;
-  services.mysql.package = pkgs.mysql;
 
   services.influxdb.enable = true;
   services.influxdb.dataDir = "/var/db/influxdb";

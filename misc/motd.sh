@@ -66,7 +66,6 @@ services=(
   ""
   "pgmanage.service"
   "postgresql.service"
-  "mysql.service"
   "influxdb.service"
   ""
   "sonarr.service"
