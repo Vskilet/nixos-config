@@ -67,8 +67,9 @@ in
     skypeforlinux
     teams
 
+    texstudio
     (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super;
+      inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
     nixnote2
     libreoffice
