@@ -31,6 +31,8 @@ in
     konversation
     kcalc
     kdeplasma-addons
+    kdepim-runtime
+    kdepim-addons
     akonadiconsole
     akonadi-calendar
     akonadi-contacts
