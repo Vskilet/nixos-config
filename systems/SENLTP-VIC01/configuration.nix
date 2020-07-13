@@ -31,6 +31,8 @@ in
     konversation
     kcalc
     kdeplasma-addons
+    kdepim-runtime
+    kdepim-addons
     akonadiconsole
     akonadi-calendar
     akonadi-contacts
@@ -40,6 +42,7 @@ in
     yakuake_autostart
     anydesk
 
+    obs-studio
     kdenlive
     ffmpeg-full
     frei0r
@@ -64,8 +67,9 @@ in
     skypeforlinux
     teams
 
+    texstudio
     (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super;
+      inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
     nixnote2
     libreoffice
