@@ -42,6 +42,7 @@ in
     yakuake_autostart
     anydesk
 
+    obs-studio
     kdenlive
     ffmpeg-full
     frei0r
