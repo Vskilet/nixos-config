@@ -63,18 +63,22 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.syntaxHighlighting.enable = true;
-  programs.zsh.ohMyZsh.enable = true;
-  programs.zsh.ohMyZsh.plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
-  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
-  programs.zsh.promptInit = ''
-    autoload -U promptinit
-    promptinit
-    prompt adam2
-  '';
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
+    };
+    shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
+    promptInit = ''
+      autoload -U promptinit
+      promptinit
+      prompt adam2
+    '';
+  };
 
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 15d";
