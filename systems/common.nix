@@ -32,7 +32,6 @@
     nvim
     bat
     wget
-    tmux
     git
     tig
     jq
@@ -43,6 +42,25 @@
   ];
 
   environment.variables = { EDITOR = "nvim"; };
+
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    terminal = "screen-256color";
+    newSession = true;
+    historyLimit = 10000;
+    extraConfig = ''
+      bind-key a set-window-option synchronize-panes
+      set-option -g mode-keys vi
+      set -g mouse on
+      unbind '|'
+      bind-key % split-window -h
+      unbind '"'
+      bind-key - split-window -v
+      unbind 'n'
+      bind-key n new-window
+    '';
+  };
 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
