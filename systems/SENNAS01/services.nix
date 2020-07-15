@@ -286,7 +286,7 @@ in
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud18;
+    package = pkgs.nextcloud19;
     nginx.enable = true;
     poolSettings = {
       "pm" = "dynamic";
