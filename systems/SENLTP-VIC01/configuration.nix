@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   yakuake_autostart = (pkgs.makeAutostartItem { name = "yakuake"; package = pkgs.yakuake; srcPrefix = "org.kde."; });
-  nextcloud_autostart = (pkgs.makeAutostartItem { name = "nextcloud"; package = pkgs.nextcloud-client; });
+  nextcloud_autostart = (pkgs.makeAutostartItem { name = "nextcloud"; package = pkgs.nextcloud-client; srcPrefix = "com.nextcloud.desktopclient."; });
 in
 {
   imports =
