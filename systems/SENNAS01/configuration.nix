@@ -37,9 +37,6 @@
   environment.systemPackages = with pkgs; [
     borgbackup rclone kubectl
   ];
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.0.2u"
-  ];
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "zfs";
