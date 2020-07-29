@@ -38,7 +38,9 @@ in
         };
         "constance@${cfg.domain}" = {
           hashedPassword = "$6$wGIPnWzZqfJD0.l$HpxYitiTsIWQVFoJOnJax5ZEJXucdhMsfc8vKgNzX7QfQQ/CSIwcozXfB49cqEXRivktd3aKcop1k7tCo840w/";
-          aliases = ["douceurdecreation@${cfg.domain}"];
+          aliases = [
+            "constance.prowin@${cfg.domain}"
+          ];
         };
         "prunille@${cfg.domain}" = {
           hashedPassword = "$6$0KdsLs/b5d8$WMs406bs/UxI.Gby36AWudtJ9G2plFucdOO/9wjUPDM5i9f.TSMV9leYjB/m4U2cu8xTVXY8WR5bPghEelsCs/";
