@@ -302,6 +302,7 @@ in
       dbpassFile = "/mnt/secrets/nextcloud_config_dbpassFile";
       dbtableprefix = "oc_";
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
+      extraTrustedDomains = config.services.nginx.virtualHosts."cloud.sene.ovh".serverAliases;
     };
   };
 
