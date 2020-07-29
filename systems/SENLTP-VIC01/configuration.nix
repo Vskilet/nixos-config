@@ -46,6 +46,7 @@ in
     kdenlive
     ffmpeg-full
     frei0r
+    v4l-utils
 
     gparted
     gwenview
