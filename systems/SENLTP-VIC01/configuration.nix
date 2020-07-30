@@ -92,6 +92,10 @@ in
     jmtpfs
 
     vitetris
+
+    gnome3.adwaita-icon-theme
+    virt-manager
+    virt-viewer
   ];
 
   fonts.fonts = with pkgs; [
@@ -115,8 +119,14 @@ in
   services.flatpak.enable = true;
 
   virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.kvmgt.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemuOvmf = true;
+    #qemuRunAsRoot = false;
+    onBoot = "ignore";
+    onShutdown = "shutdown";
+  };
 
   services.tlp.enable = true;
   services.tlp.extraConfig = ''
