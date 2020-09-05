@@ -153,6 +153,7 @@ in
         default = true;
         enableACME = true;
         forceSSL = true;
+        serverAliases = [ "stech.ovh" ];
         locations = {
           "/" = {
             alias = "/var/www/frontpage/";
@@ -244,6 +245,7 @@ in
       "matrix.sene.ovh" = simpleReverse 8008;
       "searx.sene.ovh" = simpleReverse 8888;
       "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
+      "git.stech.ovh" = simpleReverse config.services.gitea.httpPort;
       "stream.sene.ovh" = simpleReverse 8096;
       "jackett.sene.ovh" = authReverse 9117;
       "sonarr.sene.ovh" = authReverse 8989;
@@ -251,9 +253,11 @@ in
       "seed.sene.ovh" = authReverse config.services.transmission.port;
       "pgmanage.sene.ovh" = authReverse config.services.pgmanage.port;
       "grafana.sene.ovh" = authReverse config.services.grafana.port;
+      "grafana.stech.ovh" = authReverse config.services.grafana.port;
       "unifi.sene.ovh" = {
 	enableACME = true;
         forceSSL = true;
+        serverAliases = [ "unifi.stech.ovh" ];
         locations = {
 	  "/" = {
             extraConfig = ''
@@ -281,6 +285,7 @@ in
       "videos.sene.ovh" = {
       	enableACME = true;
         forceSSL = true;
+        serverAliases = [ "videos.stech.ovh" ];
         locations = { "/" = {
           proxyPass = "http://127.0.0.1:9000/";
           extraConfig = ''
@@ -410,8 +415,11 @@ in
   ####################################
   ##         Communication          ##
   ####################################
-  services.mailserver.enable = true;
-  services.mailserver.domain = "sene.ovh";
+  services.mailserver = {
+    enable = true;
+    fqdn = "sene.ovh";
+    domains = [ "sene.ovh" "stech.ovh"];
+  };
 
   services.matrix-synapse = {
     enable = true;
