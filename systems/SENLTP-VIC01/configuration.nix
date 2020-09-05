@@ -64,7 +64,7 @@ in
     transmission-remote-gtk
     filelight
     signal-desktop
-    riot-desktop
+    element-desktop
     skypeforlinux
     teams
 
