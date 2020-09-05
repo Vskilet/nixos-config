@@ -272,16 +272,6 @@ in
     };
   };
 
-  services.loolwsd = {
-    enable = true;
-    package = pkgs.collabora-online;
-    dictionaries = [ "fr-moderne" ];
-    proxy = {
-      enable = true;
-      hostname = config.services.nextcloud.hostName;
-    };
-  };
-
   services.searx.enable = true;
 
   users.users.gitea.uid = 998;
