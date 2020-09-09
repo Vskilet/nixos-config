@@ -41,6 +41,7 @@ in
     yakuake
     yakuake_autostart
     anydesk
+    mkpasswd
 
     obs-studio
     kdenlive
@@ -73,10 +74,11 @@ in
       inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
     nixnote2
+    zim
     libreoffice
     gimp
     vlc
-    zim
+    molotov
 
     audacity
     qlcplus
