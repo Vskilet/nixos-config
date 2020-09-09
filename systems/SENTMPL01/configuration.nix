@@ -7,7 +7,7 @@
       ./users.nix
     ];
 
-  networking.hostName = "asus-amarie"; # Define your hostname.
+  networking.hostName = "SENLPT-VIC03"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Use the GRUB 2 boot loader.
@@ -16,18 +16,42 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  # Select internationalisation properties.
-  i18n = {
-     consoleKeyMap = "fr";
-     defaultLocale = "fr_FR.UTF-8";
-  };
   # Set your time zone.
   time.timeZone = "Europe/Paris";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "fr_FR.UTF-8";
+  console.keyMap = "fr";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; with kdeApplications; [
+    ark
+    kate
+    kmail
+    kaddressbook
+    korganizer
+    kdeconnect
+    okular
+    konversation
+    kcalc
+    kdeplasma-addons
+    kdepim-runtime
+    kdepim-addons
+    akonadiconsole
+    akonadi-calendar
+    akonadi-contacts
+    akonadi-notes
+    spectacle
+    yakuake
+    anydesk
+    mkpasswd
+    
+    nix-index
+    nix-prefetch-scripts
+    nox
+    
     dnsutils
     nmap
     pciutils
@@ -35,14 +59,17 @@
     htop
     acpi
     iperf
+    ncdu
 
+    bat
     wget
     tmux
-    neovim
+    nvim
     git
     tig
     tmate
-
+    jq
+    
     lm_sensors
     pdftk
     ghostscript
@@ -68,24 +95,51 @@
     gimp
     vlc
     appimage-run
+    molotov
 
     chessx
     superTux
+    teams
   ];
 
+  environment.variables = { EDITOR = "nvim"; };
+
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    terminal = "screen-256color";
+    newSession = true;
+    historyLimit = 10000;
+    extraConfig = ''
+      bind-key a set-window-option synchronize-panes
+      set-option -g mode-keys vi
+      set -g mouse on
+      unbind '|'
+      bind-key % split-window -h
+      unbind '"'
+      bind-key - split-window -v
+      unbind 'n'
+      bind-key n new-window
+    '';
+  };
+
   users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.syntaxHighlighting.enable = true;
-  programs.zsh.ohMyZsh.enable = true;
-  programs.zsh.ohMyZsh.plugins = [ "git" "colored-man-pages" "command-not-found" "extract" "nix" ];
-  programs.zsh.shellAliases = { ll="ls -alh --color=auto"; vim="nvim"; };
-  programs.zsh.promptInit = ''
-    autoload -U promptinit
-    promptinit
-    prompt adam2
-  '';
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
+    };
+    shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
+    promptInit = ''
+      autoload -U promptinit
+      promptinit
+      prompt adam2
+    '';
+  };
 
   services.tlp.enable = true;
   services.tlp.extraConfig = ''
@@ -117,7 +171,9 @@
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = true;
 
-  services.xserver.desktopManager.mate.enable = true;
+  # Enable the KDE Desktop Environment.
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ];
@@ -129,7 +185,7 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "18.09";
+  system.stateVersion = "20.03";
   system.autoUpgrade.enable = true;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 15d";
