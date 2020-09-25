@@ -23,8 +23,8 @@ in
 
   imports = [
     (builtins.fetchTarball {
-      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/v2.3.0/nixos-mailserver-v2.3.0.tar.gz";
-      sha256 = "0lpz08qviccvpfws2nm83n7m2r8add2wvfg9bljx9yxx8107r919";
+      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/358cfcdfbe6ca137983c6629e174a98c306209cd/nixos-mailserver-358cfcdfbe6ca137983c6629e174a98c306209cd.tar.gz";
+      sha256 = "0kib5qp4li4241yk474w1a7j1gsgb8gp3jj1sdhih22g40g69llb";
     })
   ];
 
@@ -79,15 +79,11 @@ in
       enableManageSieve = true;
     };
 
-    security.acme.certs = {
-      "${cfg.fqdn}" = {
-        extraDomains = {
-          "mail.${cfg.fqdn}" = null;
-        };
-        postRun = ''
-          systemctl reload dovecot2.service
-        '';
-      };
+    security.acme.certs."${cfg.fqdn}" = {
+      extraDomainNames = [ "mail.${cfg.fqdn}" ];
+      postRun = ''
+        systemctl reload dovecot2.service
+      '';
     };
   };
 }
