@@ -174,7 +174,7 @@ in
       "riot.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
-        locations = { "/" = { root = pkgs.riot-web; }; };
+        locations = { "/" = { root = pkgs.element-web; }; };
       };
       "cloud.sene.ovh" = {
         enableACME = true;
@@ -253,7 +253,6 @@ in
     hostName = "cloud.sene.ovh";
     https = true;
     package = pkgs.nextcloud19;
-    nginx.enable = true;
     poolSettings = {
       "pm" = "dynamic";
       "pm.max_children" = "75";
@@ -286,10 +285,11 @@ in
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea_database_passwordFile";
     };
-    extraConfig = ''
-      [server]
-      LANDING_PAGE = explore
-    '';
+    settings = {
+      server = {
+        LANDING_PAGE = "explore";
+      };
+    };
   };
 
   services.jellyfin.enable = true;
@@ -300,6 +300,7 @@ in
   services.transmission = {
     enable = true;
     home = "/var/lib/transmission";
+    port = 51413;
     settings = {
       download-dir = "/mnt/medias/downloads/";
       incomplete-dir = "/mnt/medias/downloads/.incomplete";
@@ -413,7 +414,6 @@ in
     '';
   };
   users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
-  security.acme.certs."sene.ovh".allowKeysForGroup = true;
 
   services.mautrix-whatsapp = {
     enable = true;

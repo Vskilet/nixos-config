@@ -1,6 +1,6 @@
 self: super:
 {
-  riot-web = super.riot-web.override {
+  element-web = super.element-web.override {
     conf = {
       default_server_config = {
         "m.homeserver" = {
