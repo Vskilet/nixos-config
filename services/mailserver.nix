@@ -59,7 +59,7 @@ in
           hashedPassword = "$6$9VdG71TJ4$eurEDwedEqA3TKeTpSI6l6r8MTRBpSGebIINusp0wxCNRt7AEwWWRGfp219oJgdCWqiYEB5DQzp.PXuQCkqVN0";
         };
         "david.beiner@stech.ovh" = {
-          hashedPassword = "$6$9VdG71TJ4$eurEDwedEqA3TKeTpSI6l6r8MTRBpSGebIINusp0wxCNRt7AEwWWRGfp219oJgdCWqiYEB5DQzp.PXuQCkqVN0";
+          hashedPassword = "$6$RJf0cot4$IRLvlrf5SAqfRQML91U6TGYvYFMaYPUYn4zMKhczVhAhbeb.Ens8JUqPglA2h70e5deXMko/jAf6MLy3z3zxG1";
         };
 
       };
