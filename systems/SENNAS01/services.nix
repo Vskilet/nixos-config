@@ -300,7 +300,8 @@ in
   services.transmission = {
     enable = true;
     home = "/var/lib/transmission";
-    port = 51413;
+    port = 9091;
+    openFirewall = true;
     settings = {
       download-dir = "/mnt/medias/downloads/";
       incomplete-dir = "/mnt/medias/downloads/.incomplete";
@@ -308,8 +309,10 @@ in
       rpc-bind-address = "127.0.0.1";
       rpc-host-whitelist = "*";
       rpc-whitelist-enabled = false;
+      peer-port = 51413;
     };
   };
+  systemd.services.transmission.serviceConfig.BindPaths = [ "/mnt/medias/" ];
 
   services.phpfpm.pools.web = {
     user = "nginx";
@@ -602,10 +605,6 @@ in
   networking.firewall.allowedTCPPorts = [
     80
     443
-    51413 # Transmission
     8448 # Matrix Federation
-  ];
-  networking.firewall.allowedUDPPorts = [
-    51413 # Transmission
   ];
 }
