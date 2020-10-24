@@ -42,6 +42,7 @@ in
     yakuake_autostart
     anydesk
     mkpasswd
+    jitsi-meet-electron
 
     obs-studio
     kdenlive
