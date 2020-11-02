@@ -174,6 +174,7 @@ in
       "riot.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
+        serverAliases = [ "chat.sene.ovh" ];
         locations = { "/" = { root = pkgs.element-web; }; };
       };
       "cloud.sene.ovh" = {
@@ -364,7 +365,7 @@ in
         bind_address = "";
         port = 8448;
         resources = [
-          { compress = true; names = [ "client" "webclient" ]; }
+          { compress = true; names = [ "client" ]; }
           { compress = false; names = [ "federation" ]; }
         ];
         tls = true;
@@ -375,7 +376,7 @@ in
         bind_address = "127.0.0.1";
         port = 8008;
         resources = [
-          { compress = true; names = [ "client" "webclient" ]; }
+          { compress = true; names = [ "client" ]; }
         ];
         tls = false;
         type = "http";
