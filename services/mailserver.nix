@@ -60,6 +60,9 @@ in
         };
         "david.beiner@stech.ovh" = {
           hashedPassword = "$6$RJf0cot4$IRLvlrf5SAqfRQML91U6TGYvYFMaYPUYn4zMKhczVhAhbeb.Ens8JUqPglA2h70e5deXMko/jAf6MLy3z3zxG1";
+          aliases = [
+            "david67@stech.ovh"
+          ];
         };
 
       };
