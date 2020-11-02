@@ -56,7 +56,7 @@ in
 
   services.unifi = {
     enable = true;
-    unifiPackage = pkgs.unifiStable;
+    unifiPackage = pkgs.unifiBeta;
     openPorts = true;
   };
 
