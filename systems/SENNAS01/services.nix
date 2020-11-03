@@ -356,6 +356,29 @@ in
     domains = [ "sene.ovh" "stech.ovh"];
   };
 
+  services.jitsi-meet = {
+    enable = true;
+    hostName = "meet.sene.ovh";
+    config = {
+      enableWelcomePage = true;
+      prejoinPageEnabled = true;
+      defaultLang = "fr";
+    };
+    interfaceConfig = {
+      SHOW_JITSI_WATERMARK = false;
+      SHOW_WATERMARK_FOR_GUESTS = false;
+    };
+  };
+  services.jitsi-videobridge = {
+    openFirewall = true;
+    nat = {
+      localAddress = "192.168.1.12";
+      #config.networking.interfaces."enp2s0".ipv4.addresses.0.address;
+      publicAddress = "176.179.179.58";
+    };
+  };
+  boot.kernel.sysctl."net.core.rmem_max" = 10485760;
+
   services.matrix-synapse = {
     enable = true;
     enable_registration = true;
