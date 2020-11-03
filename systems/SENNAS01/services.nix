@@ -253,7 +253,7 @@ in
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud19;
+    package = pkgs.nextcloud20;
     poolSettings = {
       "pm" = "dynamic";
       "pm.max_children" = "75";
