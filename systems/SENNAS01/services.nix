@@ -70,6 +70,9 @@ in
   };
   services.nginx = {
     enable = true;
+    package = pkgs.nginx.override {
+      modules = with pkgs.nginxModules; [ rtmp ];
+    };
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
@@ -234,9 +237,49 @@ in
           '';
         }; };
       };
+      "live.sene.ovh" = base {
+        "/" = {
+          root = "/var/www/hls/";
+          extraConfig = ''
+            add_header Cache-Control no-cache;
+            add_header Access-Control-Allow-Origin *;
+          '';
+        };
+      };
     };
-  };
+    appendConfig = let
+      rootLocation = config.services.nginx.virtualHosts."live.sene.ovh".locations."/".root;
+    in ''
+      rtmp {
+        server {
+          listen 1935;
 
+          application live {
+            live on;
+
+            exec_push ${pkgs.ffmpeg}/bin/ffmpeg -i rtmp://localhost/$app/$name -async 1 -vsync -1
+                        -c:v libx264 -c:a aac -b:v 768k -b:a 96k -vf "scale=720:trunc(ow/a/2)*2" -tune zerolatency -preset ultrafast -crf 28 -f flv rtmp://localhost/show/$name_mid
+                        -c:v libx264 -c:a aac -b:v 1024k -b:a 128k -vf "scale=960:trunc(ow/a/2)*2" -tune zerolatency -preset ultrafast -crf 28 -f flv rtmp://localhost/show/$name_high
+                        -c copy -f flv rtmp://localhost/show/$name_src 2>>${rootLocation}/ffmpeg-$name.log;
+          }
+
+          application show {
+            live on;
+            hls on;
+
+            hls_path ${rootLocation};
+            hls_fragment 3s;
+            hls_playlist_length 60s;
+
+            hls_variant _mid BANDWIDTH=448000; # Medium bitrate, SD resolution
+            hls_variant _high BANDWIDTH=1152000; # High bitrate, higher-than-SD resolution
+            hls_variant _src BANDWIDTH=4096000; # Source bitrate, source resolution
+          }
+        }
+      }
+    '';
+  };
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www/" ];
   services.roundcube = {
     enable = true;
     hostName = "roundcube.sene.ovh";
@@ -630,5 +673,6 @@ in
     80
     443
     8448 # Matrix Federation
+    1935 # RTMP
   ];
 }
