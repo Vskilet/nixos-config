@@ -413,10 +413,14 @@ in
       enableWelcomePage = true;
       prejoinPageEnabled = true;
       defaultLang = "fr";
+      enableNoisyMicDetection = false;
     };
     interfaceConfig = {
       SHOW_JITSI_WATERMARK = false;
       SHOW_WATERMARK_FOR_GUESTS = false;
+      DISABLE_VIDEO_BACKGROUND = true;
+      PROVIDER_NAME = "sene.ovh";
+      DISABLE_JOIN_LEAVE_NOTIFICATIONS = true;
     };
   };
   services.jitsi-videobridge = {
