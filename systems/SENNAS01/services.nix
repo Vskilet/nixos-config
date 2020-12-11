@@ -377,6 +377,31 @@ in
     };
   };
 
+  #services.nfs.server = {
+  #  enable = true;
+  #  exports = ''
+  #    /mnt/medias  192.168.1.0/24(ro,no_root_squash)
+  #  '';
+  #  statdPort = 4000;
+  #  lockdPort = 4001;
+  #  mountdPort = 4002;
+  #};
+
+  services.samba = {
+    enable = true;
+    extraConfig = ''
+      max protocol SMB1
+      client max protocol SMB1
+    '';
+    shares.medias = {
+      path = "/mnt/medias";
+      "read only" = true;
+      browseable = "yes";
+      "guest ok" = "yes";
+      comment = "SENE's medias share.";
+    };
+  };
+
   ####################################
   ##            Databases           ##
   ####################################
@@ -674,5 +699,11 @@ in
     443
     8448 # Matrix Federation
     1935 # RTMP
+    111 2049 4000 4001 4002 # NFS
+    139 445 # SMB
+  ];
+  networking.firewall.allowedUDPPorts = [
+    111 2049 4000 4001 4002 # NFS
+    137 138 # SMB
   ];
 }
