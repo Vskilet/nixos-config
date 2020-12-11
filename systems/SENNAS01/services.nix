@@ -190,10 +190,6 @@ in
       "searx.sene.ovh" = simpleReverse 8888;
       "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
       "git.stech.ovh" = simpleReverse config.services.gitea.httpPort;
-      "stream.sene.ovh" = simpleReverse 8096;
-      "jackett.sene.ovh" = authReverse 9117;
-      "sonarr.sene.ovh" = authReverse 8989;
-      "radarr.sene.ovh" = authReverse 7878;
       "seed.sene.ovh" = authReverse config.services.transmission.port;
       "pgmanage.sene.ovh" = authReverse config.services.pgmanage.port;
       "grafana.sene.ovh" = authReverse config.services.grafana.port;
@@ -226,6 +222,7 @@ in
 	  };
 	};
       };
+      "stream.sene.ovh" = simpleReverse 8096;
       "videos.sene.ovh" = {
       	enableACME = true;
         forceSSL = true;
@@ -336,10 +333,10 @@ in
     };
   };
 
-  services.jellyfin.enable = true;
-  services.sonarr.enable = true;
-  services.radarr.enable = true;
-  services.jackett.enable = true;
+  services.jellyfin = {
+    enable = true;
+    package = pkgs.jellyfin;
+  };
 
   services.transmission = {
     enable = true;
