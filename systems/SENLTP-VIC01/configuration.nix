@@ -67,8 +67,8 @@ in
     filelight
     signal-desktop
     element-desktop
-    skypeforlinux
     teams
+    zoom-us
 
     texstudio
     (texlive.combine {
