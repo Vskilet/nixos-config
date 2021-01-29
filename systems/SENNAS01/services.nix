@@ -231,16 +231,7 @@ in
           '';
         }; };
       };
-  services.roundcube = {
-    enable = true;
-    hostName = "roundcube.sene.ovh";
-    database = {
-      username = "roundcube";
-      host = "localhost";
-      dbname = "roundcube";
     };
-    plugins = ["archive" "attachment_reminder" "autologon" "emoticons" "filesystem_attachments" "help" "identicon" "identity_select" "jqueryui" "managesieve" "show_additional_headers" "subscriptions_option" "virtuser_file" "zipdownload"];
-    extraConfig = lib.fileContents ../../misc/config.inc.php;
   };
 
   services.nextcloud = {

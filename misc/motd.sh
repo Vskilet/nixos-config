@@ -52,7 +52,6 @@ services=(
   "nginx-sso.service"
   "phpfpm-web.service"
   "phpfpm-nextcloud.service"
-  "phpfpm-roundcube.service"
   ""
   "matrix-synapse.service"
   "gitea.service"
