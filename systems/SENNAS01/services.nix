@@ -188,6 +188,7 @@ in
       "searx.sene.ovh" = simpleReverse 8888;
       "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
       "git.stech.ovh" = simpleReverse config.services.gitea.httpPort;
+      "apc.stech.ovh" = simpleReverse 30007;
       "seed.sene.ovh" = authReverse config.services.transmission.port;
       "pgmanage.sene.ovh" = authReverse config.services.pgmanage.port;
       "grafana.sene.ovh" = authReverse config.services.grafana.port;
