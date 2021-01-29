@@ -241,6 +241,7 @@ in
     hostName = "cloud.sene.ovh";
     https = true;
     package = pkgs.nextcloud20;
+    autoUpdateApps.enable = true;
     poolSettings = {
       "pm" = "dynamic";
       "pm.max_children" = "75";
@@ -256,6 +257,15 @@ in
       dbtableprefix = "oc_";
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
       extraTrustedDomains = config.services.nginx.virtualHosts."cloud.sene.ovh".serverAliases;
+    };
+  };
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      onlyoffice = {
+        image = "onlyoffice/documentserver";
+        ports = [ "9981:80" ];
+      };
     };
   };
 
