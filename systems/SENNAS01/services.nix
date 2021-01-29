@@ -92,13 +92,14 @@ in
           port = 8082;
         };
         login = {
-          title = "SENE-NET login";
+          title = "STECH Corp.";
           default_method = "simple";
           hide_mfa_field = true;
           names.simple = "Username / Password";
         };
         cookie = {
           domain = ".sene.ovh";
+          expire = 10800;
           secure = true;
         };
         audit_log = {
