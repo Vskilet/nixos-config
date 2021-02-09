@@ -167,7 +167,7 @@ in
       "login.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
-
+        serverAliases = [ "login.stech.ovh" ];
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString(config.services.nginx.sso.configuration.listen.port)}/";
       	};
@@ -175,7 +175,7 @@ in
       "riot.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
-        serverAliases = [ "chat.sene.ovh" ];
+        serverAliases = [ "chat.sene.ovh" "chat.stech.ovh" ];
         locations = { "/" = { root = pkgs.element-web; }; };
       };
       "cloud.sene.ovh" = {
