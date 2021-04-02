@@ -240,16 +240,8 @@ in
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud20;
+    package = pkgs.nextcloud21;
     autoUpdateApps.enable = true;
-    poolSettings = {
-      "pm" = "dynamic";
-      "pm.max_children" = "75";
-      "pm.start_servers" = "10";
-      "pm.min_spare_servers" = "5";
-      "pm.max_spare_servers" = "20";
-      "pm.max_requests" = "500";
-    };
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
@@ -257,6 +249,7 @@ in
       dbtableprefix = "oc_";
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
       extraTrustedDomains = config.services.nginx.virtualHosts."cloud.sene.ovh".serverAliases;
+      defaultPhoneRegion = "FR";
     };
   };
   virtualisation.oci-containers = {
@@ -320,11 +313,11 @@ in
       "listen.mode" = "0660";
       "user" = "nginx";
       "pm" = "dynamic";
-      "pm.max_children" = "75";
-      "pm.start_servers" = "2";
-      "pm.min_spare_servers" = "1";
-      "pm.max_spare_servers" =" 20";
-      "pm.max_requests" = "500";
+      "pm.max_children" = 75;
+      "pm.start_servers" = 10;
+      "pm.min_spare_servers" = 5;
+      "pm.max_spare_servers" = 20;
+      "pm.max_requests" = 500;
       "php_admin_value[error_log]" = "stderr";
       "php_admin_flag[log_errors]" = "on";
       "catch_workers_output" = "yes";
