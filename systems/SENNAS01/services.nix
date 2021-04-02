@@ -480,14 +480,13 @@ in
         domain = "sene.ovh";
       };
       appservice = {
-        address = http://localhost:8081;
+        address = http://localhost:29318;
         hostname = "0.0.0.0";
-        port = 8081;
+        port = 29318;
         database = {
           type = "sqlite3";
           uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
         };
-        state_store_path = "/var/lib/mautrix-whatsapp/mx-state.json";
         id = "whatsapp";
         bot = {
           username = "whatsappbot";
@@ -504,6 +503,10 @@ in
         permissions = {
           "@vskilet:sene.ovh" = "admin";
         };
+      };
+      relaybot = {
+        enabled = true;
+        management = "!whatsappbot:sene.ovh";
       };
       logging = {
         directory = "/var/lib/mautrix-whatsapp/logs";
