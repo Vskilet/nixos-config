@@ -162,6 +162,31 @@ in
           "/errorpages/" = {
             alias = "/var/www/errorpages/";
           };
+          "/.well-known/matrix/server" = {
+            extraConfig =
+              let
+                # use 443 instead of the default 8448 port to unite
+                # the client-server and server-server port for simplicity
+                server = { "m.server" = "matrix.sene.ovh:443"; };
+              in ''
+                add_header Content-Type application/json;
+                return 200 '${builtins.toJSON server}';
+              '';
+          };
+          "/.well-known/matrix/client" = {
+            extraConfig =
+              let
+                client = {
+                  "m.homeserver" =  { "base_url" = "https://matrix.sene.ovh"; };
+                  "m.identity_server" =  { "base_url" = "https://vector.im"; };
+                };
+              # ACAO required to allow element-web on any URL to request this json file
+              in ''
+                add_header Content-Type application/json;
+                add_header Access-Control-Allow-Origin *;
+                return 200 '${builtins.toJSON client}';
+              '';
+          };
         };
       };
       "login.sene.ovh" = {
@@ -171,6 +196,16 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString(config.services.nginx.sso.configuration.listen.port)}/";
       	};
+      };
+      "matrix.sene.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".extraConfig = ''
+          return 404;
+        '';
+        locations."/_matrix" = {
+          proxyPass = "http://127.0.0.1:8008";
+        };
       };
       "riot.sene.ovh" = {
         enableACME = true;
@@ -184,7 +219,6 @@ in
         serverAliases = [ "cloud.stech.ovh" ];
       };
       "onlyoffice.sene.ovh" = simpleReverse 9981;
-      "matrix.sene.ovh" = simpleReverse 8008;
       "searx.sene.ovh" = simpleReverse 8888;
       "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
       "git.stech.ovh" = simpleReverse config.services.gitea.httpPort;
@@ -388,22 +422,14 @@ in
     enable_registration = true;
     server_name = "sene.ovh";
     listeners = [
-      { # federation
-        bind_address = "";
-        port = 8448;
-        resources = [
-          { compress = true; names = [ "client" ]; }
-          { compress = false; names = [ "federation" ]; }
-        ];
-        tls = true;
-        type = "http";
-        x_forwarded = false;
-      }
-      { # client
+      {
         bind_address = "127.0.0.1";
         port = 8008;
         resources = [
-          { compress = true; names = [ "client" ]; }
+          {
+            compress = false;
+            names = [ "client" "federation" ];
+          }
         ];
         tls = false;
         type = "http";
@@ -633,7 +659,6 @@ in
   networking.firewall.allowedTCPPorts = [
     80
     443
-    8448 # Matrix Federation
     1935 # RTMP
     111 2049 4000 4001 4002 # NFS
   ];

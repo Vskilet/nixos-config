@@ -5,7 +5,7 @@ self: super:
       default_server_config = {
         "m.homeserver" = {
           base_url = "https://matrix.sene.ovh";
-          server_name = "sene.ovh";
+          server_name = "matrix.sene.ovh";
         };
         "m.identity_server" = {
           base_url = "https://vector.im";
