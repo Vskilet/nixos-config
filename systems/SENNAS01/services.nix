@@ -663,6 +663,7 @@ in
     80
     443
     1935 # RTMP
+    1688 # vlmscd
     111 2049 4000 4001 4002 # NFS
   ];
   networking.firewall.allowedUDPPorts = [
