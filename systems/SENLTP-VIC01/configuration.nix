@@ -20,7 +20,7 @@ in
     allowUnfree = true;
     firefox.enablePlasmaBrowserIntegration = true;
   };
-  environment.systemPackages = with pkgs; with kdeApplications; [
+  environment.systemPackages = with pkgs; with libsForQt5; [
     ark
     kate
     kmail
