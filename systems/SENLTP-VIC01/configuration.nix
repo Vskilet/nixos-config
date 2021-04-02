@@ -122,6 +122,7 @@ in
   services.flatpak.enable = true;
 
   virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
