@@ -38,6 +38,12 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/medias" =
+    { device = "192.168.1.136:/mnt/medias";
+      fsType = "nfs";
+      options = ["x-systemd.automount" "noauto"];
+    };
+
   swapDevices = [ ];
 
 

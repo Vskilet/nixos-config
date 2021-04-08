@@ -43,6 +43,8 @@ in
     anydesk
     mkpasswd
     jitsi-meet-electron
+    parted
+    nfsUtils
 
     obs-studio
     kdenlive
@@ -169,6 +171,8 @@ in
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
+  # Workaround nfsutils - Issue https://github.com/NixOS/nixpkgs/issues/24913
+  security.wrappers."mnt-medias.mount".source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ];
