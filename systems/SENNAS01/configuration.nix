@@ -9,14 +9,8 @@
       ../common.nix
     ];
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.grub.device = "/dev/disk/by-id/ata-CT240BX500SSD1_2003E3E28B59"; # or "nodev" for efi only
-
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
   services.zfs.autoSnapshot.enable = true;
   services.zfs.autoScrub.enable = true;
@@ -28,6 +22,11 @@
 
   networking.hostName = "SENNAS01"; # Define your hostname.
   networking.hostId = "7e44e347";
+  networking.useDHCP = false;
+  networking.interfaces.eno1.useDHCP = true;
+  networking.interfaces.eno2.useDHCP = true;
+  networking.interfaces.eno3.useDHCP = true;
+  networking.interfaces.eno4.useDHCP = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
