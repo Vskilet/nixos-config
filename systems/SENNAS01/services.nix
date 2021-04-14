@@ -4,10 +4,6 @@ with lib;
 
 let
   domain = "sene.ovh";
-  jellyfin_backend = ''
-    http-request set-header X-Forwarded-Port %[dst_port]
-    http-request add-header X-Forwarded-Proto https if { ssl_fc }
-  '';
 
   nginxSsoAuth = pkgs.writeText "nginx-sso_auth.inc" ''
     # Protect this location using the auth_request
@@ -255,7 +251,6 @@ in
 	  };
 	};
       };
-      "stream.sene.ovh" = simpleReverse 8096;
       "videos.sene.ovh" = {
       	enableACME = true;
         forceSSL = true;
@@ -315,11 +310,6 @@ in
         LANDING_PAGE = "explore";
       };
     };
-  };
-
-  services.jellyfin = {
-    enable = true;
-    package = pkgs.jellyfin;
   };
 
   services.transmission = {
