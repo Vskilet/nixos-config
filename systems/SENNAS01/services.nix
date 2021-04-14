@@ -142,7 +142,7 @@ in
         };
       } // {
         extraConfig = ''
-          include ${nginxSsoAuth};
+         include ${nginxSsoAuth};
         '';
       };
     in {
@@ -197,7 +197,7 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/".extraConfig = ''
-          return 404;
+          error_page 404 https://sene.ovh/errorpages/50x.html;
         '';
         locations."/_matrix" = {
           proxyPass = "http://127.0.0.1:8008";
@@ -215,7 +215,6 @@ in
         serverAliases = [ "cloud.stech.ovh" ];
       };
       "onlyoffice.sene.ovh" = simpleReverse 9981;
-      "searx.sene.ovh" = simpleReverse 8888;
       "git.sene.ovh" = simpleReverse config.services.gitea.httpPort;
       "git.stech.ovh" = simpleReverse config.services.gitea.httpPort;
       "apc.stech.ovh" = simpleReverse 30007;
@@ -291,8 +290,6 @@ in
     };
   };
 
-  services.searx.enable = true;
-
   users.users.gitea.uid = 998;
   users.groups.gitea.gid = 492;
   services.gitea = {
@@ -301,6 +298,7 @@ in
     httpPort = 30006;
     rootUrl = "https://git.sene.ovh/";
     disableRegistration = true;
+    log.level = "Warn";
     database = {
       type = "postgres";
       passwordFile = "/mnt/secrets/gitea_database_passwordFile";
@@ -520,7 +518,7 @@ in
   services.telegraf.extraConfig = {
     inputs = {
       zfs = { poolMetrics = true; };
-      net = { interfaces = [ "enp2s0" ]; };
+      net = { interfaces = [ "eno1" "eno2" "eno3" "eno4" ]; };
       netstat = {};
       cpu = { totalcpu = true; };
       sensors = {};

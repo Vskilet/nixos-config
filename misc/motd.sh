@@ -30,7 +30,7 @@ LOAD5=`cat /proc/loadavg | awk {'print $2'}`
 LOAD15=`cat /proc/loadavg | awk {'print $3'}`
 
 IPV4=`dig +short sene.ovh @resolver1.opendns.com`
-IPV6=`ip -6 addr show enp2s0 | awk '/inet6/{print $2}' | cut -d/ -f1 | head -1`
+IPV6=`ip -6 addr show eno1 | awk '/inet6/{print $2}' | cut -d/ -f1 | head -1`
 
 echo "============================================================"
 echo "Good $TIME $USER"
@@ -56,7 +56,6 @@ services=(
   "matrix-synapse.service"
   "gitea.service"
   "grafana.service"
-  "searx.service"
   "docker.service"
   ""
   "rspamd.service"
