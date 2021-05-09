@@ -13,6 +13,9 @@ in
 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.useDHCP = false;
+  networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlp3s0.useDHCP = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -123,7 +126,6 @@ in
 
   services.flatpak.enable = true;
 
-  virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
