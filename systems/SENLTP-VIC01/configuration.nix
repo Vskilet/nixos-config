@@ -180,7 +180,7 @@ in
   #networking.firewall.allowedTCPPorts = [ ];
   #networking.firewall.allowedUDPPorts = [ ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
