@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 let
   yakuake_autostart = (pkgs.makeAutostartItem { name = "yakuake"; package = pkgs.yakuake; srcPrefix = "org.kde."; });
-  nextcloud_autostart = (pkgs.makeAutostartItem { name = "nextcloud"; package = pkgs.nextcloud-client; srcPrefix = "com.nextcloud.desktopclient."; });
 in
 {
   imports =
@@ -13,6 +12,9 @@ in
 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.useDHCP = false;
+  networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlp3s0.useDHCP = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -43,6 +45,8 @@ in
     anydesk
     mkpasswd
     jitsi-meet-electron
+    parted
+    nfsUtils
 
     obs-studio
     kdenlive
@@ -84,7 +88,6 @@ in
     audacity
     qlcplus
     nextcloud-client
-    nextcloud_autostart
     spotify
 
     appimage-run
@@ -121,7 +124,6 @@ in
 
   services.flatpak.enable = true;
 
-  virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
@@ -160,7 +162,7 @@ in
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
-  services.xserver.libinput.naturalScrolling = true;
+  services.xserver.libinput.touchpad.naturalScrolling = true;
 
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
@@ -169,12 +171,14 @@ in
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
+  # Workaround nfsutils - Issue https://github.com/NixOS/nixpkgs/issues/24913
+  security.wrappers."mnt-medias.mount".source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [ ];
   #networking.firewall.allowedUDPPorts = [ ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

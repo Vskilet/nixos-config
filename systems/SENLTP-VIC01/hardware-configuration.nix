@@ -38,6 +38,12 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/medias" =
+    { device = "192.168.1.136:/mnt/medias";
+      fsType = "nfs";
+      options = ["x-systemd.automount" "noauto"];
+    };
+
   swapDevices = [ ];
 
 
@@ -51,6 +57,6 @@
   ];
 
   nix.maxJobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
 }
