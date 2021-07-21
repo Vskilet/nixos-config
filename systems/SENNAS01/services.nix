@@ -432,77 +432,15 @@ in
     tls_certificate_path = "/var/lib/acme/sene.ovh/fullchain.pem";
     max_upload_size = "100M";
     url_preview_enabled = true;
-    logConfig = ''
-      version: 1
-
-      formatters:
-          journal_fmt:
-              format: '%(name)s: [%(request)s] %(message)s'
-
-      filters:
-          context:
-              (): synapse.util.logcontext.LoggingContextFilter
-              request: ""
-
-      handlers:
-          journal:
-              class: systemd.journal.JournalHandler
-              formatter: journal_fmt
-              filters: [context]
-              SYSLOG_IDENTIFIER: synapse
-
-      root:
-          level: WARNING
-          handlers: [journal]
-
-      disable_existing_loggers: False
-    '';
   };
   users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
 
   services.mautrix-whatsapp = {
     enable = true;
-    configOptions = {
-      homeserver = {
-        address = "https://matrix.sene.ovh";
-        domain = "sene.ovh";
-      };
-      appservice = {
-        address = http://localhost:29318;
-        hostname = "0.0.0.0";
-        port = 29318;
-        database = {
-          type = "sqlite3";
-          uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
-        };
-        id = "whatsapp";
-        bot = {
-          username = "whatsappbot";
-          displayname = "WhatsApp Bot";
-          #avatar = "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr";
-        };
-        as_token = "";
-        hs_token = "";
-      };
-      bridge = {
-        username_template = "whatsapp_{{.}}";
-        displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}}";
-        command_prefix = "!wa";
-        permissions = {
-          "@vskilet:sene.ovh" = "admin";
-        };
-      };
-      relaybot = {
-        enabled = true;
-        management = "!whatsappbot:sene.ovh";
-      };
-      logging = {
-        directory = "/var/lib/mautrix-whatsapp/logs";
-        file_name_format = "{{.Date}}-{{.Index}}.log";
-        file_date_format = "2006-01-02";
-        file_mode = 0384;
-        timestamp_format = "Jan _2, 2006 15:04:05";
-        print_level = "error";
+    settings = {
+      homeserver.address = "https://matrix.sene.ovh";
+      bridge.permissions = {
+        "@vskilet:sene.ovh" = "admin";
       };
     };
   };
