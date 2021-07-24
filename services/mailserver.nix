@@ -5,6 +5,7 @@ with lib;
 
 let
   cfg = config.services.mailserver;
+  release = "master";
 in
 {
   options.services.mailserver = {
@@ -23,11 +24,17 @@ in
 
   imports = [
     (builtins.fetchTarball {
-      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/358cfcdfbe6ca137983c6629e174a98c306209cd/nixos-mailserver-358cfcdfbe6ca137983c6629e174a98c306209cd.tar.gz";
-      sha256 = "0kib5qp4li4241yk474w1a7j1gsgb8gp3jj1sdhih22g40g69llb";
+      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz";
+      sha256 = "160rc7w71rnysb19kp9rxzq0787azsivha72dspc5xzsijyk0977";
     })
   ];
-
+  #imports = [
+  #  (builtins.fetchGit {
+  #    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver";
+  #    ref = "master";
+  #    rev = "8b287056215cac91438a671054e7eb2c932ab21a";
+  #  })
+  #];
   config = mkIf cfg.enable {
 
     mailserver = {
@@ -41,6 +48,10 @@ in
       loginAccounts = {
         "victor@${cfg.fqdn}" = {
           hashedPassword = "$6$SKy30uwxPvGAS4j0$yTEAL5VyOwTXnkdxI/Caj0F44S7yMT.7w28c61miDmV6Q59xV.so2ds7soP1eZ0a6tTSjmzZCXe2xXeFI8KVp/";
+          aliases = [
+            "contact@${cfg.fqdn}"
+            "admin@${cfg.fqdn}"
+          ];
         };
         "constance@${cfg.fqdn}" = {
           hashedPassword = "$6$wGIPnWzZqfJD0.l$HpxYitiTsIWQVFoJOnJax5ZEJXucdhMsfc8vKgNzX7QfQQ/CSIwcozXfB49cqEXRivktd3aKcop1k7tCo840w/";
@@ -73,13 +84,17 @@ in
       keyFile = "/var/lib/acme/${cfg.fqdn}/key.pem";
 
       # Enable IMAP and POP3
-      enableImap = true;
+      enableImap = false;
       enablePop3 = false;
       enableImapSsl = true;
       enablePop3Ssl = false;
+      #enableSubmission = false;
+      enableSubmissionSsl = true;
 
       # Enable the ManageSieve protocol
       enableManageSieve = true;
+
+      virusScanning = false;
     };
 
     services.postfix = {
