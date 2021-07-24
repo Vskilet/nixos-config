@@ -264,6 +264,21 @@ in
           '';
         }; };
       };
+      "hd.stech.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        serverAliases = [ "www.hd.stech.ovh" ];
+        locations."/" = {
+          extraConfig = "return 301 https://dbeiner67.wixsite.com/monsite-1$request_uri;";
+        };
+      };
+      "meet.sene.ovh" = {
+        enableACME = true;
+        forceSSL   = true;
+        extraConfig = ''
+          more_set_headers "X-Frame-Options: ALLOW";
+        '';
+      };
     };
   };
 
@@ -401,9 +416,10 @@ in
   services.jitsi-videobridge = {
     openFirewall = true;
     nat = {
-      localAddress = "192.168.1.12";
+      localAddress = "192.168.1.136";
       #config.networking.interfaces."enp2s0".ipv4.addresses.0.address;
-      publicAddress = "176.179.179.58";
+      publicAddress = "128.78.187.125";
+      #"${pkgs.dnsutils}/bin/dig +short myip.opendns.com @208.67.222.222";
     };
   };
   boot.kernel.sysctl."net.core.rmem_max" = 10485760;
