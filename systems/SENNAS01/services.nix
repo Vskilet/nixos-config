@@ -153,7 +153,11 @@ in
         serverAliases = [ "stech.ovh" ];
         locations = {
           "/" = {
-            alias = "/var/www/frontpage/";
+            root = fetchGit {
+              url = "https://git.sene.ovh/victor/frontpage.git";
+              rev = "be5bd08e2a0a617bffe7988904d9aa1f0f534cfb";
+              ref = "refs/heads/master";
+            };
           };
           "/errorpages/" = {
             alias = "/var/www/errorpages/";
@@ -221,7 +225,6 @@ in
       "seed.sene.ovh" = authReverse config.services.transmission.port;
       "pgmanage.sene.ovh" = authReverse config.services.pgmanage.port;
       "grafana.sene.ovh" = authReverse config.services.grafana.port;
-      "grafana.stech.ovh" = authReverse config.services.grafana.port;
       "unifi.sene.ovh" = {
         enableACME = true;
         forceSSL = true;
