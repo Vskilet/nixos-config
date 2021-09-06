@@ -116,6 +116,5 @@
     extraConfig = ''
       include ${toString(config.environment.etc."nginx-sso_auth.inc".source)};
     '';
-      #include ${nginxSsoAuth};
   };
 }

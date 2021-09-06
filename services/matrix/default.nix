@@ -1,6 +1,13 @@
 { pkgs, config, lib, ... }:
 
 {
+  imports = [
+    ../../modules/mautrix-whatsapp
+  ];
+  nixpkgs.overlays = [
+    (import ../../overlays/riot-web.nix)
+  ];
+
   services.postgresql.enable = true;
   # Try to create database
 

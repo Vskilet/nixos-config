@@ -10,7 +10,6 @@ in
     (builtins.fetchTarball {
       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz";
       sha256 = "1fllk14cqkpjwmf6nsy6mknn4gvxwqcl4ysyh5hxpn6axwfwjvnf";
-      #sha256 = "160rc7w71rnysb19kp9rxzq0787azsivha72dspc5xzsijyk0977";
     })
   ];
   #imports = [
@@ -64,8 +63,6 @@ in
 
     # Certificate setup
     certificateScheme = 3;
-    #certificateFile = "/var/lib/acme/sene.ovh/fullchain.pem";
-    #keyFile = "/var/lib/acme/sene.ovh/key.pem";
 
     # Enable IMAP and POP3
     enableImap = false;
@@ -89,13 +86,5 @@ in
       smtp_tls_key_file = lib.mkForce "/var/lib/postfix/postfixrelay.key";
     };
   };
-
-#  security.acme.certs."${toString(config.mailserver.fqdn)}" = {
-#    webroot = "/var/lib/acme/.well-known/acme-challenge";
-#    extraDomainNames = [ "${toString(config.mailserver.fqdn)}" ];
-#    postRun = ''
-#      systemctl reload dovecot2.service
-#    '';
-#  };
 }
 
