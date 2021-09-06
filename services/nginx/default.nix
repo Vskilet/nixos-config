@@ -75,7 +75,7 @@ in
           "/" = {
             root = fetchGit {
               url = "https://git.sene.ovh/victor/frontpage.git";
-              rev = "be5bd08e2a0a617bffe7988904d9aa1f0f534cfb";
+              rev = "aec463e215d34d394130a072fa86b476fbe52392";
               ref = "refs/heads/master";
             };
           };
