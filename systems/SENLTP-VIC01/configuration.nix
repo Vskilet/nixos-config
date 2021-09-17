@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  yakuake_autostart = (pkgs.makeAutostartItem { name = "yakuake"; package = pkgs.yakuake; srcPrefix = "org.kde."; });
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -22,26 +19,7 @@ in
     allowUnfree = true;
     firefox.enablePlasmaBrowserIntegration = true;
   };
-  environment.systemPackages = with pkgs; with libsForQt5; [
-    ark
-    kate
-    kmail
-    kaddressbook
-    korganizer
-    kdeconnect
-    okular
-    konversation
-    kcalc
-    kdeplasma-addons
-    kdepim-runtime
-    kdepim-addons
-    akonadiconsole
-    akonadi-calendar
-    akonadi-contacts
-    akonadi-notes
-    spectacle
-    yakuake
-    yakuake_autostart
+  environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
     mkpasswd
     jitsi-meet-electron
@@ -99,9 +77,14 @@ in
 
     vitetris
 
-    gnome3.adwaita-icon-theme
-    virt-manager
-    virt-viewer
+    lxappearance
+    breeze-icons
+    gnome-breeze
+    numix-gtk-theme
+    numix-icon-theme
+    qt5ct
+    #materia-theme
+    #adwaita-icon-theme
   ];
 
   fonts.fonts = with pkgs; [
@@ -119,10 +102,6 @@ in
   programs.adb.enable = true;
 
   services.udev.packages = [ pkgs.qlcplus ];
-
-  environment.variables = { TERM = "konsole-256color"; };
-
-  services.flatpak.enable = true;
 
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
@@ -155,18 +134,50 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  environment.variables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    TERMINAL = "alacritty";
+  };
+
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "fr";
-  # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver = {
+    enable = true;
+    layout = "fr,us";
+    xkbVariant = ",intl";
+    xkbOptions = "grp:win_space_toggle";
+    libinput = {
+      enable = true;
+      touchpad.naturalScrolling = true;
+    };
+    displayManager.defaultSession = "none+i3";
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3status # gives you the default i3 status bar
+        i3lock #default i3 screen locker
+        i3blocks #if you are planning on using i3blocks over i3status
+        polybar multilockscreen rofi i3-auto-layout
+        alacritty
+     ];
+    };
+    desktopManager = {
+      xterm.enable = false;
+    };
+  };
+  services.picom = {
+    enable = true;
+    backend = "glx";
+    vSync = true;
+  };
 
-  # Enable touchpad support.
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.naturalScrolling = true;
-
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  programs.dconf.enable = true;
+  services.gnome.evolution-data-server.enable = true;
+  services.gnome.gnome-online-accounts.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  programs.evolution.enable = true;
+  programs.light.enable = true;
 
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
