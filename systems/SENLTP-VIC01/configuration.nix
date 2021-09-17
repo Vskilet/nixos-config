@@ -21,59 +21,62 @@
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
-    mkpasswd
-    jitsi-meet-electron
-    parted
-    nfsUtils
-
-    obs-studio
-    kdenlive
-    ffmpeg-full
-    frei0r
-    v4l-utils
-
+    evince
+    filelight
+    file-roller
+    gnome-calculator
     gparted
     gwenview
+    jitsi-meet-electron
+    kate
+    kdeconnect
     imagemagick
-    gnome-breeze
-    materia-theme
+    libreoffice
+    nautilus
+    nextcloud-client
+    okular
+    spectacle
+    texstudio
+    (texlive.combine {
+      inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
+    })
+    virt-manager
+    virt-viewer
     wineWowPackages.unstable
     (winetricks.override {
       wine = wineWowPackages.unstable;
     })
+    zim
 
     firefox
     chromium
-    filezilla
-    transmission-remote-gtk
-    filelight
     signal-desktop
     element-desktop
     teams
     zoom-us
 
-    texstudio
-    (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
-    })
-    nixnote2
-    zim
-    libreoffice
-    gimp
-    vlc
-    molotov
-
     audacity
+    ffmpeg-full
+    frei0r
+    gimp
+    kdenlive
+    molotov
+    obs-studio
+    pitivi
     qlcplus
-    nextcloud-client
     spotify
+    v4l-utils
+    vlc
 
     appimage-run
-    youtube-dl
     gnupg
     gopass
-    xclip
     jmtpfs
+    mkpasswd
+    nfsUtils
+    parted
+    youtube-dl
+    xclip
 
     vitetris
 
@@ -92,6 +95,9 @@
     dejavu_fonts
     freefont_ttf
   ];
+
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
