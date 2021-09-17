@@ -12,6 +12,7 @@
   networking.useDHCP = false;
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
+  hardware.bluetooth.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -121,11 +122,12 @@
 
   services.tlp.enable = true;
   services.tlp.settings = {
-    DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
-    START_CHARGE_THRESH_BAT0 = 85;
-    STOP_CHARGE_THRESH_BAT0 = 95;
+    #START_CHARGE_THRESH_BAT0 = 85;
+    #STOP_CHARGE_THRESH_BAT0 = 95;
+    CPU_SCALING_GOVERNOR_ON_AC="performance";
     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-    ENERGY_PERF_POLICY_ON_BAT = "powersave";
+    CPU_ENERGY_PERF_POLICY_ON_AC="performance";
+    CPU_ENERGY_PERF_POLICY_ON_BAT="balance_power";
   };
 
   services.pcscd.enable = true;
