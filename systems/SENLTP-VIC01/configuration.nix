@@ -107,7 +107,7 @@
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    qemuOvmf = true;
+    qemu.ovmf.enable = true;
     #qemuRunAsRoot = false;
     onBoot = "ignore";
     onShutdown = "shutdown";
@@ -115,8 +115,8 @@
 
   services.tlp.enable = true;
   services.tlp.settings = {
-    #START_CHARGE_THRESH_BAT0 = 85;
-    #STOP_CHARGE_THRESH_BAT0 = 95;
+    START_CHARGE_THRESH_BAT0 = 90;
+    STOP_CHARGE_THRESH_BAT0 = 95;
     CPU_SCALING_GOVERNOR_ON_AC="performance";
     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
     CPU_ENERGY_PERF_POLICY_ON_AC="performance";
