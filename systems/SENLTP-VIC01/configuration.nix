@@ -177,6 +177,7 @@
   services.gnome.evolution-data-server.enable = true;
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  services.gvfs.enable = true;
   programs.evolution.enable = true;
   programs.light.enable = true;
 
