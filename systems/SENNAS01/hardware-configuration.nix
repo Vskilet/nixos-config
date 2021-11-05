@@ -74,6 +74,46 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/gitea" =
+    { device = "senpool01/var/lib/gitea";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/grafana" =
+    { device = "senpool01/var/lib/grafana";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/matrix-synapse" =
+    { device = "senpool01/var/lib/matrix-synapse";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/nextcloud" =
+    { device = "senpool01/var/lib/nextcloud";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/opendkim" =
+    { device = "senpool01/var/lib/opendkim";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/peertube" =
+    { device = "senpool01/var/lib/peertube";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/postgresql" =
+    { device = "senpool01/var/lib/postgresql";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/unifi" =
+    { device = "senpool01/var/lib/unifi";
+      fsType = "zfs";
+    };
+
   fileSystems."/var/sieve" =
     { device = "senpool01/var/sieve";
       fsType = "zfs";
