@@ -184,12 +184,25 @@
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
-  # Workaround nfsutils - Issue https://github.com/NixOS/nixpkgs/issues/24913
-  security.wrappers."mnt-medias.mount".source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
+
+  services.nginx.enable = true;
+  services.nginx.virtualHosts = {
+    "localhost" = {
+      locations."/" = {
+       root = "/var/www/";
+      };
+      default = true;
+    };
+  };
 
   # Open ports in the firewall.
-  #networking.firewall.allowedTCPPorts = [ ];
-  #networking.firewall.allowedUDPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [
+    1716  # KDEConnect
+    80 443
+  ];
+  networking.firewall.allowedUDPPorts = [
+    1716  # KDEConnect
+  ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
