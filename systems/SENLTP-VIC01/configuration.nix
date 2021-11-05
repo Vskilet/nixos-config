@@ -43,17 +43,12 @@
     })
     virt-manager
     virt-viewer
-    wineWowPackages.unstable
-    (winetricks.override {
-      wine = wineWowPackages.unstable;
-    })
     zim
 
     firefox
     chromium
     signal-desktop
     element-desktop
-    teams
     zoom-us
 
     audacity
@@ -87,8 +82,6 @@
     numix-gtk-theme
     numix-icon-theme
     qt5ct
-    #materia-theme
-    #adwaita-icon-theme
   ];
 
   fonts.fonts = with pkgs; [
