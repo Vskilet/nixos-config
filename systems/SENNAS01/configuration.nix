@@ -8,6 +8,7 @@
       ./users.nix
       ../../services/gitea
       ../../services/jitsi
+      ../../services/kresus
       ../../services/mail
       ../../services/matrix
       ../../services/monitoring
