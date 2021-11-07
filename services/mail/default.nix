@@ -9,7 +9,7 @@ in
   imports = [
     (builtins.fetchTarball {
       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz";
-      sha256 = "0x6yyfnr6ghjx590xl8rnabz6dnqh0w7080vbp8ckk4nfvlymqdc";
+      sha256 = "1dyn502m9qgajvx6pz38kbpvwwi9h4ydw547yxs86m785yfnir59";
     })
   ];
   #imports = [
