@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  yakuake_autostart = (pkgs.makeAutostartItem { name = "yakuake"; package = pkgs.yakuake; srcPrefix = "org.kde."; });
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -15,6 +12,7 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
+  hardware.bluetooth.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -22,86 +20,68 @@ in
     allowUnfree = true;
     firefox.enablePlasmaBrowserIntegration = true;
   };
-  environment.systemPackages = with pkgs; with libsForQt5; [
-    ark
-    kate
-    kmail
-    kaddressbook
-    korganizer
-    kdeconnect
-    okular
-    konversation
-    kcalc
-    kdeplasma-addons
-    kdepim-runtime
-    kdepim-addons
-    akonadiconsole
-    akonadi-calendar
-    akonadi-contacts
-    akonadi-notes
-    spectacle
-    yakuake
-    yakuake_autostart
+  environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
-    mkpasswd
-    jitsi-meet-electron
-    parted
-    nfsUtils
-
-    obs-studio
-    kdenlive
-    ffmpeg-full
-    frei0r
-    v4l-utils
-
+    evince
+    filelight
+    file-roller
+    gnome-calculator
     gparted
     gwenview
+    jitsi-meet-electron
+    kate
+    kdeconnect
     imagemagick
-    gnome-breeze
-    materia-theme
-    wineWowPackages.unstable
-    (winetricks.override {
-      wine = wineWowPackages.unstable;
-    })
-
-    firefox
-    chromium
-    filezilla
-    transmission-remote-gtk
-    filelight
-    signal-desktop
-    element-desktop
-    teams
-    zoom-us
-
+    libreoffice
+    nautilus
+    nextcloud-client
+    okular
+    spectacle
     texstudio
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
-    nixnote2
+    virt-manager
+    virt-viewer
     zim
-    libreoffice
-    gimp
-    vlc
-    molotov
+
+    firefox
+    chromium
+    signal-desktop
+    element-desktop
+    zoom-us
 
     audacity
+    ffmpeg-full
+    frei0r
+    gimp
+    kdenlive
+    molotov
+    obs-studio
+    pitivi
     qlcplus
-    nextcloud-client
     spotify
+    v4l-utils
+    vlc
 
     appimage-run
-    youtube-dl
     gnupg
     gopass
-    xclip
     jmtpfs
+    mkpasswd
+    nfsUtils
+    parted
+    youtube-dl
+    xclip
 
     vitetris
 
-    gnome3.adwaita-icon-theme
-    virt-manager
-    virt-viewer
+    lxappearance
+    breeze-icons
+    gnome-breeze
+    numix-gtk-theme
+    numix-icon-theme
+    qt5ct
   ];
 
   fonts.fonts = with pkgs; [
@@ -109,6 +89,9 @@ in
     dejavu_fonts
     freefont_ttf
   ];
+
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
@@ -120,15 +103,11 @@ in
 
   services.udev.packages = [ pkgs.qlcplus ];
 
-  environment.variables = { TERM = "konsole-256color"; };
-
-  services.flatpak.enable = true;
-
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    qemuOvmf = true;
+    qemu.ovmf.enable = true;
     #qemuRunAsRoot = false;
     onBoot = "ignore";
     onShutdown = "shutdown";
@@ -136,11 +115,12 @@ in
 
   services.tlp.enable = true;
   services.tlp.settings = {
-    DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
-    START_CHARGE_THRESH_BAT0 = 85;
+    START_CHARGE_THRESH_BAT0 = 90;
     STOP_CHARGE_THRESH_BAT0 = 95;
+    CPU_SCALING_GOVERNOR_ON_AC="performance";
     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-    ENERGY_PERF_POLICY_ON_BAT = "powersave";
+    CPU_ENERGY_PERF_POLICY_ON_AC="performance";
+    CPU_ENERGY_PERF_POLICY_ON_BAT="balance_power";
   };
 
   services.pcscd.enable = true;
@@ -155,28 +135,74 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  environment.variables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    TERMINAL = "alacritty";
+  };
+
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "fr";
-  # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver = {
+    enable = true;
+    layout = "fr,us";
+    xkbVariant = ",intl";
+    xkbOptions = "grp:win_space_toggle";
+    libinput = {
+      enable = true;
+      touchpad.naturalScrolling = true;
+    };
+    displayManager.defaultSession = "none+i3";
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3status # gives you the default i3 status bar
+        i3lock #default i3 screen locker
+        i3blocks #if you are planning on using i3blocks over i3status
+        polybar xss-lock multilockscreen rofi i3-auto-layout
+        alacritty
+     ];
+    };
+    desktopManager = {
+      xterm.enable = false;
+    };
+  };
+  services.picom = {
+    enable = true;
+    backend = "glx";
+    vSync = true;
+  };
 
-  # Enable touchpad support.
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.naturalScrolling = true;
-
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  programs.dconf.enable = true;
+  services.gnome.evolution-data-server.enable = true;
+  services.gnome.gnome-online-accounts.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.gvfs.enable = true;
+  programs.evolution.enable = true;
+  programs.light.enable = true;
 
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
-  # Workaround nfsutils - Issue https://github.com/NixOS/nixpkgs/issues/24913
-  security.wrappers."mnt-medias.mount".source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
+
+  services.nginx.enable = true;
+  services.nginx.virtualHosts = {
+    "localhost" = {
+      locations."/" = {
+       root = "/var/www/";
+      };
+      default = true;
+    };
+  };
 
   # Open ports in the firewall.
-  #networking.firewall.allowedTCPPorts = [ ];
-  #networking.firewall.allowedUDPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [
+    1716  # KDEConnect
+    80 443
+  ];
+  networking.firewall.allowedUDPPorts = [
+    1716  # KDEConnect
+  ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
