@@ -125,6 +125,14 @@ in
           extraConfig = "return 301 https://dbeiner67.wixsite.com/monsite-1$request_uri;";
         };
       };
+      "photos.stech.ovh" = {
+        enableACME = true;
+        forceSSL = true;
+        serverAliases = [ "www.photos.stech.ovh" ];
+        locations."/" = {
+          extraConfig = "return 301 https://dbeiner67.wixsite.com/website$request_uri;";
+        };
+      };
     };
   };
 
