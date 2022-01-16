@@ -49,6 +49,11 @@
   virtualisation.docker.storageDriver = "zfs";
   boot.kernelModules = [ "overlay" ];
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_13;
+  };
+
   services.nfs.server = {
     enable = true;
     exports = ''
