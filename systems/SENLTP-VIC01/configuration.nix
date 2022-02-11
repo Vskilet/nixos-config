@@ -17,7 +17,10 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config = {
-    allowUnfree = true;
+    allowUnfree = false;
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "anydesk" "corefonts" "molotov" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
+    ];
     firefox.enablePlasmaBrowserIntegration = true;
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
@@ -58,7 +61,7 @@
     kdenlive
     molotov
     obs-studio
-    pitivi
+    blender
     qlcplus
     spotify
     v4l-utils
