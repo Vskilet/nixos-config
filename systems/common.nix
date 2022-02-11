@@ -13,7 +13,6 @@
   nixpkgs.overlays = [
     (import ../overlays/nvim.nix)
   ];
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     nix-index
     nix-prefetch-scripts

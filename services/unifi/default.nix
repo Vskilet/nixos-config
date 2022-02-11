@@ -7,6 +7,10 @@
     openPorts = true;
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "unifi-controller"
+  ];
+
   services.nginx.virtualHosts."unifi.sene.ovh" = {
     enableACME = true;
     forceSSL = true;
