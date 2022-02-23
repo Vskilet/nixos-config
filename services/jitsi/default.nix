@@ -21,8 +21,8 @@
   services.jitsi-videobridge = {
     openFirewall = true;
     nat = {
-      localAddress = "192.168.1.136";
-      #config.networking.interfaces."enp2s0".ipv4.addresses.0.address;
+      localAddress = "172.16.1.3";
+      #config.networking.interfaces."eno1".ipv4.addresses.0.address;
       publicAddress = "128.78.187.125";
       #"${pkgs.dnsutils}/bin/dig +short myip.opendns.com @208.67.222.222";
     };
