@@ -13,7 +13,7 @@
 
   services.matrix-synapse = {
     enable = true;
-    enable_registration = true;
+    enable_registration = false;
     server_name = "sene.ovh";
     public_baseurl = "https://matrix.sene.ovh";
     listeners = [
