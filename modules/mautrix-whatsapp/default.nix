@@ -118,16 +118,21 @@ in
         ProtectControlGroups = true;
         User = "mautrix-whatsapp";
         Group = "matrix-synapse";
-        SupplementaryGroups = "matrix-synapse";
+        #SupplementaryGroups = "matrix-synapse";
         UMask = 0027;
         Restart = "always";
+
       };
     };
 
-    users.users.mautrix-whatsapp = {
-      isSystemUser = true;
-      createHome = true;
+    users = {
+      users.mautrix-whatsapp = {
+        isSystemUser = true;
+        group = "matrix-synapse";
+        description = "mautrix-whatsapp bridge user";
+      };
     };
+
     services.matrix-synapse.app_service_config_files = [ "${registrationFile}" ];
 
   };
