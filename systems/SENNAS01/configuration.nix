@@ -7,6 +7,7 @@
       ./hardware-configuration.nix
       ./users.nix
       ../../services/gitea
+      ../../services/hass
       ../../services/jitsi
       ../../services/kresus
       ../../services/mail
