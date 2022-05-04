@@ -3,7 +3,7 @@
 {
   services.unifi = {
     enable = true;
-    unifiPackage = pkgs.unifi6;
+    unifiPackage = pkgs.unifi7;
     openPorts = true;
   };
 
