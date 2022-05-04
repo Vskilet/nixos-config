@@ -4,12 +4,15 @@
   imports = [
     ../../modules/mautrix-whatsapp
   ];
-  nixpkgs.overlays = [
-    (import ../../overlays/riot-web.nix)
-  ];
 
   services.postgresql.enable = true;
-  # Try to create database
+  services.postgresql.initialScript = pkgs.writeText "synapse-init.sql" ''
+    CREATE ROLE "matrix-synapse";
+    CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
+      TEMPLATE template0
+      LC_COLLATE = "C"
+      LC_CTYPE = "C";
+  '';
 
   services.matrix-synapse = {
     enable = true;
@@ -20,15 +23,15 @@
       {
         bind_address = "127.0.0.1";
         port = 8008;
+        tls = false;
+        type = "http";
+        x_forwarded = true;
         resources = [
           {
             compress = false;
             names = [ "client" "federation" ];
           }
         ];
-        tls = false;
-        type = "http";
-        x_forwarded = true;
       }
     ];
     database_type = "psycopg2";
@@ -37,7 +40,7 @@
     };
     tls_private_key_path = "/var/lib/acme/sene.ovh/key.pem";
     tls_certificate_path = "/var/lib/acme/sene.ovh/fullchain.pem";
-    max_upload_size = "100M";
+    max_upload_size = "50M";
     url_preview_enabled = true;
     extraConfig = ''
       email:
@@ -92,20 +95,53 @@
   };
 
   services.nginx.virtualHosts = {
-    "riot.sene.ovh" = {
+    "chat.sene.ovh" = {
       enableACME = true;
       forceSSL = true;
-      serverAliases = [ "chat.sene.ovh" "chat.stech.ovh" ];
-      locations = { "/" = { root = pkgs.element-web; }; };
+      serverAliases = [ "riot.sene.ovh" ];
+      locations."/" = {
+        root = pkgs.element-web.override {
+          conf = {
+            default_server_config = {
+              "m.homeserver" = {
+                base_url = "https://matrix.sene.ovh";
+                server_name = "matrix.sene.ovh";
+              };
+              "m.identity_server" = {
+                base_url = "https://vector.im";
+              };
+            };
+            brand = "SENE-NET";
+            default_theme = "dark";
+            defaultCountryCode = "FR";
+            integrations_ui_url = "https://dimension.t2bot.io/element";
+            integrations_rest_url = "https://dimension.t2bot.io/api/v1/scalar";
+            integrations_widgets_urls = ["https://dimension.t2bot.io/widgets"];
+            integrations_jitsi_widget_url = "https://dimension.t2bot.io/widgets/jitsi";
+          };
+        };
+      };
     };
     "matrix.sene.ovh" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".extraConfig = ''
-        error_page 404 https://sene.ovh/errorpages/50x.html;
-      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8008/health";
+        extraConfig = ''
+          error_page 404 https://sene.ovh/errorpages/50x.html;
+        '';
+      };
       locations."/_matrix" = {
         proxyPass = "http://127.0.0.1:8008";
+        extraConfig = ''
+          client_max_body_size 50M;
+        '';
+      };
+      locations."/_synapse/client" = {
+        proxyPass = "http://127.0.0.1:8008";
+        extraConfig = ''
+          client_max_body_size 50M;
+        '';
       };
     };
   };
