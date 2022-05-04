@@ -14,17 +14,21 @@
   networking.interfaces.wlp3s0.useDHCP = true;
   hardware.bluetooth.enable = true;
 
+  nix = {
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   nixpkgs.config = {
     allowUnfree = false;
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
+      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "teams" "zoom"
     ];
-    firefox.enablePlasmaBrowserIntegration = true;
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
-    #ardour
     anydesk
     arandr
     evince
@@ -53,10 +57,11 @@
     win-virtio
     zim
 
+    chromium
     firefox
-    #chromium
     signal-desktop
     element-desktop
+    teams
     zoom-us
 
     audacity
@@ -66,6 +71,7 @@
     inkscape
     kdenlive
     obs-studio
+    openlpFull
     qlcplus
     spotify
     v4l-utils
@@ -85,7 +91,7 @@
 
     lxappearance
     breeze-icons
-    gnome-breeze
+    breeze-gtk
     numix-gtk-theme
     numix-icon-theme
     qt5ct
@@ -99,6 +105,9 @@
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="1edb", ATTR{idProduct}=="be55", MODE="0666"
+  '';
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
@@ -165,13 +174,14 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
+      configFile = /etc/nixos/misc/i3.config;
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
         polybar xss-lock multilockscreen rofi i3-auto-layout
-        rofi-pass rofi-calc rofi-power-menu
+        rofi-pass rofi-power-menu
         alacritty
      ];
     };
@@ -184,6 +194,8 @@
     backend = "glx";
     vSync = true;
   };
+  services.autorandr.enable = true;
+  environment.etc."i3status.conf".source = /etc/nixos/misc/i3status.config;
 
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;
@@ -197,20 +209,20 @@
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
 
-  services.nginx.enable = true;
-  services.nginx.virtualHosts = {
-    "localhost" = {
-      locations."/" = {
-       root = "/var/www/";
-      };
-      default = true;
-    };
-  };
+  #services.nginx.enable = true;
+  #services.nginx.virtualHosts = {
+  #  "localhost" = {
+  #    locations."/" = {
+  #     root = "/var/www/";
+  #    };
+  #    default = true;
+  #  };
+  #};
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     1716  # KDEConnect
-    80 443
+    #80 443
   ];
   networking.firewall.allowedUDPPorts = [
     1716  # KDEConnect
