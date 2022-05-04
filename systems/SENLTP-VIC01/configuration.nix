@@ -105,6 +105,9 @@
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="1edb", ATTR{idProduct}=="be55", MODE="0666"
+  '';
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
