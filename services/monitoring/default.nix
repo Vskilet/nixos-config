@@ -22,6 +22,16 @@
       processes = {};
       system = {};
       disk = {};
+      http_response = {
+        urls = [
+          "https://chat.sene.ovh" "https://cloud.sene.ovh" "https://git.sene.ovh" "https://grafana.sene.ovh" "https://home.sene.ovh" "https://login.sene.ovh" "https://matrix.sene.ovh" "https://meet.sene.ovh" "https://unifi.sene.ovh" "https://videos.sene.ovh"
+
+          "https://unionapc.fr" "https://missionfpc.fr"
+          "http://www.lecentrebiblique.fr" "https://www.lecnef.org" "http://www.reseaufef.com/"
+        ];
+        follow_redirects = true;
+        response_timeout = "3s";
+      };
       cgroup = [
         {
           paths = [
