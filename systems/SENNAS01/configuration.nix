@@ -28,6 +28,15 @@
 
   security.sudo.wheelNeedsPassword = false;
 
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  documentation.nixos.enable = false;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
@@ -59,7 +68,7 @@
   services.nfs.server = {
     enable = true;
     exports = ''
-      /mnt/medias  192.168.1.0/24(ro,no_root_squash)
+      /mnt/medias  172.16.0.0/24(ro,no_root_squash)
     '';
     statdPort = 4000;
     lockdPort = 4001;
@@ -104,6 +113,7 @@
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
+    1688
   ];
   networking.firewall.allowedUDPPorts = [
     111 2049 4000 4001 4002 # NFS
