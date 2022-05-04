@@ -9,7 +9,7 @@
       ../../services/gitea
       ../../services/hass
       ../../services/jitsi
-      ../../services/kresus
+      #../../services/kresus
       ../../services/mail
       ../../services/matrix
       ../../services/monitoring
@@ -17,6 +17,7 @@
       ../../services/nginx
       ../../services/peertube
       ../../services/unifi
+      ../../services/wordpress
     ];
 
   boot.loader.systemd-boot.enable = true;
