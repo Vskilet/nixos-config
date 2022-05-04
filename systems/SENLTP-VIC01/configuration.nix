@@ -174,13 +174,14 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
+      configFile = /etc/nixos/misc/i3.config;
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
         polybar xss-lock multilockscreen rofi i3-auto-layout
-        rofi-pass rofi-calc rofi-power-menu
+        rofi-pass rofi-power-menu
         alacritty
      ];
     };
@@ -193,6 +194,8 @@
     backend = "glx";
     vSync = true;
   };
+  services.autorandr.enable = true;
+  environment.etc."i3status.conf".source = /etc/nixos/misc/i3status.config;
 
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;
