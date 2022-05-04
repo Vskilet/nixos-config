@@ -19,12 +19,14 @@
   nixpkgs.config = {
     allowUnfree = false;
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "molotov" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
+      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
     ];
     firefox.enablePlasmaBrowserIntegration = true;
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
+    #ardour
     anydesk
+    arandr
     evince
     filelight
     file-roller
@@ -38,7 +40,9 @@
     libreoffice
     nautilus
     nextcloud-client
+    pkgs.networkmanagerapplet
     okular
+    pavucontrol
     spectacle
     texstudio
     (texlive.combine {
@@ -46,10 +50,11 @@
     })
     virt-manager
     virt-viewer
+    win-virtio
     zim
 
     firefox
-    chromium
+    #chromium
     signal-desktop
     element-desktop
     zoom-us
@@ -58,10 +63,9 @@
     ffmpeg-full
     frei0r
     gimp
+    inkscape
     kdenlive
-    molotov
     obs-studio
-    blender
     qlcplus
     spotify
     v4l-utils
@@ -72,7 +76,7 @@
     gopass
     jmtpfs
     mkpasswd
-    nfsUtils
+    nfs-utils
     parted
     youtube-dl
     xclip
@@ -110,11 +114,15 @@
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    qemu.ovmf.enable = true;
-    #qemuRunAsRoot = false;
+    qemu = {
+      ovmf.enable = true;
+      swtpm.enable = true;
+      ovmf.package = pkgs.OVMFFull;
+    };
     onBoot = "ignore";
     onShutdown = "shutdown";
   };
+  environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
   services.tlp.enable = true;
   services.tlp.settings = {
@@ -163,6 +171,7 @@
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
         polybar xss-lock multilockscreen rofi i3-auto-layout
+        rofi-pass rofi-calc rofi-power-menu
         alacritty
      ];
     };

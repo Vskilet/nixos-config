@@ -20,7 +20,7 @@
 
     nmap
     iperf
-    telnet
+    inetutils
     dnsutils
     pciutils
     usbutils
