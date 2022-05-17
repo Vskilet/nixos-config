@@ -31,6 +31,7 @@
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
     arandr
+    blueman
     evince
     filelight
     file-roller
@@ -40,6 +41,7 @@
     jitsi-meet-electron
     kate
     kdeconnect
+    kubectl
     imagemagick
     libreoffice
     nautilus
@@ -61,7 +63,6 @@
     firefox
     signal-desktop
     element-desktop
-    teams
     zoom-us
 
     audacity
