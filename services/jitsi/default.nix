@@ -26,6 +26,9 @@
       publicAddress = "128.78.187.125";
       #"${pkgs.dnsutils}/bin/dig +short myip.opendns.com @208.67.222.222";
     };
+    config = {
+      videobridge.http-servers.private.port = 8070;
+    };
   };
   boot.kernel.sysctl."net.core.rmem_max" = 10485760;
 
