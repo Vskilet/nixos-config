@@ -35,6 +35,15 @@ in
           "contact@sene.ovh"
           "admin@sene.ovh"
         ];
+        sieveScript = ''
+          require "subaddress";
+          require "fileinto";
+
+          if header :contains "X-Spam" "YES" {
+              fileinto "Junk";
+              stop;
+          }
+        '';
       };
       "constance@sene.ovh" = {
         hashedPassword = "$6$wGIPnWzZqfJD0.l$HpxYitiTsIWQVFoJOnJax5ZEJXucdhMsfc8vKgNzX7QfQQ/CSIwcozXfB49cqEXRivktd3aKcop1k7tCo840w/";
