@@ -71,7 +71,7 @@
       enable = true;
       plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
     };
-    shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; vim="nvim"; };
+    shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; };
     promptInit = ''
       autoload -U promptinit
       promptinit

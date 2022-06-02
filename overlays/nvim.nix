@@ -1,6 +1,7 @@
 self: super:
 {
   nvim = super.neovim.override {
+    viAlias = true;
     vimAlias = true;
     configure = {
       packages.myVimPackage = with super.vimPlugins; {
