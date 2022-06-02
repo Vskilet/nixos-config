@@ -5,7 +5,7 @@ let
 in
 {
   security.acme = {
-    email = "victor@sene.ovh";
+    defaults.email = "victor@sene.ovh";
     acceptTerms = true;
   };
   services.nginx = {
@@ -25,7 +25,6 @@ in
     '';
     sso = {
       enable = true;
-      environmentFile = "/mnt/secrets/nginx-sso.env";
       configuration = {
         listen = {
           addr = "127.0.0.1";
@@ -135,6 +134,8 @@ in
       };
     };
   };
+
+  systemd.services.nginx-sso.serviceConfig.EnvironmentFile = "/mnt/secrets/nginx-sso.env";
 
   environment.etc."nginx-sso_auth.inc".text = ''
     # Protect this location using the auth_request

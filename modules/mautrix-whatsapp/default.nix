@@ -36,7 +36,7 @@ in
       '';
       default = {
         homeserver = {
-          domain = config.services.matrix-synapse.server_name;
+          domain = config.services.matrix-synapse.settings.server_name;
         };
         appservice = rec {
           address = http://localhost:29318;
@@ -58,11 +58,11 @@ in
           username_template = "whatsapp_{{.}}";
           displayname_template = "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}}";
           command_prefix = "!wa";
-          permissions."*" = "relaybot";
+          permissions."*" = "relay";
         };
-        relaybot = {
+        relay = {
           enabled = true;
-          management = "!whatsappbot:${toString(config.services.matrix-synapse.server_name)}";
+          management = "!whatsappbot:${toString(config.services.matrix-synapse.settings.server_name)}";
         };
         logging = {
           directory = "${dataDir}/logs";
@@ -75,9 +75,9 @@ in
       };
       example = {
         settings = {
-          homeserver.address = https://matrix.org;
+          homeserver.address = https://matrix.myhomeserver.org;
           bridge.permissions = {
-            "@example:matrix.org" = 100;
+            "@admin:myhomeserver.org" = "admin";
           };
         };
       };
@@ -118,22 +118,19 @@ in
         ProtectControlGroups = true;
         User = "mautrix-whatsapp";
         Group = "matrix-synapse";
-        #SupplementaryGroups = "matrix-synapse";
+        SupplementaryGroups = "matrix-synapse";
         UMask = 0027;
         Restart = "always";
-
       };
     };
 
-    users = {
-      users.mautrix-whatsapp = {
-        isSystemUser = true;
-        group = "matrix-synapse";
-        description = "mautrix-whatsapp bridge user";
-      };
+    users.groups.mautrix-whatsapp = { };
+    users.users.mautrix-whatsapp = {
+      isSystemUser = true;
+      group = "mautrix-whatsapp";
+      home = dataDir;
     };
-
-    services.matrix-synapse.app_service_config_files = [ "${registrationFile}" ];
+    services.matrix-synapse.settings.app_service_config_files = [ "${registrationFile}" ];
 
   };
 }

@@ -4,7 +4,7 @@
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi7;
-    openPorts = true;
+    openFirewall = true;
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

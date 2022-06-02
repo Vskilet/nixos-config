@@ -16,42 +16,45 @@
 
   services.matrix-synapse = {
     enable = true;
-    enable_registration = false;
-    server_name = "sene.ovh";
-    public_baseurl = "https://matrix.sene.ovh";
-    listeners = [
-      {
-        bind_address = "127.0.0.1";
-        port = 8008;
-        tls = false;
-        type = "http";
-        x_forwarded = true;
-        resources = [
-          {
-            compress = false;
-            names = [ "client" "federation" ];
-          }
-        ];
-      }
-    ];
-    database_type = "psycopg2";
-    database_args = {
-      database = "matrix-synapse";
-    };
-    tls_private_key_path = "/var/lib/acme/sene.ovh/key.pem";
-    tls_certificate_path = "/var/lib/acme/sene.ovh/fullchain.pem";
-    max_upload_size = "50M";
-    url_preview_enabled = true;
-    extraConfig = ''
-      email:
-         enable_notifs: false
-         smtp_host: "localhost"
-         smtp_port: 25
-         require_transport_security: false
-         enable_tls: false
-         notif_from: "matrix@sene.ovh"
-         app_name: Matrix
-         client_base_url: "https://chat.sene.ovh"
+    settings = {
+      enable_registration = false;
+      server_name = "sene.ovh";
+      public_baseurl = "https://matrix.sene.ovh";
+      listeners = [
+        {
+          bind_addresses = [
+            "::"
+            "0.0.0.0"
+          ];
+          port = 8008;
+          tls = false;
+          type = "http";
+          x_forwarded = true;
+          resources = [
+            {
+              compress = false;
+              names = [ "client" "federation" ];
+            }
+          ];
+        }
+      ];
+      database_type = "psycopg2";
+      database_args = {
+        database = "matrix-synapse";
+      };
+      tls_private_key_path = "/var/lib/acme/sene.ovh/key.pem";
+      tls_certificate_path = "/var/lib/acme/sene.ovh/fullchain.pem";
+      max_upload_size = "50M";
+      url_preview_enabled = true;
+      email = {
+         enable_notifs = false;
+         smtp_host = "localhost";
+         smtp_port = 25;
+         require_transport_security = false;
+         enable_tls = false;
+         notif_from = "matrix@sene.ovh";
+         app_name = "Matrix";
+         client_base_url = "https://chat.sene.ovh";
 
          # Uncomment the following to disable automatic subscription to email
          # notifications for new users. Enabled by default.
@@ -67,9 +70,9 @@
          # to the identity server as the org.matrix.web_client_location key. Defaults
          # to unset, giving no guidance to the identity server.
          #
-         invite_client_location: https://chat.sene.ovh
+         invite_client_location = "https://chat.sene.ovh";
 
-         subjects:
+         subjects = {
            #message_from_person_in_room: "[%(app)s] You have a message on %(app)s from %(person)s in the %(room)s room..."
            #message_from_person: "[%(app)s] You have a message on %(app)s from %(person)s..."
            #messages_from_person: "[%(app)s] You have messages on %(app)s from %(person)s..."
@@ -78,9 +81,11 @@
            #messages_from_person_and_others: "[%(app)s] You have messages on %(app)s from %(person)s and others..."
            #invite_from_person_to_room: "[%(app)s] %(person)s has invited you to join the %(room)s room on %(app)s..."
            #invite_from_person: "[%(app)s] %(person)s has invited you to chat on %(app)s..."
-           password_reset: "[%(server_name)s] Password reset"
-           email_validation: "[%(server_name)s] Validate your email"
-    '';
+           password_reset = "[%(server_name)s] Password reset";
+           email_validation = "[%(server_name)s] Validate your email";
+        };
+      };
+    };
   };
   users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
 

@@ -1,7 +1,10 @@
 { pkgs, config, lib, ... }:
 
 let
-  meross = (builtins.fetchTarball "https://github.com/krahabb/meross_lan/archive/refs/tags/v2.5.7.tar.gz");
+  meross = builtins.fetchTarball {
+    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v2.5.7.tar.gz";
+    sha256 = "1hr161g0gqgv910ra1i5z52r101i544blrnfy99hxfzyzgk76h78";
+  };
 
 in {
   systemd.tmpfiles.rules = [
@@ -134,7 +137,7 @@ in {
       proxy_buffering off;
     '';
     locations."/" = {
-      proxyPass = "http://[::1]:${toString(config.services.home-assistant.port)}/";
+      proxyPass = "http://[::1]:${toString(config.services.home-assistant.config.http.server_port)}/";
       proxyWebsockets = true;
     };
   };
