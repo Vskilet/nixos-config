@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/mautrix-whatsapp
+    ../../modules/mautrix-signal
   ];
 
   services.postgresql.enable = true;
@@ -90,6 +91,17 @@
   users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
 
   services.mautrix-whatsapp = {
+    enable = true;
+    settings = {
+      homeserver.address = "https://matrix.sene.ovh";
+      bridge.permissions = {
+        "@vskilet:sene.ovh" = "admin";
+      };
+    };
+  };
+
+  services.signald.enable = true;
+  services.mautrix-signal = {
     enable = true;
     settings = {
       homeserver.address = "https://matrix.sene.ovh";
