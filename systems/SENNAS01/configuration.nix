@@ -52,9 +52,9 @@
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    borgbackup rclone kubectl
-  ];
+  #environment.systemPackages = with pkgs; [
+  #  borgbackup rclone kubectl
+  #];
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "zfs";
