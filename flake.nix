@@ -7,7 +7,7 @@
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-21_11.follows = "nixpkgs";
+        nixpkgs-22_05.follows = "nixpkgs";
       };
     };
   };
