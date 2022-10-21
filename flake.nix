@@ -34,13 +34,21 @@
       }
     ];
 
-    hosts.SENNAS01 = {
-      channelName = "nixpkgs";
-      modules = [
-        #"${nixpkgs-unstable}/nixos/modules/services/audio/navidrome.nix"
-        simple-nixos-mailserver.nixosModule
-        ./systems/SENNAS01/configuration.nix
-      ];
+    hosts = {
+      SENNAS01 = {
+        channelName = "nixpkgs";
+        modules = [
+          #"${nixpkgs-unstable}/nixos/modules/services/audio/navidrome.nix"
+          simple-nixos-mailserver.nixosModule
+          ./systems/SENNAS01/configuration.nix
+        ];
+      };
+      SENLTP-VIC01 = {
+        channelName = "nixpkgs-unstable";
+        modules = [
+          ./systems/SENLTP-VIC01/configuration.nix
+        ];
+      };
     };
   };
 }
