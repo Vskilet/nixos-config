@@ -43,10 +43,10 @@
           ./systems/SENNAS01/configuration.nix
         ];
       };
-      SENLTP-VIC01 = {
+      SENLPT-VIC01 = {
         channelName = "nixpkgs-unstable";
         modules = [
-          ./systems/SENLTP-VIC01/configuration.nix
+          ./systems/SENLPT-VIC01/configuration.nix
         ];
       };
     };
