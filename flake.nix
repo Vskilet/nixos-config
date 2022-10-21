@@ -18,6 +18,13 @@
 
     supportedSystems = [ "x86_64-linux" ];
 
+    channels.nixpkgs = {
+      config.allowUnfree = true;
+      overlaysBuilder = channels: [
+        (final: prev: { inherit (channels.nixpkgs-unstable) unifi7; })
+      ];
+    };
+
     hostDefaults.modules = [
       nixpkgs.nixosModules.notDetected
       {
@@ -27,10 +34,13 @@
       }
     ];
 
-    hosts.SENNAS01.modules = [
-      #"${nixpkgs-unstable}/nixos/modules/services/audio/navidrome.nix"
-      simple-nixos-mailserver.nixosModule
-      ./systems/SENNAS01/configuration.nix
-    ];
+    hosts.SENNAS01 = {
+      channelName = "nixpkgs";
+      modules = [
+        #"${nixpkgs-unstable}/nixos/modules/services/audio/navidrome.nix"
+        simple-nixos-mailserver.nixosModule
+        ./systems/SENNAS01/configuration.nix
+      ];
+    };
   };
 }
