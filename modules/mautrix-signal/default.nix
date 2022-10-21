@@ -50,6 +50,7 @@ in {
             permissions."*" = "relaybot";
             relaybot.whitelist = [ ];
             login_shared_secret_map = {};
+            double_puppet_allow_discovery = true;
             double_puppet_server_map = {};
           };
 
