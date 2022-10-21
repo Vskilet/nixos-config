@@ -31,16 +31,15 @@
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
     arandr
-    blueman
     evince
     filelight
     file-roller
     gnome-calculator
-    gparted
+    gnome-disk-utility
     gwenview
     jitsi-meet-electron
     kate
-    kdeconnect
+    kdeconnect-kde
     kubectl
     imagemagick
     libreoffice
@@ -57,11 +56,12 @@
     virt-manager
     virt-viewer
     win-virtio
+    woeusb
+    xcolor
     zim
 
     chromium
     firefox
-    signal-desktop
     element-desktop
     zoom-us
 
@@ -93,6 +93,7 @@
     lxappearance
     breeze-icons
     breeze-gtk
+    equilux-theme
     numix-gtk-theme
     numix-icon-theme
     qt5ct
@@ -203,7 +204,9 @@
   services.gnome.evolution-data-server.enable = true;
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  services.gnome.sushi.enable = true;
   services.gvfs.enable = true;
+  services.blueman.enable = true;
   programs.evolution.enable = true;
   programs.light.enable = true;
 
