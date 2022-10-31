@@ -25,77 +25,71 @@
   nixpkgs.config = {
     allowUnfree = false;
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "samsung-unified-linux-driver" "samsung-UnifiedLinuxDriver" "spotify" "spotify-unwrapped" "teams" "zoom"
+      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
     ];
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
+    appimage-run
     arandr
+    audacity
     evince
-    filelight
+    ffmpeg-full
     file-roller
-    gnome-calculator
+    filelight
+    firefox
+    frei0r
+    gimp
     gnome-disk-utility
-    gwenview
+    gnupg
+    gopass
+    imagemagick
+    inkscape
     jitsi-meet-electron
+    jmtpfs
     kate
     kdeconnect-kde
+    kdenlive
     kubectl
-    imagemagick
     libreoffice
-    nautilus
+    mkpasswd
+    cinnamon.nemo
     nextcloud-client
-    pkgs.networkmanagerapplet
+    nfs-utils
+    obs-studio
     okular
+    openlpFull
+    parted
     pavucontrol
+    pkgs.networkmanagerapplet
+    pkgs.shotwell
+    qlcplus
     spectacle
+    spotify
+    v4l-utils
+    virt-manager
+    virt-viewer
+    vitetris
+    vlc
+    win-virtio
+    woeusb
+    xclip
+    xcolor
+    youtube-dl
+    zim
+    zoom-us
+
     texstudio
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
-    virt-manager
-    virt-viewer
-    win-virtio
-    woeusb
-    xcolor
-    zim
 
-    chromium
-    firefox
-    element-desktop
-    zoom-us
-
-    audacity
-    ffmpeg-full
-    frei0r
-    gimp
-    inkscape
-    kdenlive
-    obs-studio
-    openlpFull
-    qlcplus
-    spotify
-    v4l-utils
-    vlc
-
-    appimage-run
-    gnupg
-    gopass
-    jmtpfs
-    mkpasswd
-    nfs-utils
-    parted
-    youtube-dl
-    xclip
-
-    vitetris
-
-    lxappearance
+    #breeze-gtk
     breeze-icons
-    breeze-gtk
-    equilux-theme
     numix-gtk-theme
     numix-icon-theme
+    yaru-theme
+    lxappearance
     qt5ct
   ];
 
@@ -126,11 +120,8 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      #runAsRoot = false;
-      package = pkgs.qemu_full;
+      runAsRoot = false;
       swtpm.enable = true;
-      ovmf.enable = true;
-      ovmf.packages = [ pkgs.OVMFFull ];
     };
     onBoot = "ignore";
     onShutdown = "shutdown";
@@ -153,7 +144,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver samsung-unified-linux-driver_1_00_37 ];
+  services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver_1_00_37 ];
 
   # Enable sound.
   sound.enable = true;
