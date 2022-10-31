@@ -68,7 +68,8 @@
   services.nfs.server = {
     enable = true;
     exports = ''
-      /mnt/medias  172.16.0.0/24(ro,no_root_squash)
+      /mnt/medias  172.16.2.0/24(ro,no_root_squash)  172.16.1.0/24(ro,no_root_squash)
+      /mnt/share  172.16.2.0/24(rw,sync,no_root_squash)  172.16.1.0/24(rw,sync,no_root_squash)
     '';
     statdPort = 4000;
     lockdPort = 4001;
