@@ -34,6 +34,7 @@
     git
     tig
     jq
+    tree
 
     lm_sensors
     pdftk
