@@ -39,7 +39,12 @@
     };
 
   fileSystems."/mnt/medias" =
-    { device = "192.168.1.136:/mnt/medias";
+    { device = "SENNAS01:/mnt/medias";
+      fsType = "nfs";
+      options = ["x-systemd.automount" "noauto"];
+    };
+  fileSystems."/mnt/share" =
+    { device = "SENNAS01:/mnt/share";
       fsType = "nfs";
       options = ["x-systemd.automount" "noauto"];
     };
