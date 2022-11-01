@@ -25,13 +25,13 @@
           (final: prev: { inherit (channels.nixpkgs-unstable) unifi7; })
         ];
       };
-      nixpkgs-unstable.patches = [
-        (nixpkgs-unstable.legacyPackages."x86_64-linux".fetchpatch {
-          name = "pypamtest.patch";
-          url = "https://github.com/NixOS/nixpkgs/pull/198066.patch";
-          sha256 = "sha256-pj+4FgVhCe0YUnI7WKcAvjzNRnEtAhm0cg+/e6xXi7g=";
-        })
-      ];
+#      nixpkgs-unstable.patches = [
+#        (nixpkgs-unstable.legacyPackages."x86_64-linux".fetchpatch {
+#          name = "pypamtest.patch";
+#          url = "https://github.com/NixOS/nixpkgs/pull/198066.patch";
+#          sha256 = "sha256-pj+4FgVhCe0YUnI7WKcAvjzNRnEtAhm0cg+/e6xXi7g=";
+#        })
+#      ];
 
     };
 
