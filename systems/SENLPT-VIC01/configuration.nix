@@ -45,7 +45,6 @@
     gopass
     imagemagick
     inkscape
-    jitsi-meet-electron
     jmtpfs
     kate
     kdeconnect-kde
