@@ -36,7 +36,6 @@
     evince
     ffmpeg-full
     file-roller
-    filelight
     firefox
     frei0r
     gimp
@@ -57,7 +56,7 @@
     nfs-utils
     obs-studio
     okular
-    openlpFull
+    #openlpFull
     parted
     pavucontrol
     pkgs.networkmanagerapplet
