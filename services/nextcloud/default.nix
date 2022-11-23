@@ -8,7 +8,7 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud24;
+    package = pkgs.nextcloud25;
     autoUpdateApps.enable = true;
     config = {
       dbtype = "pgsql";

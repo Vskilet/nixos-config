@@ -22,7 +22,8 @@
       nixpkgs = {
         config.allowUnfree = true;
         overlaysBuilder = channels: [
-          (final: prev: { inherit (channels.nixpkgs-unstable) unifi7; })
+          (final: prev: { inherit (channels.nixpkgs-unstable) unifi7 signald; })
+
         ];
 #        patches = [
 #          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
