@@ -10,6 +10,7 @@
     https = true;
     package = pkgs.nextcloud25;
     autoUpdateApps.enable = true;
+    enableBrokenCiphersForSSE = false;
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";

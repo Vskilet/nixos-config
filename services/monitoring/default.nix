@@ -81,19 +81,27 @@
 
   services.grafana = {
     enable = true;
-    addr = "127.0.0.1";
     dataDir = "/var/lib/grafana";
-    extraOptions = {
-      SERVER_ROOT_URL = "https://grafana.sene.ovh";
-      SMTP_ENABLED = "true";
-      SMTP_FROM_ADDRESS = "grafana@sene.ovh";
-      SMTP_SKIP_VERIFY = "true";
-      AUTH_DISABLE_LOGIN_FORM = "true";
-      AUTH_DISABLE_SIGNOUT_MENU = "true";
-      AUTH_ANONYMOUS_ENABLED = "true";
-      AUTH_ANONYMOUS_ORG_NAME = "SENE-NET";
-      AUTH_ANONYMOUS_ORG_ROLE = "Admin";
-      AUTH_BASIC_ENABLED = "false";
+    settings = {
+      server = {
+        root_url = "https://grafana.sene.ovh";
+        http_addr = "127.0.0.1";
+        http_port = 3000;
+      };
+      smtp = {
+        enabled = true;
+        from_address = "grafana@sene.ovh";
+      };
+      "auth.anonymous" = {
+        enabled = true;
+        org_name = "SENE-NET";
+        org_role = "Admin";
+      };
+      auth = {
+        basic_enabled = false;
+        disable_login_form = true;
+        disable_signout_menu = true;
+      };
     };
   };
 

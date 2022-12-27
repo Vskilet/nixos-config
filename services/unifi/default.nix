@@ -8,7 +8,7 @@
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "unifi-controller"
+    "unifi-controller" "unifi"
   ];
 
   services.nginx.virtualHosts."unifi.sene.ovh" = {

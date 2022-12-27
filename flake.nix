@@ -1,18 +1,19 @@
 {
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-22.05";
+    nixpkgs.url = "flake:nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-22_05.follows = "nixpkgs";
+        nixpkgs-22_11.follows = "nixpkgs";
       };
     };
+    nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
   };
 
-  outputs = inputs@{ self, utils, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver }: utils.lib.mkFlake {
+  outputs = inputs@{ self, utils, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, nix-matrix-appservices }: utils.lib.mkFlake {
 
     inherit self inputs;
 
@@ -20,18 +21,16 @@
 
     channels = {
       nixpkgs = {
-        config.allowUnfree = true;
-        overlaysBuilder = channels: [
-          (final: prev: { inherit (channels.nixpkgs-unstable) unifi7 signald; })
-
-        ];
-#        patches = [
-#          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
-#            name = "signal.patch";
-#            url = "https://github.com/NixOS/nixpkgs/pull/197262.patch";
-#            sha256 = "sha256-nDPOYt7cHaCc0QPzDWUSJE79wCRc82LF1zTAcDCBxis=";
-#          })
+#        overlaysBuilder = channels: [
+#          (final: prev: { inherit (channels.nixpkgs-unstable) unifi7; })
 #        ];
+        patches = [
+          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
+            name = "unifi.patch";
+            url = "https://github.com/NixOS/nixpkgs/commit/2d8cbb5a215d2b854280be74e2d18f669751668c.patch";
+            sha256 = "sha256-H0w2uEMxSHnJoQST8+gmLsl9CW+619NJ+/VJTNbcc6g=";
+          })
+        ];
       };
     };
 
