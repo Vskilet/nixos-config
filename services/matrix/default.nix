@@ -3,7 +3,6 @@
 {
   imports = [
     ../../modules/mautrix-whatsapp
-    ../../modules/mautrix-signal
   ];
 
   services.postgresql.enable = true;
@@ -101,12 +100,46 @@
   };
 
   services.signald.enable = true;
-  services.mautrix-signal = {
-    enable = true;
-    settings = {
-      homeserver.address = "https://matrix.sene.ovh";
-      bridge.permissions = {
-        "@vskilet:sene.ovh" = "admin";
+  systemd.services.matrix-as-signal = {
+    requires = [ "signald.service" ];
+    after = [ "signald.service" ];
+    unitConfig = {
+      JoinsNamespaceOf = "signald.service";
+    };
+    path = [
+      pkgs.ffmpeg # voice messages need `ffmpeg`
+    ];
+  };
+  services.matrix-appservices = {
+    addRegistrationFiles = true;
+    homeserverDomain = config.services.matrix-synapse.settings.server_name;
+    homeserverURL = config.services.matrix-synapse.settings.public_baseurl;
+    services = {
+      signal = {
+        port = 29184;
+        format = "mautrix-python";
+        package = pkgs.mautrix-signal;
+        serviceConfig = {
+          StateDirectory = [ "matrix-as-signal" "signald" ];
+          SupplementaryGroups = [ "signald" ];
+          User = lib.mkForce config.services.signald.user;
+          Group = lib.mkForce config.services.signald.group;
+          TimeoutStopSec = 1;
+        };
+        settings = {
+          bridge = {
+            permissions = {
+              "*" = "relaybot";
+              "@vskilet:sene.ovh" = "admin";
+            };
+          };
+          signal = {
+            socket_path = config.services.signald.socketPath;
+            outgoing_attachment_dir = "/var/lib/signald/tmp";
+            avatar_dir = "/var/lib/signald/avatars";
+            data_dir = "/var/lib/signald/data";
+          };
+        };
       };
     };
   };

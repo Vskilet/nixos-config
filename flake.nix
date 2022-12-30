@@ -47,8 +47,8 @@
       SENNAS01 = {
         channelName = "nixpkgs";
         modules = [
-          #"${nixpkgs-unstable}/nixos/modules/services/audio/navidrome.nix"
           simple-nixos-mailserver.nixosModule
+          nix-matrix-appservices.nixosModule
           ./systems/SENNAS01/configuration.nix
         ];
       };
