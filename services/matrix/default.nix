@@ -123,7 +123,8 @@
           StateDirectory = [ "matrix-as-signal" "signald" ];
           SupplementaryGroups = [ "signald" ];
           User = lib.mkForce config.services.signald.user;
-          Group = lib.mkForce config.services.signald.group;
+          Group = lib.mkForce "matrix-synapse";
+          #Group = lib.mkForce config.services.signald.group;
           TimeoutStopSec = 1;
         };
         settings = {
