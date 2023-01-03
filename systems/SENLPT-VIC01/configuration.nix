@@ -110,10 +110,11 @@
   programs.browserpass.enable = true;
 
   programs.adb.enable = true;
+  programs.java.enable = true;
 
   services.udev.packages = [ pkgs.qlcplus ];
 
-  #virtualisation.podman.enable = true;
+  virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
@@ -292,20 +293,9 @@
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
 
-  #services.nginx.enable = true;
-  #services.nginx.virtualHosts = {
-  #  "localhost" = {
-  #    locations."/" = {
-  #     root = "/var/www/";
-  #    };
-  #    default = true;
-  #  };
-  #};
-
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     1716  # KDEConnect
-    #80 443
   ];
   networking.firewall.allowedUDPPorts = [
     1716  # KDEConnect
@@ -317,6 +307,6 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "20.03";
+  system.stateVersion = "22.11";
   system.autoUpgrade.enable = true;
 }

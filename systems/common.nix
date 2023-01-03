@@ -70,7 +70,7 @@
     syntaxHighlighting.enable = true;
     ohMyZsh = {
       enable = true;
-      plugins = [ "docker" "git" "colored-man-pages" "command-not-found" "extract" ];
+      plugins = [ "git" "colored-man-pages" "command-not-found" "extract" ];
     };
     shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; };
     promptInit = ''
