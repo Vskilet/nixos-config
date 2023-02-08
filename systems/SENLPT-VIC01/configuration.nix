@@ -25,7 +25,7 @@
   nixpkgs.config = {
     allowUnfree = false;
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
+      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
     ];
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
@@ -75,7 +75,6 @@
     xcolor
     youtube-dl
     zim
-    zoom-us
 
     texstudio
     (texlive.combine {
