@@ -70,10 +70,12 @@
     vitetris
     vlc
     win-virtio
+    wineWowPackages.staging
+    winetricks
     woeusb
     xclip
     xcolor
-    youtube-dl
+    yt-dlp
     zim
 
     texstudio
