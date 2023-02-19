@@ -120,7 +120,8 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      runAsRoot = false;
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
       swtpm.enable = true;
     };
     onBoot = "ignore";
