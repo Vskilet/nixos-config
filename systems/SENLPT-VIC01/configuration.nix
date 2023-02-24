@@ -170,7 +170,7 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      configFile = /etc/nixos/misc/i3.config;
+      configFile = ../../misc/i3.config;
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
         i3status # gives you the default i3 status bar
@@ -278,8 +278,8 @@
       };
     };
   };
-  environment.etc."i3status.conf".source = /etc/nixos/misc/i3status.config;
-  environment.etc."alacritty.yml".source = /etc/nixos/misc/alacritty.yml;
+  environment.etc."i3status.conf".source = ../../misc/i3status.config;
+  environment.etc."alacritty.yml".source = ../../misc/alacritty.yml;
 
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;
