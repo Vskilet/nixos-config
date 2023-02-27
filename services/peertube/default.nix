@@ -5,7 +5,7 @@
     backend = "docker";
     containers = {
       peertube = {
-        image = "chocobozzz/peertube:v4.2.2-bullseye";
+        image = "chocobozzz/peertube:v5.0.1-bullseye";
         ports = [ "1935:1935" "9000:9000" ];
         volumes = [
           "/var/lib/peertube/data:/data"
