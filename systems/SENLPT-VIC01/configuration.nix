@@ -34,6 +34,7 @@
     arandr
     audacity
     evince
+    feh
     ffmpeg-full
     file-roller
     firefox
@@ -176,7 +177,7 @@
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
-        polybar xss-lock multilockscreen rofi i3-auto-layout
+        polybar xss-lock betterlockscreen rofi i3-auto-layout
         rofi-pass rofi-power-menu
         alacritty
      ];
@@ -227,7 +228,8 @@
           };
         };
         hooks.postswitch = {
-          "update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
+          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
       "laptop" = {
@@ -245,7 +247,8 @@
           };
         };
         hooks.postswitch = {
-          "update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
+          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
       "tele" = {
@@ -273,7 +276,8 @@
           };
         };
         hooks.postswitch = {
-          "update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
+          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
     };
@@ -287,7 +291,6 @@
   services.gnome.gnome-keyring.enable = true;
   services.gnome.sushi.enable = true;
   services.gvfs.enable = true;
-  services.blueman.enable = true;
   programs.evolution.enable = true;
   programs.light.enable = true;
 
