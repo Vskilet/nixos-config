@@ -64,12 +64,14 @@
     pavucontrol
     pkgs.networkmanagerapplet
     pkgs.shotwell
+    python3
     qlcplus
     spectacle
     spotify
     v4l-utils
     virt-manager
     virt-viewer
+    virtiofsd
     vitetris
     vlc
     win-virtio
@@ -99,6 +101,7 @@
     corefonts
     dejavu_fonts
     freefont_ttf
+    raleway
   ];
 
   services.flatpak.enable = true;
