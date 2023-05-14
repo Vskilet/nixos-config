@@ -25,7 +25,7 @@
     backend = "docker";
     containers = {
       cb-wp = {
-        image = "wordpress:5.9.3";
+        image = "wordpress:6.2.0";
         ports = [ "10002:80" ];
         volumes = [
           "/var/www/cb.sene.ovh/wordpress:/var/www/html"
