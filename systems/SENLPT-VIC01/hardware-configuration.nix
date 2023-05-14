@@ -1,15 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-#  imports =
-#    [
-#      <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-#    ];
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "acpi_call" "tpm-rng" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+  boot.extraModprobeConfig = ''
+    options bbswitch use_acpi_to_detect_card_state=1
+    options thinkpad_acpi force_load=1 fan_control=1
+  '';
   boot.supportedFilesystems = [ "ntfs" ];
 
   boot.loader.systemd-boot.enable = true;
@@ -51,6 +50,9 @@
 
   swapDevices = [ ];
 
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+  };
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
