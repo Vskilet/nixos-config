@@ -25,7 +25,7 @@
   nixpkgs.config = {
     allowUnfree = false;
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
+      "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
     ];
   };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
@@ -167,7 +167,16 @@
       enable = true;
       touchpad.naturalScrolling = true;
     };
-    displayManager.defaultSession = "none+i3";
+    desktopManager = {
+      xterm.enable = false;
+    };
+    displayManager = {
+      defaultSession = "none+i3";
+      sessionCommands = ''
+        ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
+      '';
+    };
+    videoDrivers = [ "displaylink" "modesetting" ];
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -177,13 +186,10 @@
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
-        polybar xss-lock betterlockscreen rofi i3-auto-layout
+        polybar xss-lock multilockscreen rofi i3-auto-layout
         rofi-pass rofi-power-menu
         alacritty
-     ];
-    };
-    desktopManager = {
-      xterm.enable = false;
+      ];
     };
   };
   services.picom = {
@@ -229,7 +235,7 @@
         };
         hooks.postswitch = {
           "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
       "laptop" = {
@@ -248,7 +254,7 @@
         };
         hooks.postswitch = {
           "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
       "tele" = {
@@ -277,7 +283,7 @@
         };
         hooks.postswitch = {
           "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.betterlockscreen}/bin/betterlockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
     };
