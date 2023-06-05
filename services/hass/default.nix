@@ -20,36 +20,81 @@ in {
         currency = "EUR";
         unit_system = "metric";
         time_zone = "Europe/Paris";
+        latitude = "!secret zone_home_latitude";
+        longitude = "!secret zone_home_longitude";
+        elevation = "150";
       };
-      config = null;
-      dhcp = null;
-      frontend = null;
-      history = null;
+      automation = [
+        {
+          id = "victor_leave_work";
+          alias = "Victor leave Work";
+          use_blueprint = {
+            path = "homeassistant/notify_leaving_zone.yaml";
+            input = {
+              person_entity = "person.victor_sene";
+              zone_entity = "zone.work";
+              notify_device = "05119a513c81136a19eec038d5d86e88";
+            };
+          };
+        }
+      ];
+      config = {};
+      counter = {};
+      dhcp = {};
+      energy = {};
+      frontend = {};
+      history = {};
       http = {
         server_host = "::1";
         trusted_proxies = [ "::1" ];
         use_x_forwarded_for = true;
       };
-      kodi = null;
-      logbook = null;
-      map = null;
-      media_player = null;
-      mobile_app = null;
-      openweathermap = null;
+      input_boolean = {};
+      input_button = {};
+      input_datetime = {};
+      input_number = {};
+      input_select = {};
+      input_text = {};
+      kodi = {};
+      logbook = {};
+      map = {};
+      media_player = {};
+      mobile_app = {};
+      my = {};
+      openweathermap = {};
       #person = [
       #  {
       #    name = test
       #  }
       #];
-      script = null;
+      script = {};
+      shelly  = {};
       sonos = {
         media_player.hosts = [ "172.16.2.11" "172.16.2.14" ];
       };
-      sun = null;
-      system_health = null;
-      shelly  = null;
-      weather = null;
-      zeroconf = null;
+      ssdp = {};
+      sun = {};
+      system_health = {};
+      tag = {};
+      weather = {};
+      webhook = {};
+      zeroconf = {};
+      zone = [
+        {
+          name = "Home";
+          latitude = "!secret zone_home_latitude";
+          longitude = "!secret zone_home_longitude";
+          radius = "40";
+          icon = "mdi:home";
+        }
+        {
+          name = "Work";
+          latitude = "!secret zone_work_latitude";
+          longitude = "!secret zone_work_longitude";
+          radius = "121";
+          icon = "mdi:server";
+        }
+      ];
     };
     lovelaceConfig = {
       views = [ {
