@@ -31,9 +31,14 @@
             sha256 = "sha256-H0w2uEMxSHnJoQST8+gmLsl9CW+619NJ+/VJTNbcc6g=";
           })
           (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
-            name = "unifi73.patch";
+            name = "unifi7376.patch";
             url = "https://github.com/NixOS/nixpkgs/commit/8df1d1aef04d591707211eadf6e6d6cf1fdab280.patch";
             sha256 = "sha256-HuYnoMQ3GzbioQUZ/Gc6GusSp6gYDfzQg8ZAMMRrnAc=";
+          })
+          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
+            name = "unifi7383.patch";
+            url = "https://github.com/NixOS/nixpkgs/commit/bfdd942d5e66f5dc53ed361ab5b95c39cf867e8f.patch";
+            sha256 = "sha256-C9aBt2V0yuRJUG9m3GeObq/k/28pEksH6Cw3xLapbtU=";
           })
         ];
       };
