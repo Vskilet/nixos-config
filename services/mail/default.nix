@@ -54,7 +54,7 @@ with lib;
     };
 
     # Certificate setup
-    certificateScheme = 3;
+    certificateScheme = "acme-nginx";
 
     # Enable IMAP and POP3
     enableImap = false;

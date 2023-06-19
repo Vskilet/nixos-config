@@ -38,9 +38,13 @@
   documentation.nixos.enable = false;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = "no";
-  services.openssh.passwordAuthentication = false;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+  };
 
   networking.hostName = "SENNAS01"; # Define your hostname.
   networking.hostId = "7e44e347";

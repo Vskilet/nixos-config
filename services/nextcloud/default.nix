@@ -8,7 +8,7 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud25;
+    package = pkgs.nextcloud26;
     autoUpdateApps.enable = true;
     enableBrokenCiphersForSSE = false;
     config = {
@@ -19,6 +19,9 @@
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
       extraTrustedDomains = config.services.nginx.virtualHosts."cloud.sene.ovh".serverAliases;
       defaultPhoneRegion = "FR";
+    };
+    phpOptions = {
+      "opcache.interned_strings_buffer" = "10";
     };
   };
   virtualisation.oci-containers = {

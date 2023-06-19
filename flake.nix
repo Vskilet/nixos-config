@@ -1,13 +1,13 @@
 {
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-22.11";
+    nixpkgs.url = "flake:nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-22_11.follows = "nixpkgs";
+        nixpkgs-23_05.follows = "nixpkgs";
       };
     };
     nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
