@@ -4,6 +4,9 @@
   imports = [
     ../../modules/mautrix-whatsapp
   ];
+  nixpkgs.overlays = [
+    (import ../../overlays/mautrix-signal.nix)
+  ];
 
   services.postgresql.enable = true;
   services.postgresql.initialScript = pkgs.writeText "synapse-init.sql" ''
