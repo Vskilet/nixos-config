@@ -2,8 +2,8 @@
 
 let
   meross = builtins.fetchTarball {
-    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v2.5.7.tar.gz";
-    sha256 = "1hr161g0gqgv910ra1i5z52r101i544blrnfy99hxfzyzgk76h78";
+    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v4.2.0.tar.gz";
+    sha256 = "1rjh2izv7hm1dnxzbd98xh7r2gx8cwssad0imzw9x8flzmvbsx2c";
   };
 
 in {
@@ -19,6 +19,7 @@ in {
         name = "Home";
         currency = "EUR";
         unit_system = "metric";
+        country = "FR";
         time_zone = "Europe/Paris";
         latitude = "!secret zone_home_latitude";
         longitude = "!secret zone_home_longitude";
@@ -102,10 +103,25 @@ in {
         cards = [
           {
             type = "vertical-stack";
-            cards = [ {
-              type = "weather-forecast";
-              entity = "weather.openweathermap";
-            } ];
+            cards = [
+              {
+                type = "weather-forecast";
+                entity = "weather.openweathermap";
+              }
+              {
+                type = "history-graph";
+                entities = [
+                  {
+                    entity = "person.victor_sene";
+                  }
+                  {
+                    entity = "person.constance";
+                  }
+                ];
+                refresh_interval = "0";
+                hours_to_show = "15";
+              }
+            ];
           }
           {
             type = "vertical-stack";
@@ -186,4 +202,8 @@ in {
       proxyWebsockets = true;
     };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    1400  # Sonos
+  ];
 }
