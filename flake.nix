@@ -19,13 +19,22 @@
 
     supportedSystems = [ "x86_64-linux" ];
 
-    channels.nixpkgs.patches = [
-      (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
-        name = "mautrix-0.19.16";
-        url = "https://github.com/NixOS/nixpkgs/commit/f449215e3850172ae90ae9783051a5a781cb3c87.patch";
-        sha256 = "sha256-VQz4z3bCTb4AiQGCM9bb2hLNclyjEjfjjHrn+FqSn6M=";
-      })
-    ];
+    channels = {
+      nixpkgs = {
+        patches = [
+          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
+            name = "unifi-7.4.156";
+            url = "https://github.com/NixOS/nixpkgs/commit/756f6cc1ef2da00e1e60ee86286fe6b22f6a5949.patch";
+            sha256 = "sha256-vCmIxWzt7AeC0rdjS90GxsvFEGQ5A7pMj+wKpNhTcQM=";
+          })
+          (nixpkgs.legacyPackages."x86_64-linux".fetchpatch {
+            name = "mautrix-0.19.16";
+            url = "https://github.com/NixOS/nixpkgs/commit/f449215e3850172ae90ae9783051a5a781cb3c87.patch";
+            sha256 = "sha256-VQz4z3bCTb4AiQGCM9bb2hLNclyjEjfjjHrn+FqSn6M=";
+          })
+        ];
+      };
+    };
 
     hostDefaults.modules = [
       nixpkgs.nixosModules.notDetected
