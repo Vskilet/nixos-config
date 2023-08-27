@@ -35,7 +35,10 @@ with lib;
         ];
       };
       "prunille@sene.ovh" = {
-        hashedPassword = "$6$0KdsLs/b5d8$WMs406bs/UxI.Gby36AWudtJ9G2plFucdOO/9wjUPDM5i9f.TSMV9leYjB/m4U2cu8xTVXY8WR5bPghEelsCs/";
+        hashedPassword = "$6$R7HuHy5.IetwgIo4$onlqGxu.DINEjXkqUv.GGYISsff2RKR69OCFB/ETuZxKM3vnDJX4BzHqAvKyhjRLsGwZ6p6geLPtUr4WIB2Mq.";
+      };
+      "eline@sene.ovh" = {
+        hashedPassword = "$6$SH/Lk4f3tGsPpeEP$j2jTkANTyJF2ixzLmNPvzPfZJsbK.p045zvlLVJjhnSvZHn1XkB7xqM.tNZS1gd1RUOKM0CBfcQzsWzfg8N.A0";
       };
 
       "gaelle@sene.ovh" = {
