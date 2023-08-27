@@ -38,6 +38,62 @@ in {
             };
           };
         }
+        {
+          id = "good_bye";
+          alias = "Good bye";
+          mode = "single";
+          trigger = [
+            {
+              platform = "zone";
+              entity_id = "person.constance";
+              zone = "zone.home";
+              event = "leave";
+            }
+            {
+              platform = "zone";
+              entity_id = "person.victor_sene";
+              zone = "zone.home";
+              event = "leave";
+            }
+          ];
+          action = [
+            {
+              service = "scene.turn_on";
+              target.entity_id = "scene.night";
+            }
+          ];
+        }
+        {
+          id = "sweat_home";
+          alias = "Welome Home";
+          mode = "single";
+          trigger = [
+            {
+              platform = "zone";
+              entity_id = "person.constance";
+              zone = "zone.home";
+              event = "enter";
+            }
+            {
+              platform = "zone";
+              entity_id = "person.victor_sene";
+              zone = "zone.home";
+              event = "enter";
+            }
+          ];
+          condition = [
+            {
+              condition = "time";
+              after = "sensor.sun_next_dusk";
+            }
+          ];
+          action = [
+            {
+              service = "scene.turn_on";
+              target.entity_id = "scene.welcome";
+            }
+          ];
+        }
       ];
       config = {};
       counter = {};
@@ -59,7 +115,13 @@ in {
       kodi = {};
       logbook = {};
       map = {};
-      media_player = {};
+      media_player = [
+        {
+          platform = "kodi";
+          name = "osmc";
+          host = "172.16.2.19";
+        }
+      ];
       mobile_app = {};
       my = {};
       openweathermap = {};
@@ -68,6 +130,32 @@ in {
       #    name = test
       #  }
       #];
+      scene = [
+        {
+          name = "Welcome";
+          icon = "mdi:home";
+          entities = {
+            "switch.halogene" = {
+              state = "on";
+            };
+          };
+        }
+        {
+          name = "Night";
+          icon = "mdi:weather-night";
+          entities = {
+            "switch.soleil" = {
+              state = "off";
+            };
+            "switch.ivar" = {
+              state = "off";
+            };
+            "switch.halogene" = {
+              state = "off";
+            };
+          };
+        }
+      ];
       script = {};
       shelly  = {};
       sonos = {
@@ -120,6 +208,27 @@ in {
                 ];
                 refresh_interval = "0";
                 hours_to_show = "15";
+              }
+              {
+                type = "horizontal-stack";
+                cards = [
+                  {
+                    show_name = "true";
+                    show_icon = "true";
+                    type = "button";
+                    tap_action.action = "toggle";
+                    entity = "scene.night";
+                    show_state = "true";
+                  }
+                  {
+                    show_name = "true";
+                    show_icon = "true";
+                    type = "button";
+                    tap_action.action = "toggle";
+                    entity = "scene.welcome";
+                    show_state = "true";
+                  }
+                ];
               }
             ];
           }
