@@ -8,7 +8,7 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud26;
+    package = pkgs.nextcloud27;
     autoUpdateApps.enable = true;
     enableBrokenCiphersForSSE = false;
     config = {
