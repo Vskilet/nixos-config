@@ -22,14 +22,6 @@
     '';
   };
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  nixpkgs.config = {
-    allowUnfree = false;
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
-    ];
-  };
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
     appimage-run
@@ -97,7 +89,7 @@
     qt5ct
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     corefonts
     dejavu_fonts
     freefont_ttf

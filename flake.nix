@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
+    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       inputs = {
@@ -33,6 +33,13 @@
             sha256 = "sha256-VQz4z3bCTb4AiQGCM9bb2hLNclyjEjfjjHrn+FqSn6M=";
           })
         ];
+      };
+      nixpkgs-unstable = {
+        config = {
+          allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
+          ];
+        };
       };
     };
 
