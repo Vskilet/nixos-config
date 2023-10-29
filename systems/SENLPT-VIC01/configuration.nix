@@ -31,7 +31,6 @@
     feh
     ffmpeg-full
     file-roller
-    firefox
     frei0r
     gimp
     gnome-disk-utility
@@ -107,6 +106,7 @@
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
+  programs.firefox.enable = true;
 
   programs.adb.enable = true;
   programs.java.enable = true;
