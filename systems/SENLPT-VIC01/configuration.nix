@@ -210,22 +210,22 @@
           DVI-I-1-1 = {
             enable = true;
             mode = "1920x1080";
-            position = "0x0";
+            position = "1600x0";
             rate = "60.00";
             primary = true;
-            rotate = "normal";
+            rotate = "right";
           };
           DVI-I-2-2 = {
             enable = true;
             mode = "1920x1080";
-            position = "1920x0";
+            position = "2680x0";
             rate = "60.00";
             rotate = "normal";
           };
           eDP-1 = {
             enable = true;
             mode = "1600x900";
-            position = "3840x0";
+            position = "0x0";
             rate = "60.00";
             rotate = "normal";
           };
