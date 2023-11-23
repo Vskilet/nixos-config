@@ -213,7 +213,7 @@
             position = "1600x0";
             rate = "60.00";
             primary = true;
-            rotate = "right";
+            rotate = "left";
           };
           DVI-I-2-2 = {
             enable = true;
