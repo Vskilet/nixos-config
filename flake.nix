@@ -37,7 +37,7 @@
       nixpkgs-unstable = {
         config = {
           allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped"
+            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
           ];
         };
       };

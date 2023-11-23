@@ -73,6 +73,7 @@
     xcolor
     yt-dlp
     zim
+    zoom-us
 
     texstudio
     (texlive.combine {
