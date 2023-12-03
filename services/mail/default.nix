@@ -6,7 +6,7 @@ with lib;
   mailserver = {
     enable = true;
     fqdn = "mail.sene.ovh";
-    domains = [ "sene.ovh" "stech.ovh"];
+    domains = [ "sene.ovh" "stech.ovh" "lecentrebiblique.fr" ];
     messageSizeLimit = 26214400;
 
     # A list of all login accounts. To create the password hashes, use
@@ -54,6 +54,10 @@ with lib;
         ];
       };
 
+    };
+
+    extraVirtualAliases = {
+      "test@lecentrebiblique.fr" = [ "victor@sene.ovh" ];
     };
 
     # Certificate setup
