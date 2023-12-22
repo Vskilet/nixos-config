@@ -5,11 +5,11 @@
     backend = "docker";
     containers = {
       kresus = {
-        image = "bnjbvr/kresus";
+        image = "bnjbvr/kresus:0.20.1";
         ports = [ "9876:9876" ];
         volumes = [
-          "/var/lib/kresus/data:/data"
-          "/var/lib/kresus/config:/config"
+          "/var/lib/kresus/data:/home/user/data"
+          "/var/lib/kresus/config:/opt"
         ];
         extraOptions = [ "--env-file=/mnt/secrets/kresus.env" "--network=host" ];
       };
