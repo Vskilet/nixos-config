@@ -39,6 +39,7 @@
     imagemagick
     inkscape
     jmtpfs
+    joplin-desktop
     kate
     kdeconnect-kde
     kdenlive
