@@ -83,14 +83,36 @@ in {
           ];
           condition = [
             {
-              condition = "time";
-              after = "sensor.sun_next_dusk";
+              condition = "sun";
+              after = "sunset";
+              before = "sunrise";
             }
           ];
           action = [
             {
               service = "scene.turn_on";
               target.entity_id = "scene.welcome";
+            }
+          ];
+        }
+        {
+          id = "midnight_sleep";
+          alias = "Go Dodo";
+          mode = "single";
+          trigger = [
+            {
+              platform = "time";
+              at = "00:00:00";
+            }
+          ];
+          action = [
+            {
+              service = "scene.turn_on";
+              target.entity_id = "scene.night";
+            }
+            {
+              service = "light.turn_off";
+              target.entity_id = "light.smart_light_2104013813353790848148e1e969658d";
             }
           ];
         }
@@ -135,6 +157,15 @@ in {
           name = "Welcome";
           icon = "mdi:home";
           entities = {
+            "switch.soleil" = {
+              state = "on";
+            };
+            "switch.ivar" = {
+              state = "on";
+            };
+            "switch.sapin" = {
+              state = "on";
+            };
             "switch.halogene" = {
               state = "on";
             };
@@ -150,7 +181,16 @@ in {
             "switch.ivar" = {
               state = "off";
             };
+            "switch.sapin" = {
+              state = "off";
+            };
             "switch.halogene" = {
+              state = "off";
+            };
+            "light.smart_light_2104013813353790848148e1e969658d" = {
+              state = "off";
+            };
+            "media_player.prunille" = {
               state = "off";
             };
           };
@@ -243,6 +283,16 @@ in {
                 entity = "switch.ivar";
                 name = "Ivar";
                 icon = "mdi:floor-lamp";
+                icon_height = "50px";
+              }
+              {
+                type = "button";
+                tap_action = {
+                  action = "toggle";
+                };
+                entity = "switch.sapin";
+                name = "Sapin";
+                icon = "mdi:pine-tree";
                 icon_height = "50px";
               }
               {
