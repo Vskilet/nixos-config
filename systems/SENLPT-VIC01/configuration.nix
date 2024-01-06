@@ -99,6 +99,7 @@
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
+  xdg.portal.config.common.default = "*";
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="1edb", ATTR{idProduct}=="be55", MODE="0666"
   '';
