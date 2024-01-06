@@ -10,6 +10,7 @@
     https = true;
     package = pkgs.nextcloud27;
     autoUpdateApps.enable = true;
+    configureRedis = true;
     enableBrokenCiphersForSSE = false;
     config = {
       dbtype = "pgsql";
