@@ -51,7 +51,6 @@
     nfs-utils
     obs-studio
     okular
-    #openlpFull
     parted
     pavucontrol
     pkgs.networkmanagerapplet
@@ -163,8 +162,8 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "fr,us";
-    xkbVariant = ",intl";
+    layout = "us,fr";
+    xkbVariant = "intl,";
     xkbOptions = "grp:win_space_toggle";
     libinput = {
       enable = true;
@@ -202,6 +201,12 @@
   };
   services.autorandr = {
     enable = true;
+    hooks = {
+      postswitch = {
+        "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
+        "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
+      };
+    };
     profiles = {
       "desk" = {
         fingerprint = {
@@ -233,10 +238,6 @@
             rotate = "normal";
           };
         };
-        hooks.postswitch = {
-          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
-        };
       };
       "laptop" = {
         fingerprint = {
@@ -251,10 +252,6 @@
             crtc = 0;
             rotate = "normal";
           };
-        };
-        hooks.postswitch = {
-          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
         };
       };
       "tele" = {
@@ -281,15 +278,11 @@
             rotate = "normal";
           };
         };
-        hooks.postswitch = {
-          "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
-          "2-update-lockscreen" = "${pkgs.multilockscreen}/bin/multilockscreen --blur 1.0 -u /home/victor/Images/Wallpapers/gears.png";
-        };
       };
     };
   };
   environment.etc."i3status.conf".source = ../../misc/i3status.config;
-  environment.etc."alacritty.yml".source = ../../misc/alacritty.yml;
+  environment.etc."alacritty.toml".source = ../../misc/alacritty.toml;
 
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;

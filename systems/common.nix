@@ -6,7 +6,7 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "fr_FR.UTF-8";
-  console.keyMap = "fr";
+  console.keyMap = "us";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
