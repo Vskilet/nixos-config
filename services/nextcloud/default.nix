@@ -8,10 +8,9 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud27;
+    package = pkgs.nextcloud28;
     autoUpdateApps.enable = true;
     configureRedis = true;
-    enableBrokenCiphersForSSE = false;
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
