@@ -1,9 +1,6 @@
 { pkgs, config, lib, ... }:
 
 {
-  imports = [
-    ../../modules/mautrix-whatsapp
-  ];
   nixpkgs.overlays = [
     (import ../../overlays/mautrix-signal.nix)
   ];
@@ -41,6 +38,7 @@
           ];
         }
       ];
+      app_service_config_files = [ "/var/lib/mautrix-whatsapp/whatsapp-registration.yaml" ];
       database_type = "psycopg2";
       database_args = {
         database = "matrix-synapse";
@@ -92,12 +90,37 @@
   };
   users.groups.${toString(config.services.nginx.group)}.members = [ "matrix-synapse" ];
 
+  users.groups.mautrix-whatsapp.members = [ "matrix-synapse" ];
   services.mautrix-whatsapp = {
     enable = true;
     settings = {
-      homeserver.address = "https://matrix.sene.ovh";
-      bridge.permissions = {
-        "@vskilet:sene.ovh" = "admin";
+      homeserver.address = config.services.matrix-synapse.settings.public_baseurl;
+      appservice = {
+        bot.displayname = "WhatsApp Bot";
+        database = {
+          type = "sqlite3";
+          uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
+        };
+        #ephemeral_events = false;
+        id = "whatsapp";
+      };
+      bridge = {
+        encryption = {
+          allow = true;
+          default = false;
+          require = false;
+        };
+        history_sync = {
+          request_full_sync = true;
+        };
+        mute_bridging = false;
+        permissions = {
+          "@vskilet:sene.ovh" = "admin";
+        };
+        private_chat_portal_meta = true;
+        provisioning = {
+          shared_secret = "disable";
+        };
       };
     };
   };
