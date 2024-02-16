@@ -21,6 +21,9 @@
 
     channels = {
       nixpkgs = {
+        overlaysBuilder = channels: [
+          (final: prev: { inherit (channels.nixpkgs-unstable) unifi8; })
+        ];
         config = {
           allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "unifi-controller" "unifi" "mongodb"
@@ -30,7 +33,7 @@
       nixpkgs-unstable = {
         config = {
           allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "zoom"
+            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "unifi-controller" "zoom"
           ];
         };
       };
