@@ -5,13 +5,14 @@
     backend = "docker";
     containers = {
       peertube = {
-        image = "chocobozzz/peertube:v5.2.1-bullseye";
+        image = "chocobozzz/peertube:v6.0.3-bookworm";
         ports = [ "1935:1935" "9000:9000" ];
         volumes = [
           "/var/lib/peertube/data:/data"
           "/var/lib/peertube/config:/config"
         ];
-        extraOptions = [ "--network=peertube" "--env-file=/mnt/secrets/peertube.env" ];
+        environmentFiles = [ "/mnt/secrets/peertube.env" ];
+        extraOptions = [ "--network=peertube" ];
         dependsOn = [
           "postgres"
           "redis"
@@ -22,7 +23,8 @@
         volumes = [
           "/var/lib/peertube/db:/var/lib/postgresql/data"
         ];
-        extraOptions = [ "--network=peertube" "--env-file=/mnt/secrets/peertube.env" ];
+        environmentFiles = [ "/mnt/secrets/peertube.env" ];
+        extraOptions = [ "--network=peertube" ];
       };
       redis = {
         image = "redis:6-alpine";
