@@ -30,6 +30,7 @@
       onlyoffice = {
         image = "onlyoffice/documentserver";
         ports = [ "9981:80" ];
+        environmentFiles = [ "/mnt/secrets/onlyoffice.env" ];
       };
     };
   };
