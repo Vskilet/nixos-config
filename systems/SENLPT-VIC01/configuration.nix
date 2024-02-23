@@ -36,6 +36,7 @@
     gnome-disk-utility
     gnupg
     gopass
+    handbrake
     imagemagick
     inkscape
     jmtpfs
@@ -46,6 +47,7 @@
     kubectl
     libreoffice
     mkpasswd
+    mpv
     cinnamon.nemo
     nextcloud-client
     nfs-utils
@@ -56,7 +58,7 @@
     pkgs.networkmanagerapplet
     pkgs.shotwell
     python3
-    qlcplus
+    #qlcplus
     spectacle
     spotify
     v4l-utils
@@ -113,7 +115,7 @@
   programs.adb.enable = true;
   programs.java.enable = true;
 
-  services.udev.packages = [ pkgs.qlcplus ];
+  #services.udev.packages = [ pkgs.qlcplus ];
 
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
@@ -162,9 +164,11 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "us,fr";
-    xkbVariant = "intl,";
-    xkbOptions = "grp:win_space_toggle";
+    xkb = {
+      layout = "us,fr";
+      variant = "intl,";
+      options = "grp:win_space_toggle";
+    };
     libinput = {
       enable = true;
       touchpad.naturalScrolling = true;
