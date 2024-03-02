@@ -5,6 +5,10 @@
     (import ../../overlays/mautrix-signal.nix)
   ];
 
+  imports = [
+    ./turn.nix
+  ];
+
   services.postgresql.enable = true;
   services.postgresql.initialScript = pkgs.writeText "synapse-init.sql" ''
     CREATE ROLE "matrix-synapse";
