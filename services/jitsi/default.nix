@@ -9,6 +9,13 @@
       prejoinPageEnabled = true;
       defaultLang = "fr";
       enableNoisyMicDetection = false;
+      useStunTurn = true;
+      p2p = {
+        useStunTurn = true;
+        stunServers = [
+          { urls = "stun:turn.sene.ovh:3479"; }
+        ];
+      };
     };
     interfaceConfig = {
       SHOW_JITSI_WATERMARK = false;
