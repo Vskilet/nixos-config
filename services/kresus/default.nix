@@ -11,7 +11,8 @@
           "/var/lib/kresus/data:/home/user/data"
           "/var/lib/kresus/config:/opt"
         ];
-        extraOptions = [ "--env-file=/mnt/secrets/kresus.env" "--network=host" ];
+        environmentFiles = [ "/mnt/secrets/kresus.env" ];
+        extraOptions = [ "--network=host" ];
       };
     };
   };
@@ -20,9 +21,7 @@
     ensureDatabases = [ "kresus" ];
     ensureUsers = [{
       name = "kresus";
-      ensurePermissions = {
-        "DATABASE kresus" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     }];
   };
 

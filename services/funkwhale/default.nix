@@ -11,7 +11,8 @@
           "/var/lib/funkwhale/data:"
           "/var/lib/funkwhale/config:"
         ];
-        extraOptions = [ "--env-file=/mnt/secrets/funkwhale.env" "--network=host" ];
+        environmentFiles = [ "/mnt/secrets/funkwhale.env" ];
+        extraOptions = [ "--network=host" ];
       };
     };
   };
@@ -20,9 +21,7 @@
     ensureDatabases = [ "funkwhale" ];
     ensureUsers = [{
       name = "funkwhale";
-      ensurePermissions = {
-        "DATABASE funkwhale" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     }];
   };
 
