@@ -42,7 +42,7 @@
     hostDefaults.modules = [
       nixpkgs.nixosModules.notDetected
       {
-        nix.generateRegistryFromInputs = true;
+        #nix.generateRegistryFromInputs = true;
         nix.linkInputs = true;
         nix.generateNixPathFromInputs = true;
       }

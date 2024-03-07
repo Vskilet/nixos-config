@@ -47,7 +47,6 @@
     kubectl
     libreoffice
     mkpasswd
-    mpv
     cinnamon.nemo
     nextcloud-client
     nfs-utils
@@ -58,7 +57,7 @@
     pkgs.networkmanagerapplet
     pkgs.shotwell
     python3
-    #qlcplus
+    qlcplus
     spectacle
     spotify
     v4l-utils
@@ -115,7 +114,7 @@
   programs.adb.enable = true;
   programs.java.enable = true;
 
-  #services.udev.packages = [ pkgs.qlcplus ];
+  services.udev.packages = [ pkgs.qlcplus ];
 
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
