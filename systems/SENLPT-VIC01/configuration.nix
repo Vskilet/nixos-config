@@ -114,7 +114,7 @@
   programs.adb.enable = true;
   programs.java.enable = true;
 
-  services.udev.packages = [ pkgs.qlcplus ];
+  services.udev.packages = [ pkgs.qlcplus pkgs.autorandr];
 
   virtualisation.podman.enable = true;
   virtualisation.kvmgt.enable = true;
@@ -204,6 +204,7 @@
   };
   services.autorandr = {
     enable = true;
+    defaultTarget = "laptop";
     hooks = {
       postswitch = {
         "1-update-wallpaper" = "${pkgs.feh}/bin/feh --bg-scale /home/victor/Images/Wallpapers/nixos.png";
@@ -213,23 +214,27 @@
     profiles = {
       "desk" = {
         fingerprint = {
+          eDP-1 = "00ffffffffffff0030e4fc030000000000170104951f11780aa3e59659558e271f505400000001010101010101010101010101010101482640a460841a303020250035ae10000019000000000000000000000000000000000000000000fe004c4720446973706c61790a2020000000fe004c503134305744322d54504231002a";
           DVI-I-1-1 = "00ffffffffffff0030aeab6101010101081d010380331d782e27b5a4574c9f260f5054bdcf00714f8180818c9500b300d1c001010101023a801871382d40582c4500fd1e1100001e000000ff0056333033334c544d0a20202020000000fd00324b1e5311000a202020202020000000fc004c454e20543233692d31300a20017902031ef14b010203040514111213901f230907078301000065030c001000011d007251d01e206e285500fd1e1100001e8c0ad08a20e02d10103e9600fd1e110000188c0ad090204031200c405500fd1e110000180000000000000000000000000000000000000000000000000000000000000000000000000000000000000052";
           DVI-I-2-2 = "00ffffffffffff0030aeab6157464e460e1e010380331d782e27b5a4574c9f260f5054bdcf00714f8180818c9500b300d1c001010101023a801871382d40582c4500fd1e1100001e000000ff0056333035464e46570a20202020000000fd00324b1e5311000a202020202020000000fc004c454e20543233692d31300a20013202031ef14b010203040514111213901f230907078301000065030c001000011d007251d01e206e285500fd1e1100001e8c0ad08a20e02d10103e9600fd1e110000188c0ad090204031200c405500fd1e110000180000000000000000000000000000000000000000000000000000000000000000000000000000000000000052";
         };
         config = {
+          eDP-1.enable = false;
           DVI-I-1-1 = {
             enable = true;
             mode = "1920x1080";
-            position = "1600x0";
+            position = "0x0";
             rate = "60.00";
-            primary = true;
+            crtc = 1;
             rotate = "left";
           };
           DVI-I-2-2 = {
             enable = true;
             mode = "1920x1080";
-            position = "2680x0";
+            position = "1080x475";
             rate = "60.00";
+            primary = true;
+            crtc = 0;
             rotate = "normal";
           };
         };
