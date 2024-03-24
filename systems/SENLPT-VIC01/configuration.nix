@@ -58,6 +58,9 @@
     pkgs.shotwell
     python3
     qlcplus
+
+    rpi-imager
+
     spectacle
     spotify
     v4l-utils
