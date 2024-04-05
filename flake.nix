@@ -3,13 +3,7 @@
     nixpkgs.url = "flake:nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
-    simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-23_11.follows = "nixpkgs";
-      };
-    };
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
     nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
   };
 
