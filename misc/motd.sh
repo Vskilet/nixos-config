@@ -54,7 +54,6 @@ services=(
   "phpfpm-nextcloud.service"
   ""
   "matrix-synapse.service"
-  "gitea.service"
   "grafana.service"
   "docker.service"
   ""
