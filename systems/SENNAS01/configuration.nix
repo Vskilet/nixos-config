@@ -7,6 +7,7 @@
       ./hardware-configuration.nix
       ./users.nix
       ../../services/hass
+      #../../services/k3s
       ../../services/kresus
       ../../services/mail
       ../../services/matrix
