@@ -12,6 +12,10 @@ in {
     "Z /var/lib/hass/custom_components 700 hass hass - -"
   ];
 
+  imports = [
+    ./mqtt.nix
+  ];
+
   services.home-assistant = {
     enable = true;
     config = {
