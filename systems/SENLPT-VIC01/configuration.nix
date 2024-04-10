@@ -27,6 +27,7 @@
     appimage-run
     arandr
     audacity
+    chromium
     evince
     feh
     ffmpeg-full
