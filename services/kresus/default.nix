@@ -11,7 +11,6 @@
           "/var/lib/kresus/data:/home/user/data"
           "/var/lib/kresus/config:/opt"
         ];
-        environmentFiles = [ "/mnt/secrets/kresus.env" ];
         extraOptions = [ "--network=host" ];
       };
     };
