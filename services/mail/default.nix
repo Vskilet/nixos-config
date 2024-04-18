@@ -53,6 +53,10 @@ with lib;
           "david67@stech.ovh"
         ];
       };
+      "nextcloud@sene.ovh" = {
+        hashedPassword = "$2b$05$nJdLEnGj8AOBXz4/PZ1Rked1dbr7Tb6QYTfy8q2UhYQhaSJ8x6YY6";
+        sendOnly = true;
+      };
 
     };
 
