@@ -41,7 +41,6 @@
     imagemagick
     inkscape
     jmtpfs
-    joplin-desktop
     kate
     kdeconnect-kde
     kdenlive
@@ -107,9 +106,6 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="1edb", ATTR{idProduct}=="be55", MODE="0666"
   '';
-
-  programs.wireshark.enable = true;
-  programs.wireshark.package = pkgs.wireshark;
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
