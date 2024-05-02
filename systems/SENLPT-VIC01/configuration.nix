@@ -160,7 +160,11 @@
     TERMINAL = "alacritty";
   };
 
-  # Enable the X11 windowing system.
+  services.libinput = {
+    enable = true;
+    touchpad.naturalScrolling = true;
+  };
+  services.displayManager.defaultSession = "none+i3";
   services.xserver = {
     enable = true;
     xkb = {
@@ -168,19 +172,12 @@
       variant = "intl,";
       options = "grp:win_space_toggle";
     };
-    libinput = {
-      enable = true;
-      touchpad.naturalScrolling = true;
-    };
     desktopManager = {
       xterm.enable = false;
     };
-    displayManager = {
-      defaultSession = "none+i3";
-      sessionCommands = ''
-        ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
-      '';
-    };
+    displayManager.sessionCommands = ''
+      ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
+    '';
     videoDrivers = [ "displaylink" "modesetting" ];
     windowManager.i3 = {
       enable = true;
