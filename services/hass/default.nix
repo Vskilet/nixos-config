@@ -144,7 +144,7 @@ in {
       media_player = [
         {
           platform = "kodi";
-          name = "osmc";
+          name = "kodi";
           host = "172.16.2.19";
         }
       ];
@@ -167,7 +167,7 @@ in {
             "switch.ivar" = {
               state = "on";
             };
-            "switch.sapin" = {
+            "switch.cuisine" = {
               state = "on";
             };
             "switch.halogene" = {
@@ -185,7 +185,7 @@ in {
             "switch.ivar" = {
               state = "off";
             };
-            "switch.sapin" = {
+            "switch.cuisine" = {
               state = "off";
             };
             "switch.halogene" = {
@@ -195,6 +195,9 @@ in {
               state = "off";
             };
             "media_player.prunille" = {
+              state = "off";
+            };
+            "media_player.salon" = {
               state = "off";
             };
           };
@@ -294,9 +297,9 @@ in {
                 tap_action = {
                   action = "toggle";
                 };
-                entity = "switch.sapin";
-                name = "Sapin";
-                icon = "mdi:pine-tree";
+                entity = "switch.cuisine";
+                name = "Cuisine";
+                icon = "mdi:faucet";
                 icon_height = "50px";
               }
               {
@@ -316,7 +319,7 @@ in {
                 };
                 entity = "switch.soleil";
                 name = "Soleil";
-                icon = "mdi:wall-sconce-round";
+                icon = "mdi:wall-sconce-round-variant";
                 icon_height = "50px";
               }
               {
@@ -345,7 +348,7 @@ in {
               }
               {
                 type = "media-control";
-                entity ="media_player.osmc";
+                entity ="media_player.kodi";
               }
             ];
           }
