@@ -5,6 +5,7 @@
       ./hardware-configuration.nix
       ./users.nix
       ../common.nix
+      ../../desktop
     ];
 
   networking.hostName = "SENLPT-VIC01"; # Define your hostname.
@@ -77,13 +78,6 @@
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super xargs bigfoot lipsum;
     })
-
-    #breeze-gtk
-    breeze-icons
-    numix-gtk-theme
-    numix-icon-theme
-    yaru-theme
-    qt5.qtwayland
   ];
 
   fonts.packages = with pkgs; [
@@ -149,46 +143,6 @@
     enable = true;
     package = pkgs.pulseaudioFull;
   };
-
-  environment.variables = {
-    QT_QPA_PLATFORM = "wayland";
-    TERMINAL = "alacritty";
-
-    SDL_VIDEODRIVER = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-  };
-  security.polkit.enable = true;
-  xdg.portal.wlr.enable = true;
-  qt = {
-    enable = true;
-    style = "breeze";
-    platformTheme = "qt5ct";
-  };
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      alacritty
-      glib
-      grim
-      slurp
-      wl-clipboard
-      clipman
-      mako
-      i3status waybar kanshi
-      swayidle
-      swaylock
-      rofi rofi-pass rofi-power-menu
-      wdisplays
-    ];
-  };
-
-  environment.etc."sway.conf".source = ../../misc/i3.config;
-  environment.etc."i3status.conf".source = ../../misc/i3status.config;
-  environment.etc."xdg/waybar/config".source = ../../misc/waybar.config;
-  environment.etc."alacritty.toml".source = ../../misc/alacritty.toml;
 
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;
