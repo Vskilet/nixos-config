@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
+    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/master";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
     nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
   };
