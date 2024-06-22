@@ -137,13 +137,6 @@
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver_1_00_37 ];
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
   programs.dconf.enable = true;
   services.gnome.evolution-data-server.enable = true;
   services.gnome.gnome-online-accounts.enable = true;
