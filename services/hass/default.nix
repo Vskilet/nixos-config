@@ -18,7 +18,14 @@ in {
 
   services.home-assistant = {
     enable = true;
+    extraComponents = [
+      "esphome"
+      "met"
+      "overkiz"
+      "radio_browser"
+    ];
     config = {
+      default_config = {};
       homeassistant = {
         name = "Home";
         currency = "EUR";
@@ -121,26 +128,12 @@ in {
           ];
         }
       ];
-      config = {};
-      counter = {};
-      dhcp = {};
-      energy = {};
-      frontend = {};
-      history = {};
       http = {
         server_host = "::1";
         trusted_proxies = [ "::1" ];
         use_x_forwarded_for = true;
       };
-      input_boolean = {};
-      input_button = {};
-      input_datetime = {};
-      input_number = {};
-      input_select = {};
-      input_text = {};
       kodi = {};
-      logbook = {};
-      map = {};
       media_player = [
         {
           platform = "kodi";
@@ -149,13 +142,7 @@ in {
         }
       ];
       mobile_app = {};
-      my = {};
       openweathermap = {};
-      #person = [
-      #  {
-      #    name = test
-      #  }
-      #];
       scene = [
         {
           name = "Welcome";
@@ -231,129 +218,6 @@ in {
           icon = "mdi:server";
         }
       ];
-    };
-    lovelaceConfig = {
-      views = [ {
-        title = "Home";
-        cards = [
-          {
-            type = "vertical-stack";
-            cards = [
-              {
-                type = "weather-forecast";
-                entity = "weather.openweathermap";
-              }
-              {
-                type = "history-graph";
-                entities = [
-                  {
-                    entity = "person.victor_sene";
-                  }
-                  {
-                    entity = "person.constance";
-                  }
-                ];
-                refresh_interval = "0";
-                hours_to_show = "15";
-              }
-              {
-                type = "horizontal-stack";
-                cards = [
-                  {
-                    show_name = "true";
-                    show_icon = "true";
-                    type = "button";
-                    tap_action.action = "toggle";
-                    entity = "scene.night";
-                    show_state = "true";
-                  }
-                  {
-                    show_name = "true";
-                    show_icon = "true";
-                    type = "button";
-                    tap_action.action = "toggle";
-                    entity = "scene.welcome";
-                    show_state = "true";
-                  }
-                ];
-              }
-            ];
-          }
-          {
-            type = "vertical-stack";
-            cards = [
-              {
-                type = "button";
-                tap_action = {
-                  action = "toggle";
-                };
-                entity = "switch.ivar";
-                name = "Ivar";
-                icon = "mdi:floor-lamp";
-                icon_height = "50px";
-              }
-              {
-                type = "button";
-                tap_action = {
-                  action = "toggle";
-                };
-                entity = "switch.cuisine";
-                name = "Cuisine";
-                icon = "mdi:faucet";
-                icon_height = "50px";
-              }
-              {
-                type = "button";
-                tap_action = {
-                  action = "toggle";
-                };
-                entity = "switch.halogene";
-                name = "Halogène";
-                icon = "mdi:floor-lamp-dual";
-                icon_height = "50px";
-              }
-              {
-                type = "button";
-                tap_action = {
-                  action = "toggle";
-                };
-                entity = "switch.soleil";
-                name = "Soleil";
-                icon = "mdi:wall-sconce-round-variant";
-                icon_height = "50px";
-              }
-              {
-                type = "button";
-                tap_action = {
-                  action = "toggle";
-                };
-                entity = "light.smart_light_2104013813353790848148e1e969658d";
-                name = "Veilleuse";
-                icon = "mdi:lightbulb";
-                icon_height = "50px";
-              }
-
-            ];
-          }
-          {
-            type = "vertical-stack";
-            cards = [
-              {
-                type = "media-control";
-                entity ="media_player.salon";
-              }
-              {
-                type = "media-control";
-                entity ="media_player.prunille";
-              }
-              {
-                type = "media-control";
-                entity ="media_player.kodi";
-              }
-            ];
-          }
-        ];
-      } ];
     };
   };
 
