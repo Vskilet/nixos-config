@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-23.11";
+    nixpkgs.url = "flake:nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus/master";
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
   };
 
