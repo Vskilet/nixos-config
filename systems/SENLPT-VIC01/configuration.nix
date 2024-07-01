@@ -17,12 +17,6 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
     anydesk
     appimage-run

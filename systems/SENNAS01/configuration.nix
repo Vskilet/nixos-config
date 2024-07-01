@@ -26,13 +26,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   documentation.nixos.enable = false;
 
   # Enable the OpenSSH daemon.
