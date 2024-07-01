@@ -2,61 +2,65 @@
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/master";
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
-    nix-matrix-appservices.url = "gitlab:coffeetables/nix-matrix-appservices";
-  };
-
-  outputs = inputs@{ self, utils, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, nix-matrix-appservices }: utils.lib.mkFlake {
-
-    inherit self inputs;
-
-    supportedSystems = [ "x86_64-linux" ];
-
-    channels = {
-      nixpkgs = {
-        overlaysBuilder = channels: [
-          (final: prev: { inherit (channels.nixpkgs-unstable) unifi8; })
-        ];
-        config = {
-          allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "unifi-controller" "unifi" "mongodb"
-          ];
-        };
-      };
-      nixpkgs-unstable = {
-        config = {
-          allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "unifi-controller" "zoom"
-          ];
-        };
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs-24_05.follows = "nixpkgs";
       };
     };
+    nix-matrix-appservices = {
+      url = "gitlab:coffeetables/nix-matrix-appservices";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-    hostDefaults.modules = [
-      nixpkgs.nixosModules.notDetected
-      {
-        #nix.generateRegistryFromInputs = true;
-        nix.linkInputs = true;
-        nix.generateNixPathFromInputs = true;
-      }
-    ];
+  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, nix-matrix-appservices }: {
 
-    hosts = {
-      SENNAS01 = {
-        channelName = "nixpkgs";
-        modules = [
-          simple-nixos-mailserver.nixosModule
-          nix-matrix-appservices.nixosModule
-          ./systems/SENNAS01/configuration.nix
-        ];
-      };
-      SENLPT-VIC01 = {
-        channelName = "nixpkgs-unstable";
-        modules = [
-          ./systems/SENLPT-VIC01/configuration.nix
-        ];
-      };
+    nixosConfigurations.SENLPT-VIC01 = nixpkgs-unstable.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        nixpkgs-unstable.nixosModules.notDetected
+        {
+          nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "unifi-controller" "zoom"
+          ];
+          nix = {
+            settings.experimental-features = [ "nix-command" "flakes" ];
+            registry = {
+              nixpkgs.to = {
+                type = "path";
+                path = nixpkgs-unstable.legacyPackages.x86_64-linux.path;
+              };
+            };
+          };
+        }
+        ./systems/SENLPT-VIC01/configuration.nix
+      ];
+    };
+
+    nixosConfigurations.SENNAS01 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        nixpkgs.nixosModules.notDetected
+        nix-matrix-appservices.nixosModule
+        simple-nixos-mailserver.nixosModule
+        {
+          nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+            "unifi-controller" "unifi" "mongodb"
+          ];
+          nix = {
+            settings.experimental-features = [ "nix-command" "flakes" ];
+            registry = {
+              nixpkgs.to = {
+                type = "path";
+                path = nixpkgs.legacyPackages.x86_64-linux.path;
+              };
+            };
+          };
+        }
+        ./systems/SENNAS01/configuration.nix
+      ];
     };
   };
 }
