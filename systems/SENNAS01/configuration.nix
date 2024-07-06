@@ -34,6 +34,7 @@
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
+      LoginGraceTime = 0;
     };
   };
 
