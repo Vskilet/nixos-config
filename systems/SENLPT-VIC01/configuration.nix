@@ -17,12 +17,10 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  environment.systemPackages = with pkgs; with gnome; with libsForQt5; [
+  environment.systemPackages = with pkgs; with libsForQt5; [
     anydesk
     appimage-run
     audacity
-    chromium
-    evince
     ffmpeg-full
     file-roller
     frei0r
@@ -58,7 +56,6 @@
     virt-manager
     virt-viewer
     virtiofsd
-    vitetris
     vlc
     win-virtio
     wineWowPackages.staging
