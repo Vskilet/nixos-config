@@ -19,7 +19,7 @@
         encryption = {
           allow = true;
           default = true;
-          require = true;
+          require = false;
         };
         history_sync = {
           request_full_sync = true;

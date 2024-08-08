@@ -17,6 +17,7 @@
 
   services.matrix-synapse = {
     enable = true;
+    log.root.level = "WARNING";
     settings = {
       enable_registration = false;
       server_name = "sene.ovh";
