@@ -39,11 +39,13 @@
     kubectl
     libreoffice
     mkpasswd
-    cinnamon.nemo
+    mpv
+    nemo
     nextcloud-client
     nfs-utils
     obs-studio
     okular
+    openswitcher
     parted
     pavucontrol
     pkgs.networkmanagerapplet

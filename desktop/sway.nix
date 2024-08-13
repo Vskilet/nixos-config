@@ -2,7 +2,6 @@
 {
   environment = {
     variables = {
-      QT_QPA_PLATFORM = "wayland";
       TERMINAL = "alacritty";
 
       SDL_VIDEODRIVER = "wayland";
@@ -36,6 +35,7 @@
       hyprpicker
 
       breeze-icons
+      kdePackages.breeze
       numix-gtk-theme
       numix-icon-theme
       qt5.qtwayland
