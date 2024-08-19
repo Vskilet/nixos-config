@@ -63,6 +63,9 @@
       vaapiVdpau
       libvdpau-va-gl
       intel-media-driver
+      intel-compute-runtime
+      intel-ocl
+      ocl-icd
     ];
   };
 

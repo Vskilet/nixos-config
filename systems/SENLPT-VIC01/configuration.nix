@@ -21,6 +21,7 @@
     anydesk
     appimage-run
     audacity
+    davinci-resolve
     ffmpeg-full
     file-roller
     frei0r

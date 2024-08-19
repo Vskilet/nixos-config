@@ -23,7 +23,7 @@
         nixpkgs-unstable.nixosModules.notDetected
         {
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "displaylink" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "unifi-controller" "zoom"
+            "anydesk" "corefonts" "davinci-resolve" "displaylink" "intel-ocl" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "unifi-controller" "zoom"
           ];
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
