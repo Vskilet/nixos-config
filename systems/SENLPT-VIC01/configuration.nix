@@ -17,7 +17,7 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  environment.systemPackages = with pkgs; with libsForQt5; [
+  environment.systemPackages = with pkgs; with kdePackages; [
     anydesk
     appimage-run
     audacity

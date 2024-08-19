@@ -38,7 +38,7 @@
       kdePackages.breeze
       numix-gtk-theme
       numix-icon-theme
-      qt5.qtwayland
+      kdePackages.qtwayland
       yaru-theme
     ];
   };
