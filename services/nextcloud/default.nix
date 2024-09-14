@@ -47,11 +47,12 @@
       serverAliases = [ "cloud.stech.ovh" ];
     };
     "onlyoffice.sene.ovh" = {
-      forceSSL = true;
       enableACME = true;
+      forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:9981/";
       };
+      serverAliases = [ "onlyoffice.stech.ovh" ];
     };
   };
 }
