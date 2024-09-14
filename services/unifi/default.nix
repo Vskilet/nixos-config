@@ -34,6 +34,7 @@
           proxy_set_header Host $host;
         '';
       };
+      serverAliases = [ "unifi.stech.ovh" ];
     };
   };
 }
