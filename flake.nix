@@ -46,9 +46,12 @@
         nix-matrix-appservices.nixosModule
         simple-nixos-mailserver.nixosModule
         {
-          nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "unifi-controller" "unifi" "mongodb"
-          ];
+          nixpkgs.config = {
+            permittedInsecurePackages = [ "olm-3.2.16" ];
+            allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+              "unifi-controller" "unifi" "mongodb"
+            ];
+          };
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
             registry = {
