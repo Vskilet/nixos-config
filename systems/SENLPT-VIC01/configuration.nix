@@ -22,7 +22,7 @@
     appimage-run
     audacity
     chromium
-    davinci-resolve
+    #davinci-resolve
     ffmpeg-full
     file-roller
     frei0r
