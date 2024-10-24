@@ -21,6 +21,7 @@
     anydesk
     appimage-run
     audacity
+    chromium
     davinci-resolve
     ffmpeg-full
     file-roller
@@ -46,6 +47,7 @@
     nfs-utils
     obs-studio
     okular
+    onedrivegui
     openswitcher
     parted
     pavucontrol
@@ -80,6 +82,8 @@
     freefont_ttf
     raleway
   ];
+
+  services.onedrive.enable = true;
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
