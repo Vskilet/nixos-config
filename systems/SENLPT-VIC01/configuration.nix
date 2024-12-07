@@ -30,12 +30,13 @@
     glaxnimate
     gnome-disk-utility
     gnupg
+    go
+    gopls
     gopass
     handbrake
     imagemagick
     inkscape
     jmtpfs
-    kate
     kdeconnect-kde
     kdenlive
     kubectl
@@ -62,6 +63,7 @@
     virt-viewer
     virtiofsd
     vlc
+    vscode
     win-virtio
     wineWowPackages.staging
     winetricks
