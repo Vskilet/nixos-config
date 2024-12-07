@@ -34,11 +34,9 @@
       wl-clipboard
       hyprpicker
 
-      breeze-icons
       kdePackages.breeze
       numix-gtk-theme
       numix-icon-theme
-      kdePackages.qtwayland
       yaru-theme
     ];
   };
@@ -48,6 +46,7 @@
     platformTheme = "qt5ct";
   };
   security.polkit.enable = true;
+  xdg.portal.enable = true;
   xdg.portal.wlr.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {

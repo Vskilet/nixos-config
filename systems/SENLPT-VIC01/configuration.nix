@@ -88,8 +88,6 @@
   services.onedrive.enable = true;
 
   services.flatpak.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.config.common.default = "*";
 
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
   programs.browserpass.enable = true;
