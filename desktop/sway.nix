@@ -24,6 +24,7 @@
       clipman
       glib
       grim
+      hyprpicker
       i3status waybar kanshi
       mako
       rofi rofi-pass rofi-power-menu
@@ -32,7 +33,7 @@
       swaylock
       wdisplays
       wl-clipboard
-      hyprpicker
+      wl-screenrec
 
       kdePackages.breeze
       numix-gtk-theme
