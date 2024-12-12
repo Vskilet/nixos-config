@@ -84,8 +84,23 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/kresus" =
+    { device = "senpool01/var/lib/kresus";
+      fsType = "zfs";
+    };
+
   fileSystems."/var/lib/matrix-synapse" =
     { device = "senpool01/var/lib/matrix-synapse";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/mautrix-signal" =
+    { device = "senpool01/var/lib/mautrix-signal";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/mautrix-whatsapp" =
+    { device = "senpool01/var/lib/mautrix-whatsapp";
       fsType = "zfs";
     };
 
