@@ -52,7 +52,6 @@
     openswitcher
     parted
     pavucontrol
-    pkgs.networkmanagerapplet
     pkgs.shotwell
     python3
     qlcplus

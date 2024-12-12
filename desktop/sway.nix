@@ -16,6 +16,22 @@
       "alacritty.toml".source = ./alacritty.toml;
     };
   };
+  programs.regreet = {
+    enable = true;
+    iconTheme = {
+      name = "Numix";
+      package = pkgs.numix-icon-theme;
+    };
+    settings = {
+      GTK = {
+        application_prefer_dark_theme = true;
+      };
+    };
+    theme = {
+      name = "Numix";
+      package = pkgs.numix-gtk-theme;
+    };
+  };
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
