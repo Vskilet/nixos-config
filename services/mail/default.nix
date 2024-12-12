@@ -76,14 +76,5 @@ with lib;
 
     virusScanning = false;
   };
-
-  services.postfix = {
-    relayHost = "mailvps.nyanlout.re";
-    relayPort = 587;
-    config = {
-      smtp_tls_cert_file = lib.mkForce "/var/lib/postfix/postfixrelay.crt";
-      smtp_tls_key_file = lib.mkForce "/var/lib/postfix/postfixrelay.key";
-    };
-  };
 }
 
