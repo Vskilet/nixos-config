@@ -18,6 +18,7 @@
     extraConfig = ''
       verbose
       no-multicast-peers
+      external-ip=128.78.187.125
       denied-peer-ip=0.0.0.0-0.255.255.255
       denied-peer-ip=10.0.0.0-10.255.255.255
       denied-peer-ip=100.64.0.0-100.127.255.255
@@ -71,5 +72,6 @@
     ];
     turn_shared_secret = static-auth-secret;
     turn_user_lifetime = "1h";
+    turn_allow_guests = true;
   };
 }
