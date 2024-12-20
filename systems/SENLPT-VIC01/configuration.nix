@@ -25,6 +25,7 @@
     #davinci-resolve
     ffmpeg-full
     file-roller
+    fractal
     frei0r
     gimp
     glaxnimate
