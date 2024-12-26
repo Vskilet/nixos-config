@@ -1,21 +1,18 @@
 {
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-24.05";
+    nixpkgs.url = "flake:nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "flake:nixpkgs/nixos-unstable";
+    nixpkgs-mongodb-ce-7.url = "github:nixos/nixpkgs/4ae2e647537bcdbb82265469442713d066675275";
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-24_05.follows = "nixpkgs";
+        nixpkgs-24_11.follows = "nixpkgs";
       };
-    };
-    nix-matrix-appservices = {
-      url = "gitlab:coffeetables/nix-matrix-appservices";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, nix-matrix-appservices }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-mongodb-ce-7, simple-nixos-mailserver }: {
 
     nixosConfigurations.SENLPT-VIC01 = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
@@ -39,11 +36,15 @@
       ];
     };
 
-    nixosConfigurations.SENNAS01 = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.SENNAS01 = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
+      specialArgs = {
+        pkgs-mongodb-ce-7 = import nixpkgs-mongodb-ce-7 {
+          inherit system;
+        };
+      };
       modules = [
         nixpkgs.nixosModules.notDetected
-        nix-matrix-appservices.nixosModule
         simple-nixos-mailserver.nixosModule
         {
           nixpkgs.config = {
