@@ -8,14 +8,13 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
     autoUpdateApps.enable = true;
     configureRedis = true;
     config = {
       dbtype = "pgsql";
       dbuser = "nextcloud";
       dbpassFile = "/mnt/secrets/nextcloud_config_dbpassFile";
-      dbtableprefix = "oc_";
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
     };
     settings = {
