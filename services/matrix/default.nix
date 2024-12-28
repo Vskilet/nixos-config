@@ -6,14 +6,14 @@
     ./signal.nix
   ];
 
-  services.postgresql.enable = true;
-  services.postgresql.initialScript = pkgs.writeText "synapse-init.sql" ''
-    CREATE ROLE "matrix-synapse";
-    CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
-      TEMPLATE template0
-      LC_COLLATE = "C"
-      LC_CTYPE = "C";
-  '';
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "matrix-synapse" ];
+    ensureUsers = [{
+      name = "matrix-synapse";
+      ensureDBOwnership = true;
+    }];
+  };
 
   services.matrix-synapse = {
     enable = true;
