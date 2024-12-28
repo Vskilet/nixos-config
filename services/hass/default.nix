@@ -8,12 +8,16 @@ let
 
 in {
   systemd.tmpfiles.rules = [
-    "C /var/lib/hass/custom_components/meross - - - - ${meross}/custom_components/meross_lan"
-    "Z /var/lib/hass/custom_components 700 hass hass - -"
+    "C ${config.services.home-assistant.configDir}/custom_components/meross - - - - ${meross}/custom_components/meross_lan"
+    "Z ${config.services.home-assistant.configDir}/custom_components 700 hass hass - -"
+    "f ${config.services.home-assistant.configDir}/automations.yaml 0600 hass hass"
+    "f ${config.services.home-assistant.configDir}/scenes.yaml 0600 hass hass"
+    "f ${config.services.home-assistant.configDir}/scripts.yaml 0600 hass hass"
   ];
 
   imports = [
     ./mqtt.nix
+    #./zigbee.nix
   ];
 
   services.home-assistant = {
@@ -55,7 +59,7 @@ in {
             input = {
               person_entity = "person.victor_sene";
               zone_entity = "zone.work";
-              notify_device = "05119a513c81136a19eec038d5d86e88";
+              notify_device = "195e7bec7367ad09e14685fdb9432b94";
             };
           };
         }
