@@ -2,8 +2,8 @@
 
 let
   meross = builtins.fetchTarball {
-    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v4.2.0.tar.gz";
-    sha256 = "1rjh2izv7hm1dnxzbd98xh7r2gx8cwssad0imzw9x8flzmvbsx2c";
+    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v5.4.1.tar.gz";
+    sha256 = "1ppvgpqj2wvrha8n87c6dnwp2fqa468zlc4qyi053fqg4yrgxs91";
   };
 
 in {
@@ -20,9 +20,19 @@ in {
     enable = true;
     extraComponents = [
       "esphome"
+      "kodi"
       "met"
+      "openweathermap"
       "overkiz"
       "radio_browser"
+    ];
+    extraPackages = python3Packages: with python3Packages; [
+      isal              # warning from logs without it
+      psycopg2          # for postgresql support
+      uiprotect         # remove warning in discovery logs
+      unifi-ap          # remove warning in discovery logs
+      unifi-discovery   # remove warning in discovery logs
+      zlib-ng           # warning from logs without it
     ];
     config = {
       default_config = {};
@@ -76,7 +86,7 @@ in {
         }
         {
           id = "sweat_home";
-          alias = "Welome Home";
+          alias = "Welcome Home";
           mode = "single";
           trigger = [
             {
@@ -121,28 +131,16 @@ in {
               service = "scene.turn_on";
               target.entity_id = "scene.night";
             }
-            {
-              service = "light.turn_off";
-              target.entity_id = "light.smart_light_2104013813353790848148e1e969658d";
-            }
           ];
         }
       ];
+      "automation ui" = "!include automations.yaml";
       http = {
         server_host = "::1";
         trusted_proxies = [ "::1" ];
         use_x_forwarded_for = true;
       };
-      kodi = {};
-      media_player = [
-        {
-          platform = "kodi";
-          name = "kodi";
-          host = "172.16.2.19";
-        }
-      ];
       mobile_app = {};
-      openweathermap = {};
       scene = [
         {
           name = "Welcome";
@@ -178,19 +176,18 @@ in {
             "switch.halogene" = {
               state = "off";
             };
-            "light.smart_light_2104013813353790848148e1e969658d" = {
-              state = "off";
-            };
             "media_player.prunille" = {
-              state = "off";
+              state = "paused";
             };
             "media_player.salon" = {
-              state = "off";
+              state = "paused";
             };
           };
         }
       ];
+      "scene ui" = "!include scenes.yaml";
       script = {};
+      "script ui" = "!include scripts.yaml";
       shelly  = {};
       sonos = {
         media_player.hosts = [ "172.16.2.11" "172.16.2.14" ];
