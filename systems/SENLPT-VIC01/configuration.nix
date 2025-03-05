@@ -13,8 +13,15 @@
   networking.useDHCP = false;
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; with kdePackages; [
@@ -70,7 +77,6 @@
     woeusb
     yt-dlp
     zim
-    zoom-us
 
     texstudio
     (texlive.combine {
