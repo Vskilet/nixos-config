@@ -10,6 +10,9 @@
         address = "127.0.0.1:10003";
       };
       dns = {
+        bind_hosts = [
+          "0.0.0.0"
+        ];
         upstream_dns = [
           "80.67.169.12"
           "80.67.169.40"
@@ -45,5 +48,10 @@
     extraConfig = ''
       include ${toString(config.environment.etc."nginx-sso_auth.inc".source)};
     '';
+  };
+
+  networking.firewall = {
+    allowedUDPPorts = [ 53 ];
+    allowedTCPPorts = [ 53 ];
   };
 }
