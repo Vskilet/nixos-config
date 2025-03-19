@@ -29,7 +29,8 @@
         };
       };
       filters = map(url: { enabled = true; url = url; }) [
-        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
+        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt"   # AdGuard DNS filter
+        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"   # The Big List of Hacked Malware Web Sites
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"  # malicious url blocklist
       ];
     };
