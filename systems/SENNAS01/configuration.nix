@@ -27,7 +27,11 @@
 
   documentation.nixos.enable = false;
 
-  # Enable the OpenSSH daemon.
+  programs.zsh.loginShellInit = ''
+    ZSH_TMUX_AUTOSTART="true"
+    ZSH_TMUX_AUTOQUIT="false"
+  '';
+
   services.openssh = {
     enable = true;
     settings = {
