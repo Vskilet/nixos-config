@@ -68,13 +68,16 @@
     ohMyZsh = {
       enable = true;
       plugins = [ "colored-man-pages" "command-not-found" "extract" "git" "git-prompt" "tmux" "urltools" ];
+      preLoaded = ''
+        zstyle ':vcs_info:*' enable git
+      '';
     };
     shellAliases = {
       ll = "ls -alh --color=auto";
       dpsa = "docker ps -a";
     };
     promptInit = ''
-      autoload -U promptinit
+      autoload -Uz promptinit vcs_info
       promptinit
       prompt adam2
     '';
