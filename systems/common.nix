@@ -14,31 +14,27 @@
     (import ../overlays/nvim.nix)
   ];
   environment.systemPackages = with pkgs; [
+    acpi
+    bat
+    dnsutils
+    ghostscript
+    git
+    htop
+    inetutils
+    iperf
+    jq
+    lm_sensors
+    ncdu
     nix-index
     nix-prefetch-scripts
-    nox
-
     nmap
-    iperf
-    inetutils
-    dnsutils
-    pciutils
-    usbutils
-    htop
-    acpi
-    ncdu
-
     nvim
-    bat
-    wget
-    git
-    tig
-    jq
-    tree
-
-    lm_sensors
+    pciutils
     pdftk
-    ghostscript
+    tig
+    tree
+    usbutils
+    wget
   ];
 
   environment.variables = { EDITOR = "nvim"; };
@@ -64,15 +60,19 @@
 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh = {
-    enable = true;
     autosuggestions.enable = true;
+    enable = true;
     enableCompletion = true;
+    histSize = 10000;
     syntaxHighlighting.enable = true;
     ohMyZsh = {
       enable = true;
-      plugins = [ "git" "colored-man-pages" "command-not-found" "extract" ];
+      plugins = [ "colored-man-pages" "command-not-found" "extract" "git" "git-prompt" "tmux" "urltools" ];
     };
-    shellAliases = { ll="ls -alh --color=auto"; dpsa="docker ps -a"; };
+    shellAliases = {
+      ll = "ls -alh --color=auto";
+      dpsa = "docker ps -a";
+    };
     promptInit = ''
       autoload -U promptinit
       promptinit
