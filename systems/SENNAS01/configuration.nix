@@ -25,8 +25,6 @@
   services.zfs.autoSnapshot.enable = true;
   services.zfs.autoScrub.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
-
   documentation.nixos.enable = false;
 
   # Enable the OpenSSH daemon.
