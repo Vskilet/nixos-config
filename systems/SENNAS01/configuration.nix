@@ -75,34 +75,6 @@
     mountdPort = 4002;
   };
 
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      global = {
-        "workgroup" = "SENE-NET";
-        "server string" = "sennas01";
-        "netbios name" = "sennas01";
-        "security" = "user";
-        #"hosts allow" = "172.16.2. 127.0.0.1 localhost";
-        #"hosts deny" = "0.0.0.0/0";
-        "guest account" = "nobody";
-        #"map to guest" = "bad user";
-        "server min protocol" = "NT1";
-      };
-      "public" = {
-        "path" = "/mnt/share/";
-        "browseable" = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        #"force user" = "username";
-        #"force group" = "groupname";
-      };
-    };
-  };
-
   services.fail2ban.enable = true;
 
   services.borgbackup.jobs = {
