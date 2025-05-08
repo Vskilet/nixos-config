@@ -10,12 +10,14 @@
       MOZ_ENABLE_WAYLAND = "1";
     };
     etc = {
+      "greetd/sway-conf".source = ./regreet-sway.conf;
       "sway.conf".source = ./sway.conf;
       "i3status.conf".source = ./i3status.config;
       "xdg/waybar/config".source = ./waybar.config;
       "alacritty.toml".source = ./alacritty.toml;
     };
   };
+
   programs.regreet = {
     enable = true;
     iconTheme = {
@@ -25,6 +27,9 @@
     settings = {
       GTK = {
         application_prefer_dark_theme = true;
+      };
+      default_session = {
+        command = "${pkgs.sway}/bin/sway -c /etc/sway.conf";
       };
     };
     theme = {
