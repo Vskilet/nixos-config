@@ -18,13 +18,29 @@
       adminpassFile = "/mnt/secrets/nextcloud_config_adminpassFile";
     };
     settings = {
+      preview_max_filesize_image = "-1";
+      preview_max_memory = "1024";
+      preview_ffmpeg_path = "${pkgs.ffmpeg}/bin/ffmpeg";
+      enabledPreviewProviders = [
+       ''OC\Preview\BMP''
+       ''OC\Preview\GIF''
+       ''OC\Preview\JPEG''
+       ''OC\Preview\Krita''
+       ''OC\Preview\MarkDown''
+       ''OC\Preview\MP3''
+       ''OC\Preview\OpenDocument''
+       ''OC\Preview\PNG''
+       ''OC\Preview\TXT''
+       ''OC\Preview\XBitmap''
+       ''OC\Preview\Movie''
+      ];
       default_phone_region = "FR";
 #      log_type = "systemd";
-      maintenance_window_start = 1;
+      maintenance_window_start = "23";
       trusted_domains = config.services.nginx.virtualHosts."cloud.sene.ovh".serverAliases;
     };
     phpOptions = {
-      "opcache.interned_strings_buffer" = "10";
+      "opcache.interned_strings_buffer" = "20";
     };
 #    phpExtraExtensions = all: [ all.php-systemd ];
   };
