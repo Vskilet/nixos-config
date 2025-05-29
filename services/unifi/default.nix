@@ -1,11 +1,10 @@
-{ pkgs, config, lib, pkgs-mongodb-ce-7, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi8;
-    #mongodbPackage = pkgs-mongodb-ce-7.mongodb-ce;
-    mongodbPackage = pkgs.mongodb-6_0;
+    mongodbPackage = pkgs.mongodb-ce;
     openFirewall = true;
   };
 
