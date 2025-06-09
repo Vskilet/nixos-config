@@ -8,7 +8,7 @@
     enable = true;
     hostName = "cloud.sene.ovh";
     https = true;
-    package = pkgs.nextcloud30;
+    package = pkgs.nextcloud31;
     autoUpdateApps.enable = true;
     configureRedis = true;
     config = {
