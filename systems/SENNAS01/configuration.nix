@@ -77,39 +77,39 @@
 
   services.fail2ban.enable = true;
 
-  services.borgbackup.jobs = {
-    senback01 = {
-      paths = [
-        "/var/certs"
-        "/var/dkim"
-        "/var/lib/gitea"
-        "/var/lib/grafana"
-        "/var/lib/matrix-synapse"
-        "/var/lib/nextcloud/"
-        "/var/lib/.zfs/snapshot/borgsnap/postgresql"
-        "/var/sieve"
-        "/var/vmail"
-      ];
-      repo = "/mnt/backups/borg";
-      encryption = {
-        mode = "repokey-blake2";
-        passCommand = "cat /mnt/secrets/borgbackup_senback01_encryption_pass";
-      };
-      startAt = "weekly";
-      prune.keep = {
-        within = "1d";
-        weekly = 4;
-        monthly = 6;
-      };
-      preHook = "${pkgs.zfs}/bin/zfs snapshot senpool01/var/lib@borgsnap";
-      postHook = ''
-        ${pkgs.zfs}/bin/zfs destroy senpool01/var/lib@borgsnap
-        if [[ $exitStatus == 0 ]]; then
-          ${pkgs.rclone}/bin/rclone --config /mnt/secrets/rclone_senback01.conf sync -v $BORG_REPO ovh_backup:senback01
-        fi
-      '';
-    };
-  };
+  #services.borgbackup.jobs = {
+  #  senback01 = {
+  #    paths = [
+  #      "/var/certs"
+  #      "/var/dkim"
+  #      "/var/lib/gitea"
+  #      "/var/lib/grafana"
+  #      "/var/lib/matrix-synapse"
+  #      "/var/lib/nextcloud/"
+  #      "/var/lib/.zfs/snapshot/borgsnap/postgresql"
+  #      "/var/sieve"
+  #      "/var/vmail"
+  #    ];
+  #    repo = "/mnt/backups/borg";
+  #    encryption = {
+  #      mode = "repokey-blake2";
+  #      passCommand = "cat /mnt/secrets/borgbackup_senback01_encryption_pass";
+  #    };
+  #    startAt = "weekly";
+  #    prune.keep = {
+  #      within = "1d";
+  #      weekly = 4;
+  #      monthly = 6;
+  #    };
+  #    preHook = "${pkgs.zfs}/bin/zfs snapshot senpool01/var/lib@borgsnap";
+  #    postHook = ''
+  #      ${pkgs.zfs}/bin/zfs destroy senpool01/var/lib@borgsnap
+  #      if [[ $exitStatus == 0 ]]; then
+  #        ${pkgs.rclone}/bin/rclone --config /mnt/secrets/rclone_senback01.conf sync -v $BORG_REPO ovh_backup:senback01
+  #      fi
+  #    '';
+  #  };
+  #};
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
