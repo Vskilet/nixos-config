@@ -50,7 +50,7 @@
       set-option -g mode-keys vi
       set -g mouse on
       unbind '|'
-      bind-key % split-window -h
+      bind-key | split-window -h
       unbind '"'
       bind-key - split-window -v
       unbind 'n'
