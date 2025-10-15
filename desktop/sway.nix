@@ -55,6 +55,7 @@
       wdisplays
       wl-clipboard
       wl-screenrec
+      wofi
 
       kdePackages.breeze
       numix-gtk-theme
@@ -78,5 +79,5 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
 }

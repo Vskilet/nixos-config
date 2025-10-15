@@ -142,12 +142,17 @@
   services.printing.drivers = with pkgs; [ hplip samsung-unified-linux-driver_1_00_37 ];
 
   programs.dconf.enable = true;
-  services.gnome.evolution-data-server.enable = true;
+  services.gvfs.enable = true;
+  #services.gnome.sushi.enable = true;
+
+  services.accounts-daemon.enable = true;
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;
-  services.gnome.sushi.enable = true;
-  services.gvfs.enable = true;
-  programs.evolution.enable = true;
+  services.gnome.evolution-data-server.enable = true;
+  programs.evolution = {
+    enable = true;
+    plugins = [ pkgs.evolution-ews ];
+  };
   programs.light.enable = true;
 
   services.fprintd.enable = true;
