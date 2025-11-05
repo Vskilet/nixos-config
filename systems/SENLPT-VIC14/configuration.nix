@@ -4,15 +4,15 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../common.nix
-      ../../desktop
       ../../users/victor
+      ../../desktop
     ];
 
-  networking.hostName = "SENLPT-VIC01"; # Define your hostname.
+  networking.hostName = "SENLPT-VIC14"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.useDHCP = false;
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  networking.interfaces.enp1s0f0.useDHCP = true;
+  networking.interfaces.wlp2s0.useDHCP = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -76,7 +76,6 @@
     winetricks
     woeusb
     yt-dlp
-    zim
 
     texstudio
     (texlive.combine {
@@ -173,6 +172,6 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "22.11";
+  system.stateVersion = "25.05";
   system.autoUpgrade.enable = true;
 }
