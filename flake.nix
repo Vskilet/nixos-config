@@ -9,9 +9,16 @@
         nixpkgs-25_05.follows = "nixpkgs";
       };
     };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs-25_05.follows = "nixpkgs";
+      };
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager }: {
 
     nixosConfigurations.SENLPT-VIC01 = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
@@ -31,7 +38,41 @@
             };
           };
         }
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.victor = import ./users/victor/home.nix;
+        }
         ./systems/SENLPT-VIC01/configuration.nix
+      ];
+    };
+
+    nixosConfigurations.SENLPT-VIC14 = nixpkgs-unstable.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        nixpkgs-unstable.nixosModules.notDetected
+        {
+          nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+            "anydesk" "corefonts" "davinci-resolve" "intel-ocl" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "vscode"
+          ];
+          nix = {
+            settings.experimental-features = [ "nix-command" "flakes" ];
+            registry = {
+              nixpkgs.to = {
+                type = "path";
+                path = nixpkgs-unstable.legacyPackages.x86_64-linux.path;
+              };
+            };
+          };
+        }
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.victor = import ./users/victor/home.nix;
+        }
+        ./systems/SENLPT-VIC14/configuration.nix
       ];
     };
 

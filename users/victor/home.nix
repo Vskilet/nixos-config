@@ -1,9 +1,16 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   imports = [
     #../../home/core.nix
   ];
 
+  home = {
+    homeDirectory = "/home/victor";
+    username = "victor";
+    stateVersion = "25.05";
+  };
+
   programs.git = {
+    enable = true;
     userName = "Victor SENE";
     userEmail = "victor@sene.ovh";
 		signing = {
@@ -11,4 +18,7 @@
 			signByDefault = true;
 		};
   };
+  programs.home-manager.enable = true;
+
+  systemd.user.startServices = "sd-switch";
 }
