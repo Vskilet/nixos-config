@@ -70,8 +70,8 @@
     virt-viewer
     virtiofsd
     vlc
+    virtio-win
     vscode
-    win-virtio
     wineWowPackages.staging
     winetricks
     woeusb
