@@ -18,7 +18,9 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager }@inputs: {
+
+    packages.x86_64-linux = (import ./packages nixpkgs.legacyPackages.x86_64-linux);
 
     nixosConfigurations.SENLPT-VIC01 = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
@@ -26,7 +28,7 @@
         nixpkgs-unstable.nixosModules.notDetected
         {
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "davinci-resolve" "intel-ocl" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "vscode"
+            "anydesk" "corefonts" "intel-ocl" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "vscode"
           ];
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
@@ -50,11 +52,12 @@
 
     nixosConfigurations.SENLPT-VIC14 = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
       modules = [
         nixpkgs-unstable.nixosModules.notDetected
         {
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "anydesk" "corefonts" "davinci-resolve" "intel-ocl" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "vscode"
+            "anydesk" "corefonts" "davinci-resolve" "samsung-unified-linux-driver" "spotify" "spotify-unwrapped" "vscode"
           ];
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
