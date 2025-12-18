@@ -5,7 +5,7 @@
     backend = "docker";
     containers = {
       kresus = {
-        image = "bnjbvr/kresus:0.22.1";
+        image = "bnjbvr/kresus:0.23.5";
         ports = [ "9876:9876" ];
         volumes = [
           "/var/lib/kresus/data:/home/user/data"
