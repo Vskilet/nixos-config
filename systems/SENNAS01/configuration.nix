@@ -6,6 +6,7 @@
       ../common.nix
       ./hardware-configuration.nix
       ./users.nix
+      ../../services/actual
       ../../services/adguardhome
       ../../services/hass
       #../../services/k3s
