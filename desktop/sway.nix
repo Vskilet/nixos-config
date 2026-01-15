@@ -8,10 +8,11 @@
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       MOZ_ENABLE_WAYLAND = "1";
+      GTK_USE_PORTAL = "0";
     };
     etc = {
-      "greetd/sway-conf".source = ./regreet-sway.conf;
       "sway.conf".source = ./sway.conf;
+      "sway/config".source = ./sway.conf;
       "i3status.conf".source = ./i3status.config;
       "xdg/waybar/config".source = ./waybar.config;
       "alacritty.toml".source = ./alacritty.toml;
@@ -27,9 +28,6 @@
     settings = {
       GTK = {
         application_prefer_dark_theme = true;
-      };
-      default_session = {
-        command = "${pkgs.sway}/bin/sway -c /etc/sway.conf";
       };
     };
     theme = {
