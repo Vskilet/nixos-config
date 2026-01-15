@@ -11,7 +11,6 @@
       GTK_USE_PORTAL = "0";
     };
     etc = {
-      "sway.conf".source = ./sway.conf;
       "sway/config".source = ./sway.conf;
       "i3status.conf".source = ./i3status.config;
       "xdg/waybar/config".source = ./waybar.config;
@@ -38,6 +37,10 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    extraOptions = [
+      "-c"
+      "/etc/sway/config"
+    ];
     extraPackages = with pkgs; [
       alacritty
       clipman
