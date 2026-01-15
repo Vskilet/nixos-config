@@ -11,12 +11,14 @@
 
   programs.git = {
     enable = true;
-    userName = "Victor SENE";
-    userEmail = "victor@sene.ovh";
-		signing = {
-			key = "3ADFA1562B2E34D7";
-			signByDefault = true;
-		};
+    settings.user = {
+      name = "Victor SENE";
+      email = "victor@sene.ovh";
+    };
+    signing = {
+      key = "3ADFA1562B2E34D7";
+      signByDefault = true;
+    };
   };
   programs.home-manager.enable = true;
 
