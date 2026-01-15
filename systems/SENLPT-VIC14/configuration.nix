@@ -90,7 +90,7 @@
     raleway
   ];
 
-  services.onedrive.enable = true;
+  #services.onedrive.enable = true;
 
   services.flatpak.enable = true;
 
@@ -112,15 +112,16 @@
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
+    allowedBridges = [ "enp1s0f0" "wlp2s0" ];
+    onBoot = "ignore";
+    onShutdown = "shutdown";
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
     };
-    onBoot = "ignore";
-    onShutdown = "shutdown";
   };
-  environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+  programs.virt-manager.enable = true;
 
   services.tlp.enable = true;
   services.tlp.settings = {
