@@ -74,6 +74,7 @@ with lib;
     # Enable the ManageSieve protocol
     enableManageSieve = true;
 
+    stateVersion = 3;
     virusScanning = false;
   };
 }

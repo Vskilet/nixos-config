@@ -59,7 +59,7 @@ in {
             input = {
               person_entity = "person.victor_sene";
               zone_entity = "zone.work";
-              notify_device = "195e7bec7367ad09e14685fdb9432b94";
+              notify_device = "1733dfaa1268041e2979bac74e978bb9";
             };
           };
         }
