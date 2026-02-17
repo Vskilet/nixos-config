@@ -4,13 +4,10 @@
   services.zigbee2mqtt = {
     enable = true;
     settings = {
-      mqtt = {
-        server = "mqtt://127.0.0.1:1883";
-        #server = "mqtt://${(head config.services.mosquitto.listeners).address}:${toString (head config.services.mosquitto.listeners).port}";
-      };
+      advanced.channel = 11;
       frontend = {
+        enabled = true;
         port = 8099;
-        host = "127.0.0.1";
         url = "https://zigbee.sene.ovh";
       };
       groups = {
@@ -27,6 +24,14 @@
           ];
         };
       };
+      homeassistant.enabled = config.services.home-assistant.enable;
+      mqtt = {
+        server = "mqtt://127.0.0.1:1883";
+      };
+      serial = {
+        port = "/dev/serial/by-id/usb-SMLIGHT_SMLIGHT_SLZB-06Mg24_e66336b085d5ef11bbf66e4b49d2c684-if00-port0";
+        adapter = "ember";
+      };
     };
   };
 
@@ -34,7 +39,7 @@
     enableACME = true;
     forceSSL = true;
     locations."/" = {
-      proxyPass = "http://${config.services.zigbee2mqtt.settings.frontend.host}:${toString config.services.zigbee2mqtt.settings.frontend.port}/";
+      proxyPass = "http://127.0.0.1:${toString config.services.zigbee2mqtt.settings.frontend.port}/";
       proxyWebsockets = true;
       extraConfig = ''
         auth_request_set $cookie $upstream_http_set_cookie;

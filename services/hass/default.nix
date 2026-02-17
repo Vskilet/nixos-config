@@ -17,7 +17,7 @@ in {
 
   imports = [
     ./mqtt.nix
-    #./zigbee.nix
+    ./zigbee.nix
   ];
 
   services.home-assistant = {
