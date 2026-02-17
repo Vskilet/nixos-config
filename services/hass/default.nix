@@ -2,8 +2,8 @@
 
 let
   meross = builtins.fetchTarball {
-    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v5.4.1.tar.gz";
-    sha256 = "1ppvgpqj2wvrha8n87c6dnwp2fqa468zlc4qyi053fqg4yrgxs91";
+    url = "https://github.com/krahabb/meross_lan/archive/refs/tags/v5.8.0.tar.gz";
+    sha256 = "0gbpdzi87664s3i4awbiw7ikhjlqxz7b79c1mkknjgl9h2ddivs6";
   };
 
 in {
