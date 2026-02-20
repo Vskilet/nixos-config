@@ -53,12 +53,12 @@ in {
       automation = [
         {
           id = "victor_leave_work";
-          alias = "Victor leave Work";
+          alias = "Victor leave l'Atelier";
           use_blueprint = {
             path = "homeassistant/notify_leaving_zone.yaml";
             input = {
               person_entity = "person.victor_sene";
-              zone_entity = "zone.work";
+              zone_entity = "zone.atelier";
               notify_device = "1733dfaa1268041e2979bac74e978bb9";
             };
           };
@@ -212,11 +212,11 @@ in {
           icon = "mdi:home";
         }
         {
-          name = "Work";
-          latitude = "!secret zone_work_latitude";
-          longitude = "!secret zone_work_longitude";
-          radius = "121";
-          icon = "mdi:server";
+          name = "Atelier";
+          latitude = "!secret zone_latelier_latitude";
+          longitude = "!secret zone_latelier_longitude";
+          radius = "35";
+          icon = "mdi:church";
         }
       ];
     };
