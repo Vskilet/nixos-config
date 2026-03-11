@@ -19,6 +19,7 @@
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
       };
     };
   };
@@ -73,7 +74,7 @@
     vlc
     virtio-win
     vscode
-    wineWowPackages.staging
+    wineWow64Packages.staging
     winetricks
     woeusb
     yt-dlp
@@ -99,7 +100,6 @@
   programs.browserpass.enable = true;
   programs.firefox.enable = true;
 
-  programs.adb.enable = true;
   programs.java.enable = true;
 
   services.udev = {

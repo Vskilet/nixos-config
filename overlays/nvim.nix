@@ -6,7 +6,7 @@ self: super:
     configure = {
       packages.myVimPackage = with super.vimPlugins; {
         # loaded on launch
-        start = [ sensible polyglot ale vim-startify airline ];
+        start = [ vim-sensible vim-polyglot ale vim-startify vim-airline ];
         # manually loadable by calling `:packadd $plugin-name`
         opt = [ ];
         # To automatically load a plugin when opening a filetype, add vimrc lines like:
