@@ -28,6 +28,7 @@
     anydesk
     appimage-run
     audacity
+    brightnessctl
     chromium
     #davinci-resolve
     ffmpeg-full
@@ -153,7 +154,6 @@
     enable = true;
     plugins = [ pkgs.evolution-ews ];
   };
-  programs.light.enable = true;
 
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
