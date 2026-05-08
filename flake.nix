@@ -75,6 +75,13 @@
           home-manager.useUserPackages = true;
           home-manager.users.victor = import ./users/victor/home.nix;
         }
+        {
+          nixpkgs.overlays = [
+            (final: prev: {
+              freeshow = final.callPackage ./packages/freeshow.nix { };
+            })
+          ];
+        }
         ./systems/SENLPT-VIC14/configuration.nix
       ];
     };

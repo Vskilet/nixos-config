@@ -8,13 +8,13 @@
 
 let
   pname = "freeshow";
-  version = "1.5.5";
+  version = "1.6.0";
   src =
     fetchurl
       {
         x86_64-linux = {
           url = "https://github.com/ChurchApps/FreeShow/releases/download/v${version}/FreeShow-${version}-x86_64.AppImage";
-          hash = "sha256-7sVGi/1VkyrMKg5kEm0slvC6TPnUUC78Y/ZJ0/WFefw=";
+          hash = "sha256-EkjnNvjLa66fmRLy75RkuSAPVYK8bBZZ0LbhlVhrltw=";
         };
       }
       .${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.system}");
@@ -46,9 +46,9 @@ appimageTools.wrapType2 {
     mkdir -p $out/share/{applications,freeshow}
     cp -a ${appimageContents}/{locales,resources} $out/share/freeshow
     cp -a ${appimageContents}/usr/share/icons $out/share
-    #install -Dm 444 ${appimageContents}/freeshow.desktop $out/share/applications
-    #substituteInPlace $out/share/applications/freeshow.desktop \
-    #--replace-warn 'Exec=AppRun' 'Exec=freeshow'
+    install -Dm 444 ${appimageContents}/freeshow.desktop $out/share/applications
+    substituteInPlace $out/share/applications/freeshow.desktop \
+    --replace-warn 'Exec=AppRun' 'Exec=freeshow'
   '';
 
 }

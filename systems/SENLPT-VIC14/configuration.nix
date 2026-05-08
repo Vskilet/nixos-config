@@ -32,9 +32,11 @@
     brightnessctl
     chromium
     #davinci-resolve
+    darktable
     ffmpeg-full
     file-roller
     fractal
+    freeshow
     frei0r
     gimp
     glaxnimate
