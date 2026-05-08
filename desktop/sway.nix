@@ -49,6 +49,9 @@
       hyprpicker
       i3status waybar kanshi
       mako
+      nemo-with-extensions
+      nemo-fileroller
+      nemo-preview
       rofi rofi-pass rofi-power-menu
       slurp
       swayidle

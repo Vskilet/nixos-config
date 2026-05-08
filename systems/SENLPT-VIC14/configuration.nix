@@ -53,7 +53,6 @@
     libreoffice
     mkpasswd
     mpv
-    nemo
     nextcloud-client
     nfs-utils
     obs-studio
