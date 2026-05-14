@@ -1,9 +1,9 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, pkgs-unstable, ... }:
 
 {
   services.unifi = {
     enable = true;
-    unifiPackage = pkgs.unifi;
+    unifiPackage = pkgs-unstable.unifi;
     mongodbPackage = pkgs.mongodb-ce;
     openFirewall = true;
   };
