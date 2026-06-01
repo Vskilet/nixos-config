@@ -114,6 +114,7 @@
             };
           };
         }
+        ./modules/mautrix-gmessages
         ./systems/SENNAS01/configuration.nix
       ];
     };
