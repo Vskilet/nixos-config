@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./gmessages.nix
     ./turn.nix
     ./signal.nix
     ./whatsapp.nix
