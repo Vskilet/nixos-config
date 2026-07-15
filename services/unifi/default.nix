@@ -3,9 +3,10 @@
 {
   services.unifi = {
     enable = true;
-    unifiPackage = pkgs-unstable.unifi;
+    jrePackage = pkgs.jdk25_headless;
     mongodbPackage = pkgs.mongodb-ce;
     openFirewall = true;
+    unifiPackage = pkgs-unstable.unifi;
   };
 
   services.nginx.virtualHosts."unifi.sene.ovh" = {
