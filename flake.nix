@@ -50,9 +50,14 @@
       ];
     };
 
-    nixosConfigurations.SENLPT-VIC14 = nixpkgs-unstable.lib.nixosSystem {
+    nixosConfigurations.SENLPT-VIC14 = nixpkgs-unstable.lib.nixosSystem rec {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      specialArgs = {
+        inherit inputs;
+        pkgs-stable = import nixpkgs {
+          inherit system;
+        };
+      };
       modules = [
         nixpkgs-unstable.nixosModules.notDetected
         {

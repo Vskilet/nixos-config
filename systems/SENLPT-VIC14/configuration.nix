@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs,  pkgs-stable, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -45,7 +45,6 @@
     go
     gopls
     gopass
-    handbrake
     imagemagick
     inkscape
     jmtpfs
@@ -65,7 +64,7 @@
     pavucontrol
     pkgs.shotwell
     python3
-    qlcplus
+    pkgs-stable.qlcplus
     rpi-imager
     spotify
     v4l-utils
@@ -104,7 +103,7 @@
   programs.java.enable = true;
 
   services.udev = {
-    packages = [ pkgs.qlcplus ];
+    packages = [ pkgs-stable.qlcplus ];
     extraRules = ''
       SUBSYSTEM=="usb", ATTR{idVendor}=="1edb", ATTR{idProduct}=="be55", MODE="0666"
     '';
