@@ -11,7 +11,7 @@ with lib;
 
     # A list of all login accounts. To create the password hashes, use
     # mkpasswd -m sha-512 "super secret password"
-    loginAccounts = {
+    accounts = {
       "victor@sene.ovh" = {
         hashedPassword = "$6$SKy30uwxPvGAS4j0$yTEAL5VyOwTXnkdxI/Caj0F44S7yMT.7w28c61miDmV6Q59xV.so2ds7soP1eZ0a6tTSjmzZCXe2xXeFI8KVp/";
         aliases = [
@@ -61,7 +61,7 @@ with lib;
     };
 
     # Certificate setup
-    certificateScheme = "acme-nginx";
+    x509.useACMEHost = config.mailserver.fqdn;
 
     # Enable IMAP and POP3
     enableImap = false;
@@ -72,10 +72,19 @@ with lib;
     enableSubmissionSsl = true;
 
     # Enable the ManageSieve protocol
-    enableManageSieve = true;
+    enableManageSieve = false;
 
-    stateVersion = 3;
+    stateVersion = 5;
     virusScanning = false;
+  };
+
+  services.nginx.virtualHosts = {
+    ${config.mailserver.fqdn} = {
+      enableACME = true;
+      forceSSL = true;
+      serverAliases = config.mailserver.domains;
+      serverName = config.mailserver.fqdn;
+    };
   };
 }
 
