@@ -18,6 +18,7 @@
       ../../services/nginx
       ../../services/peertube
       ../../services/unifi
+      ../../services/vaultwarden
     ];
 
   boot.loader.systemd-boot.enable = true;
