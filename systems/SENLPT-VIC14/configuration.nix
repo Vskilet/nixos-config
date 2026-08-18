@@ -47,7 +47,6 @@
     gopass
     imagemagick
     inkscape
-    jmtpfs
     kdeconnect-kde
     kdenlive
     kubectl
