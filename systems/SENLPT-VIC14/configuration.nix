@@ -29,6 +29,7 @@
     anydesk
     appimage-run
     audacity
+    bitwarden-cli
     brightnessctl
     chromium
     #davinci-resolve
