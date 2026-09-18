@@ -115,6 +115,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-gmessages-pr": {
+      "locked": {
+        "lastModified": 1789568821,
+        "narHash": "sha256-PJgzaMAOAigHiIgLpT+ABY+wy/ebYikELvVlMDDzh0E=",
+        "owner": "SchweGELBin",
+        "repo": "nixpkgs",
+        "rev": "3d2e3750b9579d1af14a12fe7542735217a4f62a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SchweGELBin",
+        "ref": "mautrix-gmessages-26.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1788752844,
@@ -133,6 +149,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-gmessages-pr": "nixpkgs-gmessages-pr",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "simple-nixos-mailserver": "simple-nixos-mailserver"
       }
