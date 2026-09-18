@@ -18,7 +18,7 @@
     };
   };
 
-  programs.regreet = {
+  services.displayManager.regreet = {
     enable = true;
     iconTheme = {
       name = "Numix";
@@ -31,7 +31,7 @@
     };
     theme = {
       name = "Numix";
-      package = pkgs.numix-gtk-theme;
+      package = pkgs.yaru-theme;
     };
   };
   programs.sway = {
@@ -52,7 +52,7 @@
       nemo-with-extensions
       nemo-fileroller
       nemo-preview
-      rofi rofi-pass rofi-power-menu
+      rofi rofi-power-menu
       slurp
       swayidle
       swaylock
@@ -62,7 +62,6 @@
       wofi
 
       kdePackages.breeze
-      numix-gtk-theme
       numix-icon-theme
       yaru-theme
     ];
