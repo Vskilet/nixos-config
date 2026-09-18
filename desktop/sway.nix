@@ -72,8 +72,18 @@
     platformTheme = "qt5ct";
   };
   security.polkit.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.wlr.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          chooser_type = "dmenu";
+          chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu -p 'Select output'";
+        };
+      };
+    };
+  };
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
