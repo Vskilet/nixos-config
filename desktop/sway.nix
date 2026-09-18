@@ -18,7 +18,7 @@
     };
   };
 
-  programs.regreet = {
+  services.displayManager.regreet = {
     enable = true;
     iconTheme = {
       name = "Numix";
@@ -31,7 +31,7 @@
     };
     theme = {
       name = "Numix";
-      package = pkgs.numix-gtk-theme;
+      package = pkgs.yaru-theme;
     };
   };
   programs.sway = {
@@ -52,7 +52,7 @@
       nemo-with-extensions
       nemo-fileroller
       nemo-preview
-      rofi rofi-pass rofi-power-menu
+      rofi rofi-power-menu
       slurp
       swayidle
       swaylock
@@ -62,7 +62,6 @@
       wofi
 
       kdePackages.breeze
-      numix-gtk-theme
       numix-icon-theme
       yaru-theme
     ];
@@ -73,8 +72,18 @@
     platformTheme = "qt5ct";
   };
   security.polkit.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.wlr.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          chooser_type = "dmenu";
+          chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu -p 'Select output'";
+        };
+      };
+    };
+  };
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
