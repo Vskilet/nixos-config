@@ -78,6 +78,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/hass" =
+    { device = "senpool01/var/lib/hass";
+      fsType = "zfs";
+    };
+
   fileSystems."/var/lib/kresus" =
     { device = "senpool01/var/lib/kresus";
       fsType = "zfs";
@@ -85,6 +90,11 @@
 
   fileSystems."/var/lib/matrix-synapse" =
     { device = "senpool01/var/lib/matrix-synapse";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/mautrix-gmessages" =
+    { device = "senpool01/var/lib/mautrix-gmessages";
       fsType = "zfs";
     };
 
