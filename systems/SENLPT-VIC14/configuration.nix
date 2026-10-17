@@ -32,7 +32,7 @@
     bitwarden-cli
     brightnessctl
     chromium
-    #davinci-resolve
+    davinci-resolve
     darktable
     ffmpeg-full
     file-roller
