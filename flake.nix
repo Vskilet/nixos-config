@@ -21,6 +21,12 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager}@inputs:
   let
     system = "x86_64-linux";
+    overlay-gmessages = final: prev: {
+      mautrix-gmessages = (import nixpkgs-unstable {
+        inherit system;
+        config.permittedInsecurePackages = [ "olm-3.2.16" ];
+      }).mautrix-gmessages;
+    };
   in {
 
     packages.x86_64-linux = (import ./packages nixpkgs.legacyPackages.x86_64-linux);
@@ -115,6 +121,7 @@
               "unifi-controller" "unifi" "mongodb-ce"
             ];
           };
+          nixpkgs.overlays = [ overlay-gmessages ];
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
             registry = {
