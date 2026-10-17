@@ -8,13 +8,13 @@
 
 let
   pname = "freeshow";
-  version = "1.6.4";
+  version = "1.6.6";
   src =
     fetchurl
       {
         x86_64-linux = {
           url = "https://github.com/ChurchApps/FreeShow/releases/download/v${version}/FreeShow-${version}-x86_64.AppImage";
-          hash = "sha256-C6cG3c9I5yMnpWmAXPWVXW/oQdFTgbn00udwcZK9+Q0=";
+          hash = "sha256-DrSGS6TvnGPAAw6Du0LJLusaLVQDk5G45tfVb4aIY8g=";
         };
       }
       .${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.system}");
