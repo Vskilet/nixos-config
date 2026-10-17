@@ -32,11 +32,11 @@
     bitwarden-cli
     brightnessctl
     chromium
-    davinci-resolve
+    cinny-desktop
     darktable
+    davinci-resolve
     ffmpeg-full
     file-roller
-    fractal
     freeshow
     frei0r
     gimp
@@ -56,6 +56,7 @@
     mpv
     nextcloud-client
     nfs-utils
+    nheko
     obs-studio
     okular
     onedrivegui
