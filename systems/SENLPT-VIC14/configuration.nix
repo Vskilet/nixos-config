@@ -44,8 +44,8 @@
     gnome-disk-utility
     gnupg
     go
-    gopls
     gopass
+    gopls
     imagemagick
     inkscape
     kdeconnect-kde
@@ -63,9 +63,11 @@
     openswitcher
     parted
     pavucontrol
+    pinentry-gnome3
+    pkgs-stable.qlcplus
     pkgs.shotwell
     python3
-    pkgs-stable.qlcplus
+    rbw
     rpi-imager
     spotify
     v4l-utils
