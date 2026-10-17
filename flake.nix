@@ -16,18 +16,11 @@
         nixpkgs-26_05.follows = "nixpkgs";
       };
     };
-    nixpkgs-gmessages-pr.url = "github:SchweGELBin/nixpkgs/mautrix-gmessages-26.09";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager, nixpkgs-gmessages-pr}@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager}@inputs:
   let
     system = "x86_64-linux";
-    overlay-gmessages = final: prev: {
-      mautrix-gmessages = (import nixpkgs-gmessages-pr {
-        inherit system;
-        inherit (final) config;
-      }).mautrix-gmessages;
-    };
   in {
 
     packages.x86_64-linux = (import ./packages nixpkgs.legacyPackages.x86_64-linux);
@@ -122,7 +115,6 @@
               "unifi-controller" "unifi" "mongodb-ce"
             ];
           };
-          nixpkgs.overlays = [ overlay-gmessages ];
           nix = {
             settings.experimental-features = [ "nix-command" "flakes" ];
             registry = {
