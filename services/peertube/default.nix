@@ -5,7 +5,7 @@
     backend = "docker";
     containers = {
       peertube = {
-        image = "chocobozzz/peertube:v8.2.2";
+        image = "chocobozzz/peertube:v8.2.4";
         ports = [ "1935:1935" "9000:9000" ];
         volumes = [
           "/var/lib/peertube/data:/data"
@@ -54,7 +54,7 @@
   };
 
   services.nginx.virtualHosts."videos.sene.ovh" = {
-  	enableACME = true;
+    enableACME = true;
     forceSSL = true;
     locations = { "/" = {
       proxyPass = "http://127.0.0.1:9000/";
