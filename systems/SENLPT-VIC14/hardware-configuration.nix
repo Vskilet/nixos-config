@@ -20,7 +20,6 @@
   boot.initrd.luks.devices = {
     luks = {
       device = "/dev/disk/by-uuid/8695dbd1-5df3-487b-a29e-55ffc509beb7";
-      preLVM = true;
       allowDiscards = true;
     };
   };
