@@ -105,6 +105,8 @@
 
   programs.java.enable = true;
 
+  programs.logos.enable = true;
+
   services.udev = {
     packages = [ pkgs-stable.qlcplus ];
     extraRules = ''

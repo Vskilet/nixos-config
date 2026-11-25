@@ -16,9 +16,13 @@
         nixpkgs-26_05.follows = "nixpkgs";
       };
     };
+    logos-nix = {
+      url = "github:s4myz/logos-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager}@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, simple-nixos-mailserver, home-manager, logos-nix}@inputs:
   let
     system = "x86_64-linux";
     overlay-gmessages = final: prev: {
@@ -69,6 +73,7 @@
       };
       modules = [
         nixpkgs-unstable.nixosModules.notDetected
+        inputs.logos-nix.nixosModules.default
         {
           nixpkgs.config = {
             permittedInsecurePackages = [ "olm-3.2.16" ];
